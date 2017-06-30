@@ -1,0 +1,14 @@
+[{
+    "modid": "keywizard",
+    "name": "Keyboard Wizard",
+    "description": "A simple that makes finding and fixing key bind conflicts a lot easier",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["MrNerdy42"],
+    "credits": "_Bedrock_Miner_ for his Forge tutorials",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+}]
