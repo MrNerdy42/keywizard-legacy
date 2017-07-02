@@ -59,7 +59,7 @@ public class GuiKeyWizard extends GuiScreen {
 	private HashMap<Integer, GuiButton> keyHash = new HashMap();
 	private KeyBinding selectedKeybind;
 	private KeyModifier activeModifier = KeyModifier.NONE;
-	private String selectedCategory;
+	private String selectedCategory = "categories.all";
 	private String searchText = "";
 
 
