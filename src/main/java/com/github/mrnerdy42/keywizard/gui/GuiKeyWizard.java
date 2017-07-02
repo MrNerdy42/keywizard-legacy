@@ -211,6 +211,7 @@ public class GuiKeyWizard extends GuiScreen {
 
 
 		this.categoryList = new GuiCategorySelector(startX - 30, 5, 125, "Binding Categories", categories);
+		this.selectedCategory = this.categoryList.getSelctedCategory();
 
 		this.reset = new GuiButton(0, startX - 30, this.height - 40, 125, 20, "Reset binding");
 		this.activeModifierButton = new GuiButton(1, startX - 30, this.height - 65, 150, 20,

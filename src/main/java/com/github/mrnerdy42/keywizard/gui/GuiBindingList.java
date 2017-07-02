@@ -21,6 +21,10 @@ public class GuiBindingList extends GuiScrollingList {
 	
 	private GuiKeyWizard parent;
 	private KeyBinding[] bindings;
+	
+	private String searchText;
+	private String selectedCategory;
+	
 	private KeyBinding selectedKeybind;
 	private int selectedKeybindId;
 
@@ -30,6 +34,8 @@ public class GuiBindingList extends GuiScrollingList {
 		
 		this.parent = parent;
 		this.bindings = KeybindUtils.ALL_BINDINGS;
+		this.searchText = this.parent.getSearchText();
+		this.selectedCategory = this.parent.getSelectedCategory();
 		this.selectKeybind(0);
 	}
 
@@ -75,17 +81,22 @@ public class GuiBindingList extends GuiScrollingList {
 	
 	protected void updateList(){
 		
-		String filterExp = "(?i).*" + this.parent.getSearchText() + ".*";
-		
-		if (this.parent.getSearchText().equals("")) {
-			this.filtered = false;
-		} else {
-			this.filtered = true;
+		if ( !this.searchText.equals(this.parent.getSearchText()) || !this.selectedCategory.equals(this.parent.getSelectedCategory()) ) {
+			this.searchText = this.parent.getSearchText();
+			this.selectedCategory = this.parent.getSelectedCategory();
+
+			String filterExp = "(?i).*" + this.searchText + ".*";
+			
+			if (this.searchText.equals("")) {
+				this.filtered = false;
+			} else {
+				this.filtered = true;
+			}
+			this.bindings = this.getBindings(this.selectedCategory, filterExp);
+			
+			if (this.bindings.length != 0)
+				this.selectKeybind(0);
 		}
-		this.bindings = this.getBindings(this.parent.getSelectedCategory(), filterExp);
-		
-//		if (this.bindings.length != 0)
-//			this.selectKeybind(0);
 	}
 	
 	private void selectKeybind(int id){
