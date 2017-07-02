@@ -13,6 +13,7 @@ import static org.lwjgl.input.Keyboard.KEY_F3;
 import static org.lwjgl.input.Keyboard.KEY_F4;
 import static org.lwjgl.input.Keyboard.KEY_F5;
 import static org.lwjgl.input.Keyboard.KEY_F6;
+import static org.lwjgl.input.Keyboard.KEY_F7;
 import static org.lwjgl.input.Keyboard.KEY_F8;
 import static org.lwjgl.input.Keyboard.KEY_F9;
 import static org.lwjgl.input.Keyboard.KEY_GRAVE;
@@ -38,7 +39,7 @@ public class KeyHelper {
 		FUNCTION_KEYS.put(KEY_F4, "F4");
 		FUNCTION_KEYS.put(KEY_F5, "F5");
 		FUNCTION_KEYS.put(KEY_F6, "F6");
-		FUNCTION_KEYS.put(KEY_F6, "F7");
+		FUNCTION_KEYS.put(KEY_F7, "F7");
 		FUNCTION_KEYS.put(KEY_F8, "F8");
 		FUNCTION_KEYS.put(KEY_F9, "F9");
 		FUNCTION_KEYS.put(KEY_F10, "F10");
