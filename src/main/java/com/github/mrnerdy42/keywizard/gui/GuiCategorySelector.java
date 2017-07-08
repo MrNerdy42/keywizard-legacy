@@ -24,8 +24,8 @@ public class GuiCategorySelector extends GuiButton{
 		private String name;
 		private GuiCategorySelector parent;
 		
-		public ListItem(int index, String itemText, String name, GuiCategorySelector parent) throws IllegalArgumentException{
-			super(index + 1, parent.xPosition, parent.yPosition + 21 * (index + 1), parent.width, 20, itemText);
+		public ListItem(int index, int row, int column, String itemText, String name, GuiCategorySelector parent) throws IllegalArgumentException{
+			super(index, parent.xPosition + (parent.width + 2) * column, parent.yPosition + 21 * (row + 1), parent.width, 20, itemText);
 			
 			this.index = index;
 			this.name = name;
@@ -76,9 +76,16 @@ public class GuiCategorySelector extends GuiButton{
 		
 		this.items = new ListItem[itemNames.size()];
 		this.length = this.items.length;
-		
+
+		int row = 0;
+		int column = 0;
 		for (int i = 0; i < items.length; i ++) {
-			this.items[i] = new ListItem(i, I18n.format(itemNames.get(i)), itemNames.get(i), this);
+			if  (i % 11 == 0 && i != 0) {
+				column++;
+				row = 0;
+			}
+			this.items[i] = new ListItem(i, row, column, I18n.format(itemNames.get(i)), itemNames.get(i), this);
+			row++;
 		}
 		
 		this.selectItem(0);
