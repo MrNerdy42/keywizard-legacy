@@ -57,10 +57,12 @@ public class GuiKeyWizard extends GuiScreen {
 	// This hash map maps LWJGL key ids to buttons in the gui. Use this to
 	// access keys instead of buttonList
 	private HashMap<Integer, GuiButton> keyHash = new HashMap();
+	private HashMap<Integer, GuiButton> numpadHash = new HashMap();
 	private KeyBinding selectedKeybind;
 	private KeyModifier activeModifier = KeyModifier.NONE;
 	private String selectedCategory = "categories.all";
 	private String searchText = "";
+	private String keyboardMode = "keyboard";
 
 
 	private GuiCategorySelector categoryList;
@@ -68,6 +70,7 @@ public class GuiKeyWizard extends GuiScreen {
 	private GuiBindingList bindingList;
 	private GuiButton reset;
 	private GuiButton activeModifierButton;
+	private GuiButton numpadButton;
 
 	/**
 	 * This variable is incremented every time a key is added to the keyboard.
@@ -216,11 +219,13 @@ public class GuiKeyWizard extends GuiScreen {
 		this.reset = new GuiButton(0, startX - 30, this.height - 40, 125, 20, "Reset binding");
 		this.activeModifierButton = new GuiButton(1, startX - 30, this.height - 65, 150, 20,
 				"Active Modifier: " + activeModifier.toString());
+		this.numpadButton = new GuiButton(2, startX + 100, this.height - 40, 125, 20, "NUMPAD");
 		
 		this.setSelectedKeybind(this.bindingList.getSelectedKeybind());
 
 		this.buttonList.add(this.activeModifierButton);
 		this.buttonList.add(this.reset);
+		this.buttonList.add(this.numpadButton);
 
 		int rowPos = 0;
 
@@ -360,6 +365,22 @@ public class GuiKeyWizard extends GuiScreen {
         	this.searchText = this.searchBar.getText();
         }
         this.bindingList.updateList();
+        
+        if (this.keyboardMode.equals("keyboard")) {
+        	keyHash.values().forEach(button -> {
+        		button.visible = true;
+        	});
+        	numpadHash.values().forEach(button -> {
+        		button.visible = false;
+        	});
+        } else if (this.keyboardMode.equals("numpad")) {
+        	keyHash.values().forEach(button -> {
+        		button.visible = false;
+        	});
+        	numpadHash.values().forEach(button -> {
+        		button.visible = true;
+        	});
+        }
     }
 
 }
