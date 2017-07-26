@@ -6,3 +6,5 @@ keywizard.keybind.openKeyboardWizard=Open Keyboard Wizard
 categories.all=All Bindings
 categories.conflicts=Conflicting
 categories.unbound=Unbound
+mode.keyoard=Keyboard
+mode.numpad=Numpad

@@ -25,10 +25,22 @@ import static org.lwjgl.input.Keyboard.KEY_SLASH;
 import static org.lwjgl.input.Keyboard.KEY_SPACE;
 import static org.lwjgl.input.Keyboard.KEY_TAB;
 import static org.lwjgl.input.Keyboard.KEY_Z;
+import static org.lwjgl.input.Keyboard.KEY_NUMPAD7;
+import static org.lwjgl.input.Keyboard.KEY_NUMPAD8;
+import static org.lwjgl.input.Keyboard.KEY_NUMPAD9;
+import static org.lwjgl.input.Keyboard.KEY_NUMPAD4;
+import static org.lwjgl.input.Keyboard.KEY_NUMPAD5;
+import static org.lwjgl.input.Keyboard.KEY_NUMPAD6;
+import static org.lwjgl.input.Keyboard.KEY_NUMPAD1;
+import static org.lwjgl.input.Keyboard.KEY_NUMPAD2;
+import static org.lwjgl.input.Keyboard.KEY_NUMPAD3;
+import static org.lwjgl.input.Keyboard.KEY_NUMPAD0;
+import static org.lwjgl.input.Keyboard.KEY_DECIMAL;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.lwjgl.input.Mouse;
 
@@ -228,7 +240,6 @@ public class GuiKeyWizard extends GuiScreen {
 		this.buttonList.add(this.numpadButton);
 
 		int rowPos = 0;
-
 		GuiButton button;
 		
 		for (int i = KEY_F1; i < KEY_F10 + 1; i++) {
@@ -242,25 +253,24 @@ public class GuiKeyWizard extends GuiScreen {
 		}
 		
 		rowPos = 0;
-
 		for (int i = KEY_1; i < KEY_EQUALS + 1; i++) {
 			this.placeKey(i, (startX + rowPos * 30), startY + 25, 25);
 			rowPos++;
 		}
+		
 		rowPos = 0;
-
 		for (int i = KEY_Q; i < KEY_RBRACKET + 1; i++) {
 			this.placeKey(i, (startX + rowPos * 30) + 15, startY + 50, 25);
 			rowPos++;
 		}
+		
 		rowPos = 0;
-
 		for (int i = KEY_A; i < KEY_APOSTROPHE + 1; i++) {
 			this.placeKey(i, (startX + rowPos * 30) + 20, startY + 75, 25);
 			rowPos++;
 		}
+		
 		rowPos = 0;
-
 		for (int i = KEY_Z; i < KEY_SLASH + 1; i++) {
 			this.placeKey(i, (startX + rowPos * 30) + 25, startY + 100, 25);
 			rowPos++;
@@ -287,6 +297,14 @@ public class GuiKeyWizard extends GuiScreen {
 		this.placeAuxKey(KEY_RMENU, KEY_SPACE, 195, 0, 35);
 		this.placeAuxKey(KEY_LMETA, KEY_RMENU, 40, 0, 35);
 		this.placeAuxKey(KEY_RCONTROL, KEY_LMETA, 40, 0, 35);
+		
+		rowPos = 0;
+		for (int i = KEY_NUMPAD7; i < KEY_NUMPAD9; i ++) {
+			this.placeKey(i, (startX + rowPos * 30) + 25, startY, 25);
+			this.numpadHash.put((Integer) i, keyHash.get(i));
+			rowPos++;
+		}
+		
 
 	}
 
@@ -366,14 +384,14 @@ public class GuiKeyWizard extends GuiScreen {
         }
         this.bindingList.updateList();
         
-        if (this.keyboardMode.equals("keyboard")) {
+        if (this.keyboardMode.equals("mode.keyboard")) {
         	keyHash.values().forEach(button -> {
         		button.visible = true;
         	});
         	numpadHash.values().forEach(button -> {
         		button.visible = false;
         	});
-        } else if (this.keyboardMode.equals("numpad")) {
+        } else if (this.keyboardMode.equals("mode.numpad")) {
         	keyHash.values().forEach(button -> {
         		button.visible = false;
         	});
