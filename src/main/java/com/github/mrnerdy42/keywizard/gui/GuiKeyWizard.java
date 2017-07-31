@@ -298,6 +298,22 @@ public class GuiKeyWizard extends GuiScreen {
 		this.placeAuxKey(KEY_LMETA, KEY_RMENU, 40, 0, 35);
 		this.placeAuxKey(KEY_RCONTROL, KEY_LMETA, 40, 0, 35);
 		
+		// Draw the numpad to the right of the keyboard
+		this.placeAuxKey(KEY_NUMPAD7, KEY_F12, 45, 0, 50);
+		this.placeAuxKey(KEY_NUMPAD8, KEY_NUMPAD7, 55, 0, 50);
+		this.placeAuxKey(KEY_NUMPAD9, KEY_NUMPAD8, 55, 0, 50);
+		
+		this.placeAuxKey(KEY_NUMPAD4, KEY_NUMPAD7, 0, 25, 50);
+		this.placeAuxKey(KEY_NUMPAD5, KEY_NUMPAD4, 55, 0, 50);
+		this.placeAuxKey(KEY_NUMPAD6, KEY_NUMPAD5, 55, 0, 50);
+		
+		this.placeAuxKey(KEY_NUMPAD1, KEY_NUMPAD4, 0, 25, 50);
+		this.placeAuxKey(KEY_NUMPAD2, KEY_NUMPAD1, 55, 0, 50);
+		this.placeAuxKey(KEY_NUMPAD3, KEY_NUMPAD2, 55, 0, 50);
+		
+		this.placeAuxKey(KEY_NUMPAD0, KEY_NUMPAD1, 0, 25, 100);
+		this.placeAuxKey(KEY_DECIMAL, KEY_NUMPAD0, 105, 0, 55);
+		
 		
 /*		rowPos = 0;
 		for (int i = KEY_NUMPAD7; i < KEY_NUMPAD9; i ++) {
