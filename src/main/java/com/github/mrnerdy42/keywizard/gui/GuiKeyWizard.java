@@ -69,7 +69,7 @@ public class GuiKeyWizard extends GuiScreen {
 	// This hash map maps LWJGL key ids to buttons in the gui. Use this to
 	// access keys instead of buttonList
 	private HashMap<Integer, GuiButton> keyHash = new HashMap();
-	private HashMap<Integer, GuiButton> numpadHash = new HashMap();
+//	private HashMap<Integer, GuiButton> numpadHash = new HashMap();
 	private KeyBinding selectedKeybind;
 	private KeyModifier activeModifier = KeyModifier.NONE;
 	private String selectedCategory = "categories.all";
@@ -82,7 +82,7 @@ public class GuiKeyWizard extends GuiScreen {
 	private GuiBindingList bindingList;
 	private GuiButton reset;
 	private GuiButton activeModifierButton;
-	private GuiButton numpadButton;
+//	private GuiButton numpadButton;
 
 	/**
 	 * This variable is incremented every time a key is added to the keyboard.
@@ -231,13 +231,13 @@ public class GuiKeyWizard extends GuiScreen {
 		this.reset = new GuiButton(0, startX - 30, this.height - 40, 125, 20, "Reset binding");
 		this.activeModifierButton = new GuiButton(1, startX - 30, this.height - 65, 150, 20,
 				"Active Modifier: " + activeModifier.toString());
-		this.numpadButton = new GuiButton(2, startX + 100, this.height - 40, 125, 20, "NUMPAD");
+//		this.numpadButton = new GuiButton(2, startX + 100, this.height - 40, 125, 20, "NUMPAD");
 		
 		this.setSelectedKeybind(this.bindingList.getSelectedKeybind());
 
 		this.buttonList.add(this.activeModifierButton);
 		this.buttonList.add(this.reset);
-		this.buttonList.add(this.numpadButton);
+//		this.buttonList.add(this.numpadButton);
 
 		int rowPos = 0;
 		GuiButton button;
@@ -298,12 +298,14 @@ public class GuiKeyWizard extends GuiScreen {
 		this.placeAuxKey(KEY_LMETA, KEY_RMENU, 40, 0, 35);
 		this.placeAuxKey(KEY_RCONTROL, KEY_LMETA, 40, 0, 35);
 		
-		rowPos = 0;
+		
+/*		rowPos = 0;
 		for (int i = KEY_NUMPAD7; i < KEY_NUMPAD9; i ++) {
 			this.placeKey(i, (startX + rowPos * 30) + 25, startY, 25);
 			this.numpadHash.put((Integer) i, keyHash.get(i));
 			rowPos++;
 		}
+*/
 		
 
 	}
@@ -384,7 +386,7 @@ public class GuiKeyWizard extends GuiScreen {
         }
         this.bindingList.updateList();
         
-        if (this.keyboardMode.equals("mode.keyboard")) {
+/*        if (this.keyboardMode.equals("mode.keyboard")) {
         	keyHash.values().forEach(button -> {
         		button.visible = true;
         	});
@@ -399,6 +401,7 @@ public class GuiKeyWizard extends GuiScreen {
         		button.visible = true;
         	});
         }
+*/
     }
 
 }
