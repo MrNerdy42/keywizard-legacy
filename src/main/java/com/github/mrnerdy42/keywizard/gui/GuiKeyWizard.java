@@ -78,7 +78,8 @@ public class GuiKeyWizard extends GuiScreen {
 	private GuiCategorySelector categoryList;
 	private GuiTextField searchBar;
 	private GuiBindingList bindingList;
-	private GuiButton reset;
+	private GuiButton resetButton;
+	private GuiButton clearButton;
 	private GuiButton activeModifierButton;
 
 	/**
@@ -90,11 +91,17 @@ public class GuiKeyWizard extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) {
 
-		if (button == this.reset) {
+		if (button == this.resetButton) {
 			this.selectedKeybind.setToDefault();
 			KeyBinding.resetKeyBindingArrayAndHash();
-			this.reset.enabled = !selectedKeybind.isSetToDefaultValue();
+			this.resetButton.enabled = !selectedKeybind.isSetToDefaultValue();
 			return;
+		}
+		
+		if (button == this.clearButton) {
+			this.selectedKeybind.setKeyModifierAndCode(KeyModifier.NONE, 0);
+			KeyBinding.resetKeyBindingArrayAndHash();
+			this.clearButton.enabled = (this.selectedKeybind.getKeyCode() == 0) ? false:true;
 		}
 
 		if (button == this.activeModifierButton) {
@@ -114,7 +121,7 @@ public class GuiKeyWizard extends GuiScreen {
 				this.selectedKeybind.setKeyModifierAndCode(this.activeModifier, newKeyId);
 				KeyBinding.resetKeyBindingArrayAndHash();
 			}
-			this.reset.enabled = !selectedKeybind.isSetToDefaultValue();
+			this.resetButton.enabled = !selectedKeybind.isSetToDefaultValue();
 			return;
 		}
 	}
@@ -225,14 +232,16 @@ public class GuiKeyWizard extends GuiScreen {
 		this.categoryList = new GuiCategorySelector(startX - 30, 5, 125, "Binding Categories", categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
 
-		this.reset = new GuiButton(0, startX - 30, this.height - 40, 125, 20, "Reset binding");
+		this.resetButton = new GuiButton(0, startX - 30, this.height - 40, 100, 20, "Reset binding");
+		this.clearButton = new GuiButton(0, startX + 75, this.height - 40, 100, 20, "Clear binding");
 		this.activeModifierButton = new GuiButton(1, startX - 30, this.height - 65, 150, 20,
 				"Active Modifier: " + activeModifier.toString());
 		
 		this.setSelectedKeybind(this.bindingList.getSelectedKeybind());
 
 		this.buttonList.add(this.activeModifierButton);
-		this.buttonList.add(this.reset);
+		this.buttonList.add(this.resetButton);
+		this.buttonList.add(this.clearButton);
 
 		int rowPos = 0;
 		GuiButton button;
@@ -378,8 +387,12 @@ public class GuiKeyWizard extends GuiScreen {
     public void updateScreen() {
         super.updateScreen();
         this.searchBar.updateCursorCounter();
-        if ( this.reset != null )
-        	this.reset.enabled = !this.selectedKeybind.isSetToDefaultValue();
+        if ( this.resetButton != null )
+        	this.resetButton.enabled = !this.selectedKeybind.isSetToDefaultValue();
+		if ( this.clearButton != null ) {
+			this.clearButton.enabled = (this.selectedKeybind.getKeyCode() == 0) ? false:true;
+		}
+
         if ( this.categoryList != null )
         	this.selectedCategory = this.categoryList.getSelctedCategory();
         
