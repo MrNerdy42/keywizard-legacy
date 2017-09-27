@@ -1,8 +1,0 @@
-language.name=English
-language.region=US
-language.code=en_US
-
-keywizard.keybind.openKeyboardWizard=Open Keyboard Wizard
-categories.all=All Bindings
-categories.conflicts=Conflicting
-categories.unbound=Unbound

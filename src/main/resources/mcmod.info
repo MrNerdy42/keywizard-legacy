@@ -1,14 +1,16 @@
-[{
-    "modid": "keywizard",
-    "name": "Keyboard Wizard",
-    "description": "A simple that makes finding and fixing key bind conflicts a lot easier",
-    "version": "${version}",
-    "mcversion": "${mcversion}",
-    "url": "",
-    "updateUrl": "",
-    "authorList": ["MrNerdy42"],
-    "credits": "_Bedrock_Miner_ for his Forge tutorials",
-    "logoFile": "",
-    "screenshots": [],
-    "dependencies": []
-}]
+[
+{
+  "modid": "examplemod",
+  "name": "Example Mod",
+  "description": "Example placeholder mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["ExampleDude"],
+  "credits": "The Forge and FML guys, for making this example",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
