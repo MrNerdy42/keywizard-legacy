@@ -224,7 +224,7 @@ public class GuiKeyWizard extends GuiScreen {
 				maxLength = binding.getDisplayName().length();
 		}
 
-		int listWidth = (maxLength * 19);
+		int listWidth = (maxLength * 14);
 
 		this.bindingList = new GuiBindingList(this, 10, this.height - 30, listWidth, this.height - 40,
 				fontRenderer.FONT_HEIGHT * 2 + 10);
