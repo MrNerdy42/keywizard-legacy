@@ -14,6 +14,7 @@ import static org.lwjgl.input.Keyboard.KEY_F12;
 import static org.lwjgl.input.Keyboard.KEY_GRAVE;
 import static org.lwjgl.input.Keyboard.KEY_LMENU;
 import static org.lwjgl.input.Keyboard.KEY_LMETA;
+import static org.lwjgl.input.Keyboard.KEY_RMETA;
 import static org.lwjgl.input.Keyboard.KEY_LSHIFT;
 import static org.lwjgl.input.Keyboard.KEY_Q;
 import static org.lwjgl.input.Keyboard.KEY_RBRACKET;
@@ -36,6 +37,7 @@ import static org.lwjgl.input.Keyboard.KEY_NUMPAD2;
 import static org.lwjgl.input.Keyboard.KEY_NUMPAD3;
 import static org.lwjgl.input.Keyboard.KEY_NUMPAD0;
 import static org.lwjgl.input.Keyboard.KEY_DECIMAL;
+import static org.lwjgl.input.Keyboard.KEY_LCONTROL;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,9 +67,13 @@ public class GuiKeyWizard extends GuiScreen {
 	protected Minecraft client = FMLClientHandler.instance().getClient();
 	protected KeyBinding[] allBindings = KeybindUtils.ALL_BINDINGS;
 
-	// This hash map maps LWJGL key ids to buttons in the gui. Use this to
+	// These hash maps map LWJGL key ids to buttons in the gui. Use these to
 	// access keys instead of buttonList
-	private HashMap<Integer, GuiButton> keyHash = new HashMap();;
+	private HashMap<Integer, GuiButton> keyboardHash = new HashMap();
+	private HashMap<Integer, GuiButton> numpadHash = new HashMap();
+	private HashMap<Integer, GuiButton> currentPage = keyboardHash;
+	
+	private int page = 1;
 	private KeyBinding selectedKeybind;
 	private KeyModifier activeModifier = KeyModifier.NONE;
 	private String selectedCategory = "categories.all";
@@ -78,6 +84,7 @@ public class GuiKeyWizard extends GuiScreen {
 	private GuiCategorySelector categoryList;
 	private GuiTextField searchBar;
 	private GuiBindingList bindingList;
+	private GuiButton pageButton;
 	private GuiButton resetButton;
 	private GuiButton clearButton;
 	private GuiButton activeModifierButton;
@@ -108,12 +115,19 @@ public class GuiKeyWizard extends GuiScreen {
 			this.changeActiveModifier();
 			return;
 		}
+		
+		if (button == this.pageButton) {
+			this.page++;
+			if (this.page > 2) {
+				this.page = 1;
+			}
+		}
 
-		if ( this.keyHash.containsValue(button) && !this.categoryList.getExtended() ){
+		if ( this.currentPage.containsValue(button) && !this.categoryList.getExtended() ){
 			int newKeyId = 0;
 
-			for (int keyId : keyHash.keySet()) {
-				if (keyHash.containsKey(keyId) && keyHash.get(keyId) == button)
+			for (int keyId : currentPage.keySet()) {
+				if (currentPage.containsKey(keyId) && currentPage.get(keyId) == button)
 					newKeyId = keyId;
 			}
 
@@ -152,7 +166,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.categoryList.drawList(this.client, mouseX, mouseY, partialTicks);
 
 		// Color key and draw hovering text
-		keyHash.forEach((keyId, keyButton) -> {
+		currentPage.forEach((keyId, keyButton) -> {
 
 			ArrayList<String> bindingNames = KeybindUtils.getBindingNames(keyId, this.activeModifier);
 
@@ -231,6 +245,7 @@ public class GuiKeyWizard extends GuiScreen {
 
 		this.categoryList = new GuiCategorySelector(startX - 30, 5, 125, "Binding Categories", categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
+		this.pageButton = new GuiButton(0, startX + 95, 5, 100, 20, "Page: " + String.format("%d", page) );
 
 		this.resetButton = new GuiButton(0, startX - 30, this.height - 40, 100, 20, "Reset binding");
 		this.clearButton = new GuiButton(0, startX + 75, this.height - 40, 100, 20, "Clear binding");
@@ -238,7 +253,8 @@ public class GuiKeyWizard extends GuiScreen {
 				"Active Modifier: " + activeModifier.toString());
 		
 		this.setSelectedKeybind(this.bindingList.getSelectedKeybind());
-
+		
+        this.buttonList.add(this.pageButton);
 		this.buttonList.add(this.activeModifierButton);
 		this.buttonList.add(this.resetButton);
 		this.buttonList.add(this.clearButton);
@@ -247,78 +263,76 @@ public class GuiKeyWizard extends GuiScreen {
 		GuiButton button;
 		
 		for (int i = KEY_F1; i < KEY_F10 + 1; i++) {
-			this.placeKey(i, (startX + rowPos * 36) - 30, startY, 34);
+			this.placeKey(i, (startX + rowPos * 36) - 30, startY, 34, keyboardHash);
 			rowPos++;
 		}
 		
 		for (int i = KEY_F11; i < KEY_F12 + 1; i++) {
-			this.placeKey(i, (startX + rowPos * 36) - 30, startY, 34);
+			this.placeKey(i, (startX + rowPos * 36) - 30, startY, 34, keyboardHash);
 			rowPos++;
 		}
 		
 		rowPos = 0;
 		for (int i = KEY_1; i < KEY_EQUALS + 1; i++) {
-			this.placeKey(i, (startX + rowPos * 30), startY + 25, 25);
+			this.placeKey(i, (startX + rowPos * 30), startY + 25, 25, keyboardHash);
 			rowPos++;
 		}
 		
 		rowPos = 0;
 		for (int i = KEY_Q; i < KEY_RBRACKET + 1; i++) {
-			this.placeKey(i, (startX + rowPos * 30) + 15, startY + 50, 25);
+			this.placeKey(i, (startX + rowPos * 30) + 15, startY + 50, 25, keyboardHash);
 			rowPos++;
 		}
 		
 		rowPos = 0;
 		for (int i = KEY_A; i < KEY_APOSTROPHE + 1; i++) {
-			this.placeKey(i, (startX + rowPos * 30) + 20, startY + 75, 25);
+			this.placeKey(i, (startX + rowPos * 30) + 20, startY + 75, 25, keyboardHash);
 			rowPos++;
 		}
 		
 		rowPos = 0;
 		for (int i = KEY_Z; i < KEY_SLASH + 1; i++) {
-			this.placeKey(i, (startX + rowPos * 30) + 25, startY + 100, 25);
+			this.placeKey(i, (startX + rowPos * 30) + 25, startY + 100, 25, keyboardHash);
 			rowPos++;
 		}
 
-		this.placeAuxKey(KEY_GRAVE, KEY_1, -30, 0, 25);
-		this.placeAuxKey(KEY_BACK, KEY_EQUALS, 30, 0, 40);
+		this.placeAuxKey(KEY_GRAVE, KEY_1, -30, 0, 25, keyboardHash);
+		this.placeAuxKey(KEY_BACK, KEY_EQUALS, 30, 0, 40, keyboardHash);
 
-		this.placeAuxKey(KEY_TAB, KEY_Q, -45, 0, 40);
-		this.placeAuxKey(KEY_BACKSLASH, KEY_RBRACKET, 30, 0, 25);
+		this.placeAuxKey(KEY_TAB, KEY_Q, -45, 0, 40, keyboardHash);
+		this.placeAuxKey(KEY_BACKSLASH, KEY_RBRACKET, 30, 0, 25, keyboardHash);
 
-		this.placeAuxKey(KEY_CAPITAL, KEY_A, -50, 0, 45);
-		this.placeAuxKey(KEY_RETURN, KEY_APOSTROPHE, 30, 0, 50);
+		this.placeAuxKey(KEY_CAPITAL, KEY_A, -50, 0, 45, keyboardHash);
+		this.placeAuxKey(KEY_RETURN, KEY_APOSTROPHE, 30, 0, 50, keyboardHash);
 
-		this.placeAuxKey(KEY_LSHIFT, KEY_Z, -55, 0, 50);
-		this.placeAuxKey(KEY_RSHIFT, KEY_SLASH, 30, 0, 75);
+		this.placeAuxKey(KEY_LSHIFT, KEY_Z, -55, 0, 50, keyboardHash);
+		this.placeAuxKey(KEY_RSHIFT, KEY_SLASH, 30, 0, 75, keyboardHash);
 
-		this.placeAuxKey(KEY_RCONTROL, KEY_LSHIFT, 0, 25, 35);
-		this.placeAuxKey(KEY_LMETA, KEY_RCONTROL, 40, 0, 35);
-		this.placeAuxKey(KEY_LMENU, KEY_LMETA, 40, 0, 35);
+		this.placeAuxKey(KEY_LCONTROL, KEY_LSHIFT, 0, 25, 35, keyboardHash);
+		this.placeAuxKey(KEY_LMETA, KEY_LCONTROL, 40, 0, 35, keyboardHash);
+		this.placeAuxKey(KEY_LMENU, KEY_LMETA, 40, 0, 35, keyboardHash);
 
-		this.placeAuxKey(KEY_SPACE, KEY_LMENU, 40, 0, 185);
+		this.placeAuxKey(KEY_SPACE, KEY_LMENU, 40, 0, 185, keyboardHash);
 
-		this.placeAuxKey(KEY_RMENU, KEY_SPACE, 195, 0, 35);
-		this.placeAuxKey(KEY_LMETA, KEY_RMENU, 40, 0, 35);
-		this.placeAuxKey(KEY_RCONTROL, KEY_LMETA, 40, 0, 35);
+		this.placeAuxKey(KEY_RMENU, KEY_SPACE, 195, 0, 35, keyboardHash);
+		this.placeAuxKey(KEY_RMETA, KEY_RMENU, 40, 0, 35, keyboardHash);
+		this.placeAuxKey(KEY_RCONTROL, KEY_RMETA, 40, 0, 35, keyboardHash);
 		
-		// Draw the numpad to the right of the keyboard
-		this.placeAuxKey(KEY_NUMPAD7, KEY_F12, 45, 0, 50);
-		this.placeAuxKey(KEY_NUMPAD8, KEY_NUMPAD7, 55, 0, 50);
-		this.placeAuxKey(KEY_NUMPAD9, KEY_NUMPAD8, 55, 0, 50);
+		// Draw the numpad page
+		this.placeKey(KEY_NUMPAD7, startX, startY, 50, numpadHash);
+		this.placeAuxKey(KEY_NUMPAD8, KEY_NUMPAD7, 55, 0, 50, numpadHash);
+		this.placeAuxKey(KEY_NUMPAD9, KEY_NUMPAD8, 55, 0, 50, numpadHash);
 		
-		this.placeAuxKey(KEY_NUMPAD4, KEY_NUMPAD7, 0, 25, 50);
-		this.placeAuxKey(KEY_NUMPAD5, KEY_NUMPAD4, 55, 0, 50);
-		this.placeAuxKey(KEY_NUMPAD6, KEY_NUMPAD5, 55, 0, 50);
+		this.placeAuxKey(KEY_NUMPAD4, KEY_NUMPAD7, 0, 25, 50, numpadHash);
+		this.placeAuxKey(KEY_NUMPAD5, KEY_NUMPAD4, 55, 0, 50, numpadHash);
+		this.placeAuxKey(KEY_NUMPAD6, KEY_NUMPAD5, 55, 0, 50, numpadHash);
 		
-		this.placeAuxKey(KEY_NUMPAD1, KEY_NUMPAD4, 0, 25, 50);
-		this.placeAuxKey(KEY_NUMPAD2, KEY_NUMPAD1, 55, 0, 50);
-		this.placeAuxKey(KEY_NUMPAD3, KEY_NUMPAD2, 55, 0, 50);
+		this.placeAuxKey(KEY_NUMPAD1, KEY_NUMPAD4, 0, 25, 50, numpadHash);
+		this.placeAuxKey(KEY_NUMPAD2, KEY_NUMPAD1, 55, 0, 50, numpadHash);
+		this.placeAuxKey(KEY_NUMPAD3, KEY_NUMPAD2, 55, 0, 50, numpadHash);
 		
-		this.placeAuxKey(KEY_NUMPAD0, KEY_NUMPAD1, 0, 25, 100);
-		this.placeAuxKey(KEY_DECIMAL, KEY_NUMPAD0, 105, 0, 55);
-		
-
+		this.placeAuxKey(KEY_NUMPAD0, KEY_NUMPAD1, 0, 25, 100, numpadHash);
+		this.placeAuxKey(KEY_DECIMAL, KEY_NUMPAD0, 105, 0, 55, numpadHash);
 	}
 
 	@Override
@@ -354,13 +368,15 @@ public class GuiKeyWizard extends GuiScreen {
 	 *     amount to offset the key on the y axis
 	 * @param width
 	 *     the width of the new key
+	 * @param page
+	 *     the page to place the key on
 	 */
-	private void placeAuxKey(int keyCode, int anchorCode, int xOffset, int yOffset, int width) {
-		GuiButton anchor = keyHash.get(anchorCode);
+	private void placeAuxKey(int keyCode, int anchorCode, int xOffset, int yOffset, int width, HashMap<Integer, GuiButton> page) {
+		GuiButton anchor = page.get(anchorCode);
 		GuiButton button = new GuiButton(this.currentID, anchor.x + xOffset, anchor.y + yOffset, width,
 				20, KeyHelper.translateKey(keyCode));
 		this.buttonList.add(button);
-		this.keyHash.put(keyCode, button);
+		page.put(keyCode, button);
 		this.currentID++;
 	}
     
@@ -375,11 +391,13 @@ public class GuiKeyWizard extends GuiScreen {
 	 *     y position of the button
 	 * @param width
 	 *     the width of the new key
+	 * @param page
+	 *     the page to place the key on
 	 */
-	private void placeKey(int keyCode, int x, int y, int width) {
+	private void placeKey(int keyCode, int x, int y, int width, HashMap<Integer, GuiButton> page) {
 		GuiButton button = new GuiButton(this.currentID, x, y, width, 20, KeyHelper.translateKey(keyCode));
 		this.buttonList.add(button);
-		this.keyHash.put(keyCode, button);
+		page.put(keyCode, button);
 		this.currentID++;
 	}
 
@@ -398,6 +416,23 @@ public class GuiKeyWizard extends GuiScreen {
         
         if ( !this.searchBar.getText().equals(this.searchText) ) {
         	this.searchText = this.searchBar.getText();
+        }
+        
+        this.pageButton.displayString = "Page: " + String.format("%d", page);
+        if ( this.page == 1 ) {
+        	numpadHash.values().forEach(button -> {
+        		button.visible = false;
+        	});
+        	keyboardHash.values().forEach(button -> {
+        		button.visible = true;
+        	});
+        } else if ( this.page == 2 ) {
+        	keyboardHash.values().forEach(button -> {
+        		button.visible = false;
+        	});
+        	numpadHash.values().forEach(button -> {
+        		button.visible = true;
+        	});
         }
         this.bindingList.updateList();
     }
