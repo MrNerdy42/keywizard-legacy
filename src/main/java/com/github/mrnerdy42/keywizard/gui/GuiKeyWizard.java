@@ -38,6 +38,11 @@ import static org.lwjgl.input.Keyboard.KEY_NUMPAD3;
 import static org.lwjgl.input.Keyboard.KEY_NUMPAD0;
 import static org.lwjgl.input.Keyboard.KEY_DECIMAL;
 import static org.lwjgl.input.Keyboard.KEY_LCONTROL;
+import static org.lwjgl.input.Keyboard.KEY_NUMPADENTER;
+import static org.lwjgl.input.Keyboard.KEY_DIVIDE;
+import static org.lwjgl.input.Keyboard.KEY_MULTIPLY;
+import static org.lwjgl.input.Keyboard.KEY_MINUS;
+import static org.lwjgl.input.Keyboard.KEY_ADD;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -333,6 +338,13 @@ public class GuiKeyWizard extends GuiScreen {
 		
 		this.placeAuxKey(KEY_NUMPAD0, KEY_NUMPAD1, 0, 25, 100, numpadHash);
 		this.placeAuxKey(KEY_DECIMAL, KEY_NUMPAD0, 105, 0, 55, numpadHash);
+		
+		this.placeAuxKey(KEY_DIVIDE, KEY_NUMPAD7, 0, -25, 50, numpadHash);
+		this.placeAuxKey(KEY_MULTIPLY, KEY_NUMPAD8, 0, -25, 50, numpadHash);
+		this.placeAuxKey(KEY_MINUS, KEY_NUMPAD9, 0, -25, 50, numpadHash);
+		
+		this.placeAuxKey(KEY_ADD, KEY_NUMPAD9, 55, 0, 70, numpadHash);
+		this.placeAuxKey(KEY_NUMPADENTER, KEY_NUMPAD6, 55, 0, 70, numpadHash);
 	}
 
 	@Override
