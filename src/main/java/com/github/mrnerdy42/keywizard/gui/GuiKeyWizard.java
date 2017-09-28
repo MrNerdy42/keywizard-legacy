@@ -245,7 +245,7 @@ public class GuiKeyWizard extends GuiScreen {
 
 		this.categoryList = new GuiCategorySelector(startX - 30, 5, 125, "Binding Categories", categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
-		this.pageButton = new GuiButton(0, startX + 95, 5, 100, 20, "Page: " + String.format("%d", page) );
+		this.pageButton = new GuiButton(0, startX + 105, 5, 100, 20, "Page: " + String.format("%d", page) );
 
 		this.resetButton = new GuiButton(0, startX - 30, this.height - 40, 100, 20, "Reset binding");
 		this.clearButton = new GuiButton(0, startX + 75, this.height - 40, 100, 20, "Clear binding");
