@@ -19,7 +19,7 @@ import com.github.mrnerdy42.keywizard.handlers.GuiHandler;
 
 import net.minecraftforge.common.MinecraftForge;
 
-@Mod(modid = KeyWizard.MODID, name = KeyWizard.MODNAME, version = KeyWizard.VERSION, useMetadata = true, clientSideOnly = true)
+@Mod(modid = KeyWizard.MODID, name = KeyWizard.MODNAME, version = KeyWizard.VERSION, useMetadata = true, acceptedMinecraftVersions = "1.12 1.12.1 1.12.2", clientSideOnly = true)
 public class KeyWizard {
 	
 	public static final String MODID = "keywizard";
