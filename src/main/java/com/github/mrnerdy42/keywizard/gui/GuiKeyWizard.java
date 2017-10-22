@@ -58,6 +58,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.settings.KeyModifier;
@@ -158,7 +159,7 @@ public class GuiKeyWizard extends GuiScreen {
 			this.activeModifier = KeyModifier.NONE;
 		}
 
-		this.activeModifierButton.displayString = "Active Modifier: " + activeModifier.toString();
+		this.activeModifierButton.displayString = I18n.format("keywizard.gui.modifierButton") + ": " + activeModifier.toString();
 	}
 	
     @Override
@@ -248,14 +249,14 @@ public class GuiKeyWizard extends GuiScreen {
 		categories.add(0, "categories.all");
 
 
-		this.categoryList = new GuiCategorySelector(startX - 30, 5, 125, "Binding Categories", categories);
+		this.categoryList = new GuiCategorySelector(startX - 30, 5, 125, I18n.format("keywizard.gui.categoryButton"), categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
 		this.pageButton = new GuiButton(0, startX + 105, 5, 100, 20, "Page: " + String.format("%d", page) );
 
-		this.resetButton = new GuiButton(0, startX - 30, this.height - 40, 100, 20, "Reset binding");
-		this.clearButton = new GuiButton(0, startX + 75, this.height - 40, 100, 20, "Clear binding");
+		this.resetButton = new GuiButton(0, startX - 30, this.height - 40, 100, 20, I18n.format("keywizard.gui.resetButton"));
+		this.clearButton = new GuiButton(0, startX + 75, this.height - 40, 100, 20, I18n.format("keywizard.gui.clearButton"));
 		this.activeModifierButton = new GuiButton(1, startX - 30, this.height - 65, 150, 20,
-				"Active Modifier: " + activeModifier.toString());
+				I18n.format("keywizard.gui.modifierButton") + ": " + activeModifier.toString());
 		
 		this.setSelectedKeybind(this.bindingList.getSelectedKeybind());
 		

@@ -3,6 +3,10 @@ language.region=US
 language.code=en_US
 
 keywizard.keybind.openKeyboardWizard=Open Keyboard Wizard
+keywizard.gui.categoryButton=Binding Categories
+keywizard.gui.resetButton=Reset binding
+keywizard.gui.clearButton=Clear binding
+keywizard.gui.modifierButton=Active modifier
 categories.all=All Bindings
 categories.conflicts=Conflicting
 categories.unbound=Unbound
