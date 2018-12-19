@@ -134,9 +134,23 @@ public class GuiKeyWizard extends GuiScreen {
 			if (this.page > 2) {
 				this.page = 1;
 			}
+			
+			switch (this.page) {
+			    case 1:
+			    	this.currentPage = this.keyboardHash;
+			    	break;
+			    case 2:
+			    	this.currentPage = this.numpadHash;
+			    	break;
+			    default:
+			    	this.currentPage = this.keyboardHash;
+			    	break;
+			}
+				
 		}
 
-		if ( this.currentPage.containsValue(button) && !this.categoryList.getExtended() ){
+		//if ( this.currentPage.containsValue(button) && !this.categoryList.getExtended() ){
+		if (!this.categoryList.getExtended() ){
 			int newKeyId = 0;
 
 			for (int keyId : currentPage.keySet()) {
@@ -150,6 +164,7 @@ public class GuiKeyWizard extends GuiScreen {
 				KeyBinding.resetKeyBindingArrayAndHash();
 			}
 			this.resetButton.enabled = !selectedKeybind.isSetToDefaultValue();
+			System.out.println(this.currentPage.containsValue(button));
 			return;
 		}
 	}
