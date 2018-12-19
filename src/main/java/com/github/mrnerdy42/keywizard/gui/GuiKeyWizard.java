@@ -47,6 +47,7 @@ import static org.lwjgl.input.Keyboard.KEY_ADD;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import org.lwjgl.input.Mouse;
 
@@ -203,7 +204,7 @@ public class GuiKeyWizard extends GuiScreen {
 	}
 	
 	public String getSearchText() {
-		return this.searchText;
+		return Pattern.quote(this.searchText);
 	}
 	
 	public String getSelectedCategory() {
