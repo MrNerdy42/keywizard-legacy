@@ -59,6 +59,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.settings.KeyModifier;
@@ -72,6 +73,8 @@ public class GuiKeyWizard extends GuiScreen {
 	// null pointer exception
 	protected Minecraft client = FMLClientHandler.instance().getClient();
 	protected KeyBinding[] allBindings = KeybindUtils.ALL_BINDINGS;
+	
+	private final GameSettings options;
 
 	// These hash maps map LWJGL key ids to buttons in the gui. Use these to
 	// access keys instead of buttonList
@@ -94,6 +97,10 @@ public class GuiKeyWizard extends GuiScreen {
 	private GuiButton resetButton;
 	private GuiButton clearButton;
 	private GuiButton activeModifierButton;
+	
+	public GuiKeyWizard(GameSettings settings) {
+		this.options = settings;
+	}
 
 	/**
 	 * This variable is incremented every time a key is added to the keyboard.
@@ -139,6 +146,7 @@ public class GuiKeyWizard extends GuiScreen {
 
 			if (newKeyId != 0) {
 				this.selectedKeybind.setKeyModifierAndCode(this.activeModifier, newKeyId);
+				this.options.setOptionKeyBinding(this.selectedKeybind, newKeyId);
 				KeyBinding.resetKeyBindingArrayAndHash();
 			}
 			this.resetButton.enabled = !selectedKeybind.isSetToDefaultValue();

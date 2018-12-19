@@ -15,7 +15,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 
 import com.github.mrnerdy42.keywizard.handlers.BindingHandler;
-import com.github.mrnerdy42.keywizard.handlers.GuiHandler;
 
 import net.minecraftforge.common.MinecraftForge;
 
@@ -35,7 +34,6 @@ public class KeyWizard {
 	
 	@EventHandler
     public void init(FMLInitializationEvent e) {
-    	NetworkRegistry.INSTANCE.registerGuiHandler(KeyWizard.instance, new GuiHandler());
     	BindingHandler.register();
     	MinecraftForge.EVENT_BUS.register(handler);
     }

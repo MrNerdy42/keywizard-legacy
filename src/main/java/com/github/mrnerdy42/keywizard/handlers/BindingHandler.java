@@ -31,7 +31,7 @@ public class BindingHandler {
 	@SubscribeEvent
 	public void OnOpenKeyGuiPress(KeyInputEvent e){
 		if (OpenKeyGui.isPressed()){
-			client.displayGuiScreen(new GuiKeyWizard());
+			client.displayGuiScreen(new GuiKeyWizard(client.gameSettings));
 		}
 	}
 }
