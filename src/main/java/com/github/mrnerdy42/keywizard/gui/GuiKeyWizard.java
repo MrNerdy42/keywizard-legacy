@@ -1,48 +1,6 @@
 package com.github.mrnerdy42.keywizard.gui;
 
-import static org.lwjgl.input.Keyboard.KEY_1;
-import static org.lwjgl.input.Keyboard.KEY_A;
-import static org.lwjgl.input.Keyboard.KEY_APOSTROPHE;
-import static org.lwjgl.input.Keyboard.KEY_BACK;
-import static org.lwjgl.input.Keyboard.KEY_BACKSLASH;
-import static org.lwjgl.input.Keyboard.KEY_CAPITAL;
-import static org.lwjgl.input.Keyboard.KEY_EQUALS;
-import static org.lwjgl.input.Keyboard.KEY_F1;
-import static org.lwjgl.input.Keyboard.KEY_F10;
-import static org.lwjgl.input.Keyboard.KEY_F11;
-import static org.lwjgl.input.Keyboard.KEY_F12;
-import static org.lwjgl.input.Keyboard.KEY_GRAVE;
-import static org.lwjgl.input.Keyboard.KEY_LMENU;
-import static org.lwjgl.input.Keyboard.KEY_LMETA;
-import static org.lwjgl.input.Keyboard.KEY_RMETA;
-import static org.lwjgl.input.Keyboard.KEY_LSHIFT;
-import static org.lwjgl.input.Keyboard.KEY_Q;
-import static org.lwjgl.input.Keyboard.KEY_RBRACKET;
-import static org.lwjgl.input.Keyboard.KEY_RCONTROL;
-import static org.lwjgl.input.Keyboard.KEY_RETURN;
-import static org.lwjgl.input.Keyboard.KEY_RMENU;
-import static org.lwjgl.input.Keyboard.KEY_RSHIFT;
-import static org.lwjgl.input.Keyboard.KEY_SLASH;
-import static org.lwjgl.input.Keyboard.KEY_SPACE;
-import static org.lwjgl.input.Keyboard.KEY_TAB;
-import static org.lwjgl.input.Keyboard.KEY_Z;
-import static org.lwjgl.input.Keyboard.KEY_NUMPAD7;
-import static org.lwjgl.input.Keyboard.KEY_NUMPAD8;
-import static org.lwjgl.input.Keyboard.KEY_NUMPAD9;
-import static org.lwjgl.input.Keyboard.KEY_NUMPAD4;
-import static org.lwjgl.input.Keyboard.KEY_NUMPAD5;
-import static org.lwjgl.input.Keyboard.KEY_NUMPAD6;
-import static org.lwjgl.input.Keyboard.KEY_NUMPAD1;
-import static org.lwjgl.input.Keyboard.KEY_NUMPAD2;
-import static org.lwjgl.input.Keyboard.KEY_NUMPAD3;
-import static org.lwjgl.input.Keyboard.KEY_NUMPAD0;
-import static org.lwjgl.input.Keyboard.KEY_DECIMAL;
-import static org.lwjgl.input.Keyboard.KEY_LCONTROL;
-import static org.lwjgl.input.Keyboard.KEY_NUMPADENTER;
-import static org.lwjgl.input.Keyboard.KEY_DIVIDE;
-import static org.lwjgl.input.Keyboard.KEY_MULTIPLY;
-import static org.lwjgl.input.Keyboard.KEY_MINUS;
-import static org.lwjgl.input.Keyboard.KEY_ADD;
+import static org.lwjgl.input.Keyboard.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,7 +30,7 @@ public class GuiKeyWizard extends GuiScreen {
 	// An alternative to the mc field of GuiScreen because it was throwing a
 	// null pointer exception
 	protected Minecraft client = FMLClientHandler.instance().getClient();
-	protected KeyBinding[] allBindings = KeybindUtils.ALL_BINDINGS;
+	//protected KeyBinding[] allBindings = KeybindUtils.ALL_BINDINGS;
 	
 	private final GameSettings options;
 
@@ -87,7 +45,7 @@ public class GuiKeyWizard extends GuiScreen {
 	private KeyModifier activeModifier = KeyModifier.NONE;
 	private String selectedCategory = "categories.all";
 	private String searchText = "";
-	private String keyboardMode = "keyboard";
+	//private String keyboardMode = "keyboard";
 
 
 	private GuiCategorySelector categoryList;
@@ -121,7 +79,7 @@ public class GuiKeyWizard extends GuiScreen {
 		if (button == this.clearButton) {
 			this.selectedKeybind.setKeyModifierAndCode(KeyModifier.NONE, 0);
 			KeyBinding.resetKeyBindingArrayAndHash();
-			this.clearButton.enabled = (this.selectedKeybind.getKeyCode() == 0) ? false:true;
+			this.clearButton.enabled = this.selectedKeybind.getKeyCode() != 0;
 		}
 
 		if (button == this.activeModifierButton) {

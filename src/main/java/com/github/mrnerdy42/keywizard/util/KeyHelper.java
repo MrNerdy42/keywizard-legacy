@@ -1,31 +1,6 @@
 package com.github.mrnerdy42.keywizard.util;
 
-import static org.lwjgl.input.Keyboard.KEY_APOSTROPHE;
-import static org.lwjgl.input.Keyboard.KEY_BACKSLASH;
-import static org.lwjgl.input.Keyboard.KEY_COMMA;
-import static org.lwjgl.input.Keyboard.KEY_EQUALS;
-import static org.lwjgl.input.Keyboard.KEY_F1;
-import static org.lwjgl.input.Keyboard.KEY_F10;
-import static org.lwjgl.input.Keyboard.KEY_F11;
-import static org.lwjgl.input.Keyboard.KEY_F12;
-import static org.lwjgl.input.Keyboard.KEY_F2;
-import static org.lwjgl.input.Keyboard.KEY_F3;
-import static org.lwjgl.input.Keyboard.KEY_F4;
-import static org.lwjgl.input.Keyboard.KEY_F5;
-import static org.lwjgl.input.Keyboard.KEY_F6;
-import static org.lwjgl.input.Keyboard.KEY_F7;
-import static org.lwjgl.input.Keyboard.KEY_F8;
-import static org.lwjgl.input.Keyboard.KEY_F9;
-import static org.lwjgl.input.Keyboard.KEY_GRAVE;
-import static org.lwjgl.input.Keyboard.KEY_LBRACKET;
-import static org.lwjgl.input.Keyboard.KEY_LCONTROL;
-import static org.lwjgl.input.Keyboard.KEY_MINUS;
-import static org.lwjgl.input.Keyboard.KEY_PERIOD;
-import static org.lwjgl.input.Keyboard.KEY_RBRACKET;
-import static org.lwjgl.input.Keyboard.KEY_RCONTROL;
-import static org.lwjgl.input.Keyboard.KEY_SEMICOLON;
-import static org.lwjgl.input.Keyboard.KEY_SLASH;
-import static org.lwjgl.input.Keyboard.getKeyName;
+import static org.lwjgl.input.Keyboard.*;
 
 import java.util.HashMap;
 

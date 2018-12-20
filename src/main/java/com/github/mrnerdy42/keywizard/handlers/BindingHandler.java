@@ -19,7 +19,7 @@ import net.minecraft.client.settings.KeyBinding;
 public class BindingHandler {
 
 	private Minecraft client  = FMLClientHandler.instance().getClient();
-	private KeyBinding[] keyBinds = this.client.gameSettings.keyBindings;
+	//private KeyBinding[] keyBinds = this.client.gameSettings.keyBindings;
 	public static KeyBinding OpenKeyGui;
 	
 	public static void register(){
@@ -29,7 +29,7 @@ public class BindingHandler {
 	}
     
 	@SubscribeEvent
-	public void OnOpenKeyGuiPress(KeyInputEvent e){
+	public void KeyPressed(KeyInputEvent e){
 		if (OpenKeyGui.isPressed()){
 			client.displayGuiScreen(new GuiKeyWizard(client.gameSettings));
 		}
