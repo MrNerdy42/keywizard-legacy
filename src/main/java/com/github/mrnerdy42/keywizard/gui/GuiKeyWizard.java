@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
 import com.github.mrnerdy42.keywizard.util.KeyHelper;
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
@@ -17,6 +18,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextFormatting;
@@ -36,9 +38,9 @@ public class GuiKeyWizard extends GuiScreen {
 
 	// These hash maps map LWJGL key ids to buttons in the gui. Use these to
 	// access keys instead of buttonList
-	private HashMap<Integer, GuiButton> keyboardHash = new HashMap();
-	private HashMap<Integer, GuiButton> numpadHash = new HashMap();
-	private HashMap<Integer, GuiButton> currentPage = keyboardHash;
+	private HashMap<Integer, GuiButton> keyboard = new HashMap();
+	private HashMap<Integer, GuiButton> numpad = new HashMap();
+	private HashMap<Integer, GuiButton> currentPage = keyboard;
 	
 	private int page = 1;
 	private KeyBinding selectedKeybind;
@@ -95,13 +97,13 @@ public class GuiKeyWizard extends GuiScreen {
 			
 			switch (this.page) {
 			    case 1:
-			    	this.currentPage = this.keyboardHash;
+			    	this.currentPage = this.keyboard;
 			    	break;
 			    case 2:
-			    	this.currentPage = this.numpadHash;
+			    	this.currentPage = this.numpad;
 			    	break;
 			    default:
-			    	this.currentPage = this.keyboardHash;
+			    	this.currentPage = this.keyboard;
 			    	break;
 			}
 				
@@ -203,7 +205,9 @@ public class GuiKeyWizard extends GuiScreen {
 
 	@Override
 	public void initGui() {
-
+		
+ 		this.options.guiScale = 3;
+		
 		int maxLength = 0;
 
 		for (KeyBinding binding : KeybindUtils.ALL_BINDINGS) {
@@ -250,83 +254,83 @@ public class GuiKeyWizard extends GuiScreen {
 		GuiButton button;
 		
 		for (int i = KEY_F1; i < KEY_F10 + 1; i++) {
-			this.placeKey(i, (startX + rowPos * 36) - 30, startY, 34, keyboardHash);
+			this.placeKey(i, (startX + rowPos * 36) - 30, startY, 34, keyboard);
 			rowPos++;
 		}
 		
 		for (int i = KEY_F11; i < KEY_F12 + 1; i++) {
-			this.placeKey(i, (startX + rowPos * 36) - 30, startY, 34, keyboardHash);
+			this.placeKey(i, (startX + rowPos * 36) - 30, startY, 34, keyboard);
 			rowPos++;
 		}
 		
 		rowPos = 0;
 		for (int i = KEY_1; i < KEY_EQUALS + 1; i++) {
-			this.placeKey(i, (startX + rowPos * 30), startY + 25, 25, keyboardHash);
+			this.placeKey(i, (startX + rowPos * 30), startY + 25, 25, keyboard);
 			rowPos++;
 		}
 		
 		rowPos = 0;
 		for (int i = KEY_Q; i < KEY_RBRACKET + 1; i++) {
-			this.placeKey(i, (startX + rowPos * 30) + 15, startY + 50, 25, keyboardHash);
+			this.placeKey(i, (startX + rowPos * 30) + 15, startY + 50, 25, keyboard);
 			rowPos++;
 		}
 		
 		rowPos = 0;
 		for (int i = KEY_A; i < KEY_APOSTROPHE + 1; i++) {
-			this.placeKey(i, (startX + rowPos * 30) + 20, startY + 75, 25, keyboardHash);
+			this.placeKey(i, (startX + rowPos * 30) + 20, startY + 75, 25, keyboard);
 			rowPos++;
 		}
 		
 		rowPos = 0;
 		for (int i = KEY_Z; i < KEY_SLASH + 1; i++) {
-			this.placeKey(i, (startX + rowPos * 30) + 25, startY + 100, 25, keyboardHash);
+			this.placeKey(i, (startX + rowPos * 30) + 25, startY + 100, 25, keyboard);
 			rowPos++;
 		}
 
-		this.placeAuxKey(KEY_GRAVE, KEY_1, -30, 0, 25, keyboardHash);
-		this.placeAuxKey(KEY_BACK, KEY_EQUALS, 30, 0, 40, keyboardHash);
+		this.placeAuxKey(KEY_GRAVE, KEY_1, -30, 0, 25, keyboard);
+		this.placeAuxKey(KEY_BACK, KEY_EQUALS, 30, 0, 40, keyboard);
 
-		this.placeAuxKey(KEY_TAB, KEY_Q, -45, 0, 40, keyboardHash);
-		this.placeAuxKey(KEY_BACKSLASH, KEY_RBRACKET, 30, 0, 25, keyboardHash);
+		this.placeAuxKey(KEY_TAB, KEY_Q, -45, 0, 40, keyboard);
+		this.placeAuxKey(KEY_BACKSLASH, KEY_RBRACKET, 30, 0, 25, keyboard);
 
-		this.placeAuxKey(KEY_CAPITAL, KEY_A, -50, 0, 45, keyboardHash);
-		this.placeAuxKey(KEY_RETURN, KEY_APOSTROPHE, 30, 0, 50, keyboardHash);
+		this.placeAuxKey(KEY_CAPITAL, KEY_A, -50, 0, 45, keyboard);
+		this.placeAuxKey(KEY_RETURN, KEY_APOSTROPHE, 30, 0, 50, keyboard);
 
-		this.placeAuxKey(KEY_LSHIFT, KEY_Z, -55, 0, 50, keyboardHash);
-		this.placeAuxKey(KEY_RSHIFT, KEY_SLASH, 30, 0, 75, keyboardHash);
+		this.placeAuxKey(KEY_LSHIFT, KEY_Z, -55, 0, 50, keyboard);
+		this.placeAuxKey(KEY_RSHIFT, KEY_SLASH, 30, 0, 75, keyboard);
 
-		this.placeAuxKey(KEY_LCONTROL, KEY_LSHIFT, 0, 25, 35, keyboardHash);
-		this.placeAuxKey(KEY_LMETA, KEY_LCONTROL, 40, 0, 35, keyboardHash);
-		this.placeAuxKey(KEY_LMENU, KEY_LMETA, 40, 0, 35, keyboardHash);
+		this.placeAuxKey(KEY_LCONTROL, KEY_LSHIFT, 0, 25, 35, keyboard);
+		this.placeAuxKey(KEY_LMETA, KEY_LCONTROL, 40, 0, 35, keyboard);
+		this.placeAuxKey(KEY_LMENU, KEY_LMETA, 40, 0, 35, keyboard);
 
-		this.placeAuxKey(KEY_SPACE, KEY_LMENU, 40, 0, 185, keyboardHash);
+		this.placeAuxKey(KEY_SPACE, KEY_LMENU, 40, 0, 185, keyboard);
 
-		this.placeAuxKey(KEY_RMENU, KEY_SPACE, 195, 0, 35, keyboardHash);
-		this.placeAuxKey(KEY_RMETA, KEY_RMENU, 40, 0, 35, keyboardHash);
-		this.placeAuxKey(KEY_RCONTROL, KEY_RMETA, 40, 0, 35, keyboardHash);
+		this.placeAuxKey(KEY_RMENU, KEY_SPACE, 195, 0, 35, keyboard);
+		this.placeAuxKey(KEY_RMETA, KEY_RMENU, 40, 0, 35, keyboard);
+		this.placeAuxKey(KEY_RCONTROL, KEY_RMETA, 40, 0, 35, keyboard);
 		
 		// Draw the numpad page
-		this.placeKey(KEY_NUMPAD7, startX, startY, 50, numpadHash);
-		this.placeAuxKey(KEY_NUMPAD8, KEY_NUMPAD7, 55, 0, 50, numpadHash);
-		this.placeAuxKey(KEY_NUMPAD9, KEY_NUMPAD8, 55, 0, 50, numpadHash);
+		this.placeKey(KEY_NUMPAD7, startX, startY, 50, numpad);
+		this.placeAuxKey(KEY_NUMPAD8, KEY_NUMPAD7, 55, 0, 50, numpad);
+		this.placeAuxKey(KEY_NUMPAD9, KEY_NUMPAD8, 55, 0, 50, numpad);
 		
-		this.placeAuxKey(KEY_NUMPAD4, KEY_NUMPAD7, 0, 25, 50, numpadHash);
-		this.placeAuxKey(KEY_NUMPAD5, KEY_NUMPAD4, 55, 0, 50, numpadHash);
-		this.placeAuxKey(KEY_NUMPAD6, KEY_NUMPAD5, 55, 0, 50, numpadHash);
+		this.placeAuxKey(KEY_NUMPAD4, KEY_NUMPAD7, 0, 25, 50, numpad);
+		this.placeAuxKey(KEY_NUMPAD5, KEY_NUMPAD4, 55, 0, 50, numpad);
+		this.placeAuxKey(KEY_NUMPAD6, KEY_NUMPAD5, 55, 0, 50, numpad);
 		
-		this.placeAuxKey(KEY_NUMPAD1, KEY_NUMPAD4, 0, 25, 50, numpadHash);
-		this.placeAuxKey(KEY_NUMPAD2, KEY_NUMPAD1, 55, 0, 50, numpadHash);
-		this.placeAuxKey(KEY_NUMPAD3, KEY_NUMPAD2, 55, 0, 50, numpadHash);
+		this.placeAuxKey(KEY_NUMPAD1, KEY_NUMPAD4, 0, 25, 50, numpad);
+		this.placeAuxKey(KEY_NUMPAD2, KEY_NUMPAD1, 55, 0, 50, numpad);
+		this.placeAuxKey(KEY_NUMPAD3, KEY_NUMPAD2, 55, 0, 50, numpad);
 		
-		this.placeAuxKey(KEY_NUMPAD0, KEY_NUMPAD1, 0, 25, 100, numpadHash);
-		this.placeAuxKey(KEY_DECIMAL, KEY_NUMPAD0, 105, 0, 55, numpadHash);
+		this.placeAuxKey(KEY_NUMPAD0, KEY_NUMPAD1, 0, 25, 100, numpad);
+		this.placeAuxKey(KEY_DECIMAL, KEY_NUMPAD0, 105, 0, 55, numpad);
 		
-		this.placeAuxKey(KEY_DIVIDE, KEY_NUMPAD7, 0, -25, 50, numpadHash);
-		this.placeAuxKey(KEY_MULTIPLY, KEY_NUMPAD8, 0, -25, 50, numpadHash);
-		this.placeAuxKey(KEY_MINUS, KEY_NUMPAD9, 0, -25, 50, numpadHash);
+		this.placeAuxKey(KEY_DIVIDE, KEY_NUMPAD7, 0, -25, 50, numpad);
+		this.placeAuxKey(KEY_MULTIPLY, KEY_NUMPAD8, 0, -25, 50, numpad);
+		this.placeAuxKey(KEY_MINUS, KEY_NUMPAD9, 0, -25, 50, numpad);
 		
-		this.placeAuxKey(KEY_ADD, KEY_NUMPAD9, 55, 0, 70, numpadHash);
-		this.placeAuxKey(KEY_NUMPADENTER, KEY_NUMPAD6, 55, 0, 70, numpadHash);
+		this.placeAuxKey(KEY_ADD, KEY_NUMPAD9, 55, 0, 70, numpad);
+		this.placeAuxKey(KEY_NUMPADENTER, KEY_NUMPAD6, 55, 0, 70, numpad);
 	}
 
 	@Override
@@ -414,17 +418,17 @@ public class GuiKeyWizard extends GuiScreen {
         
         this.pageButton.displayString = "Page: " + String.format("%d", page);
         if ( this.page == 1 ) {
-        	numpadHash.values().forEach(button -> {
+        	numpad.values().forEach(button -> {
         		button.visible = false;
         	});
-        	keyboardHash.values().forEach(button -> {
+        	keyboard.values().forEach(button -> {
         		button.visible = true;
         	});
         } else if ( this.page == 2 ) {
-        	keyboardHash.values().forEach(button -> {
+        	keyboard.values().forEach(button -> {
         		button.visible = false;
         	});
-        	numpadHash.values().forEach(button -> {
+        	numpad.values().forEach(button -> {
         		button.visible = true;
         	});
         }
