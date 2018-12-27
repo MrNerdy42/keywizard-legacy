@@ -1,5 +1,6 @@
 package com.github.mrnerdy42.keywizard;
 
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Mod;
@@ -11,11 +12,13 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.input.Keyboard;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 
-import com.github.mrnerdy42.keywizard.handlers.BindingHandler;
+import com.github.mrnerdy42.keywizard.handlers.ClientEventHandler;
 
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = KeyWizard.MODID, name = KeyWizard.MODNAME, version = KeyWizard.VERSION, useMetadata = true, acceptedMinecraftVersions = "1.12 1.12.1 1.12.2", clientSideOnly = true)
@@ -30,7 +33,7 @@ public class KeyWizard {
 	@Instance
 	public static KeyWizard instance = new KeyWizard();
 	
-	private BindingHandler handler = new BindingHandler();
+	private ClientEventHandler clientEventHandler = new ClientEventHandler();
 	
     @EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
@@ -39,8 +42,9 @@ public class KeyWizard {
 	
 	@EventHandler
     public void init(FMLInitializationEvent e) {
-    	BindingHandler.register();
-    	MinecraftForge.EVENT_BUS.register(handler);
+		//KeyBinding keyOpenKeyWizard = new KeyBinding("keywizard.keybind.openKeyboardWizard", Keyboard.KEY_F7, "key.categories.misc");
+		//ClientRegistry.registerKeyBinding(keyOpenKeyWizard);
+    	MinecraftForge.EVENT_BUS.register(this.clientEventHandler);
     }
 
     @EventHandler

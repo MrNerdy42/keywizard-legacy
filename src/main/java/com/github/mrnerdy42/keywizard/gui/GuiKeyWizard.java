@@ -31,7 +31,7 @@ public class GuiKeyWizard extends GuiScreen {
 
 	// An alternative to the mc field of GuiScreen because it was throwing a
 	// null pointer exception
-	protected Minecraft client = FMLClientHandler.instance().getClient();
+	//protected Minecraft client = FMLClientHandler.instance().getClient();
 	//protected KeyBinding[] allBindings = KeybindUtils.ALL_BINDINGS;
 	
 	private final GameSettings options;
@@ -58,8 +58,9 @@ public class GuiKeyWizard extends GuiScreen {
 	private GuiButton clearButton;
 	private GuiButton activeModifierButton;
 	
-	public GuiKeyWizard(GameSettings settings) {
+	public GuiKeyWizard(Minecraft mc, GameSettings settings) {
 		this.options = settings;
+		this.mc = mc;
 	}
 
 	/**
@@ -108,9 +109,10 @@ public class GuiKeyWizard extends GuiScreen {
 			}
 				
 		}
-
-		//if ( this.currentPage.containsValue(button) && !this.categoryList.getExtended() ){
-		if (!this.categoryList.getExtended() ){
+		
+		//if (!this.categoryList.getExtended() ){
+		if ( this.currentPage.containsValue(button) && !this.categoryList.getExtended() ){
+		
 			int newKeyId = 0;
 
 			for (int keyId : currentPage.keySet()) {
@@ -152,7 +154,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.bindingList.drawScreen(mouseX, mouseY, partialTicks);
 		this.searchBar.drawTextBox();
 
-		this.categoryList.drawList(this.client, mouseX, mouseY, partialTicks);
+		this.categoryList.drawList(this.mc, mouseX, mouseY, partialTicks);
 
 		// Color key and draw hovering text
 		currentPage.forEach((keyId, keyButton) -> {
@@ -179,7 +181,7 @@ public class GuiKeyWizard extends GuiScreen {
 	}
 
 	public Minecraft getClient() {
-		return this.client;
+		return this.mc;
 	}
 
 	public FontRenderer getFontRenderer() {
@@ -196,8 +198,8 @@ public class GuiKeyWizard extends GuiScreen {
 
 	@Override
 	public void handleMouseInput() throws IOException {
-		int mouseX = Mouse.getEventX() * this.width / this.client.displayWidth;
-		int mouseY = this.height - Mouse.getEventY() * this.height / this.client.displayHeight - 1;
+		int mouseX = Mouse.getEventX() * this.width / this.mc.displayWidth;
+		int mouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
 
 		super.handleMouseInput();
 		this.bindingList.handleMouseInput(mouseX, mouseY);
@@ -346,7 +348,7 @@ public class GuiKeyWizard extends GuiScreen {
         if (button == 1 && x >= this.searchBar.x && x < this.searchBar.x + this.searchBar.width && y >= this.searchBar.y && y < this.searchBar.y + this.searchBar.height) {
             this.searchBar.setText("");
         }
-        this.categoryList.mouseClicked(this.client, x, y, button);
+        this.categoryList.mouseClicked(this.mc, x, y, button);
     }
 
 	protected void setSelectedKeybind(KeyBinding binding){
