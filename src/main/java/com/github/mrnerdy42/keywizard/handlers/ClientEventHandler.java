@@ -26,8 +26,7 @@ public class ClientEventHandler {
     @SubscribeEvent
     public void guiInit(GuiOpenEvent e) {
         if (e.getGui() instanceof GuiControls && !(e.getGui() instanceof GuiControlsPlusKeyWiz)) {
-            //e.setGui(new GuiControlsPlusKeyWiz(e.getGui(), e.getGui().mc.gameSettings));
-        	e.setGui(new GuiKeyWizard(client, client.gameSettings));
+            e.setGui(new GuiControlsPlusKeyWiz(e.getGui(), this.client.gameSettings));
             System.out.println("Overriding");
         }
     }
