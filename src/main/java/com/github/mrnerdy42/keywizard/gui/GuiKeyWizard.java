@@ -58,7 +58,7 @@ public class GuiKeyWizard extends GuiScreen {
 	private GuiButton clearButton;
 	private GuiButton activeModifierButton;
 	
-	public GuiKeyWizard(Minecraft mc, GameSettings settings) {
+	public GuiKeyWizard(Minecraft mcIn, GameSettings settings) {
 		this.options = settings;
 		this.mc = mc;
 	}
