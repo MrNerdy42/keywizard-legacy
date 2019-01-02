@@ -60,7 +60,7 @@ public class GuiKeyWizard extends GuiScreen {
 	
 	public GuiKeyWizard(Minecraft mcIn, GameSettings settings) {
 		this.options = settings;
-		this.mc = mc;
+		this.mc = mcIn;
 	}
 
 	/**
