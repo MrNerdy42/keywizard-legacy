@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
 
 import com.github.mrnerdy42.keywizard.util.KeyHelper;
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
@@ -18,12 +17,11 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.settings.KeyModifier;
-import net.minecraftforge.fml.client.FMLClientHandler;
 
 public class GuiKeyWizard extends GuiScreen {
 	
@@ -35,6 +33,7 @@ public class GuiKeyWizard extends GuiScreen {
 	//protected KeyBinding[] allBindings = KeybindUtils.ALL_BINDINGS;
 	
 	private final GameSettings options;
+	private final GuiScreen parentScreen;
 
 	// These hash maps map LWJGL key ids to buttons in the gui. Use these to
 	// access keys instead of buttonList
@@ -53,14 +52,16 @@ public class GuiKeyWizard extends GuiScreen {
 	private GuiCategorySelector categoryList;
 	private GuiTextField searchBar;
 	private GuiBindingList bindingList;
-	private GuiButton pageButton;
-	private GuiButton resetButton;
-	private GuiButton clearButton;
-	private GuiButton activeModifierButton;
+	private GuiButton buttonPage;
+	private GuiButton buttonReset;
+	private GuiButton buttonClear;
+	private GuiButton buttonDone;
+	private GuiButton buttonActiveModifier;
 	
-	public GuiKeyWizard(Minecraft mcIn, GameSettings settings) {
+	public GuiKeyWizard(Minecraft mcIn, GuiScreen parentScreen, GameSettings settings) {
 		this.options = settings;
 		this.mc = mcIn;
+		this.parentScreen = parentScreen;
 	}
 
 	/**
@@ -72,25 +73,32 @@ public class GuiKeyWizard extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) {
 
-		if (button == this.resetButton) {
+		if (button == this.buttonReset) {
 			this.selectedKeybind.setToDefault();
 			KeyBinding.resetKeyBindingArrayAndHash();
-			this.resetButton.enabled = !selectedKeybind.isSetToDefaultValue();
+			this.buttonReset.enabled = !selectedKeybind.isSetToDefaultValue();
 			return;
 		}
 		
-		if (button == this.clearButton) {
+		if (button == this.buttonClear) {
 			this.selectedKeybind.setKeyModifierAndCode(KeyModifier.NONE, 0);
 			KeyBinding.resetKeyBindingArrayAndHash();
-			this.clearButton.enabled = this.selectedKeybind.getKeyCode() != 0;
+			this.buttonClear.enabled = this.selectedKeybind.getKeyCode() != 0;
+		}
+		
+		if (button == this.buttonDone) {
+			if (this.parentScreen != null)
+				this.mc.displayGuiScreen(this.parentScreen);
+			else 
+				this.mc.displayGuiScreen((GuiScreen)null);
 		}
 
-		if (button == this.activeModifierButton) {
+		if (button == this.buttonActiveModifier) {
 			this.changeActiveModifier();
 			return;
 		}
 		
-		if (button == this.pageButton) {
+		if (button == this.buttonPage) {
 			this.page++;
 			if (this.page > 2) {
 				this.page = 1;
@@ -125,7 +133,7 @@ public class GuiKeyWizard extends GuiScreen {
 				this.options.setOptionKeyBinding(this.selectedKeybind, newKeyId);
 				KeyBinding.resetKeyBindingArrayAndHash();
 			}
-			this.resetButton.enabled = !selectedKeybind.isSetToDefaultValue();
+			this.buttonReset.enabled = !selectedKeybind.isSetToDefaultValue();
 			System.out.println(this.currentPage.containsValue(button));
 			return;
 		}
@@ -144,7 +152,7 @@ public class GuiKeyWizard extends GuiScreen {
 			this.activeModifier = KeyModifier.NONE;
 		}
 
-		this.activeModifierButton.displayString = "Active Modifier: " + activeModifier.toString();
+		this.buttonActiveModifier.displayString = "Active Modifier: " + activeModifier.toString();
 	}
 	
     @Override
@@ -208,8 +216,6 @@ public class GuiKeyWizard extends GuiScreen {
 	@Override
 	public void initGui() {
 		
- 		this.options.guiScale = 3;
-		
 		int maxLength = 0;
 
 		for (KeyBinding binding : KeybindUtils.ALL_BINDINGS) {
@@ -238,19 +244,21 @@ public class GuiKeyWizard extends GuiScreen {
 
 		this.categoryList = new GuiCategorySelector(startX - 30, 5, 125, "Binding Categories", categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
-		this.pageButton = new GuiButton(0, startX + 105, 5, 100, 20, "Page: " + String.format("%d", page) );
+		this.buttonPage = new GuiButton(0, startX + 105, 5, 100, 20, "Page: " + String.format("%d", page) );
 
-		this.resetButton = new GuiButton(0, startX - 30, this.height - 40, 100, 20, "Reset binding");
-		this.clearButton = new GuiButton(0, startX + 75, this.height - 40, 100, 20, "Clear binding");
-		this.activeModifierButton = new GuiButton(1, startX - 30, this.height - 65, 150, 20,
+		this.buttonReset = new GuiButton(0, startX - 30, this.height - 40, 100, 20, I18n.format("gui.resetBinding"));
+		this.buttonClear = new GuiButton(0, startX + 75, this.height - 40, 100, 20, I18n.format("gui.clearBinding"));
+		this.buttonDone = new GuiButton(0, startX + 180, this.height - 40, 100, 20, I18n.format("gui.done"));
+		this.buttonActiveModifier = new GuiButton(1, startX - 30, this.height - 65, 150, 20,
 				"Active Modifier: " + activeModifier.toString());
 		
 		this.setSelectedKeybind(this.bindingList.getSelectedKeybind());
 		
-        this.buttonList.add(this.pageButton);
-		this.buttonList.add(this.activeModifierButton);
-		this.buttonList.add(this.resetButton);
-		this.buttonList.add(this.clearButton);
+        this.buttonList.add(this.buttonPage);
+		this.buttonList.add(this.buttonActiveModifier);
+		this.buttonList.add(this.buttonReset);
+		this.buttonList.add(this.buttonClear);
+		this.buttonList.add(this.buttonDone);
 
 		int rowPos = 0;
 		GuiButton button;
@@ -405,10 +413,10 @@ public class GuiKeyWizard extends GuiScreen {
     public void updateScreen() {
         super.updateScreen();
         this.searchBar.updateCursorCounter();
-        if ( this.resetButton != null )
-        	this.resetButton.enabled = !this.selectedKeybind.isSetToDefaultValue();
-		if ( this.clearButton != null ) {
-			this.clearButton.enabled = (this.selectedKeybind.getKeyCode() == 0) ? false:true;
+        if ( this.buttonReset != null )
+        	this.buttonReset.enabled = !this.selectedKeybind.isSetToDefaultValue();
+		if ( this.buttonClear != null ) {
+			this.buttonClear.enabled = (this.selectedKeybind.getKeyCode() == 0) ? false:true;
 		}
 
         if ( this.categoryList != null )
@@ -418,7 +426,7 @@ public class GuiKeyWizard extends GuiScreen {
         	this.searchText = this.searchBar.getText();
         }
         
-        this.pageButton.displayString = "Page: " + String.format("%d", page);
+        this.buttonPage.displayString = "Page: " + String.format("%d", page);
         if ( this.page == 1 ) {
         	numpad.values().forEach(button -> {
         		button.visible = false;

@@ -6,4 +6,7 @@ categories.all=All Bindings
 categories.conflicts=Conflicting
 categories.unbound=Unbound
 
-gui.openKeyWiz=Key wizard
+gui.openKeyWiz=Key Wizard
+gui.done = Done
+gui.resetBinding=Reset Binding
+gui.clearBinding=Clear Binding

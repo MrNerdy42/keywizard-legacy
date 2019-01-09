@@ -44,9 +44,9 @@ public class GuiControlsPlusKeyWiz extends GuiScreen
     public void initGui()
     {
         this.keyBindingList = new GuiControlsPlusKeyWizBindingList(this, this.mc);
-        this.buttonList.add(new GuiButton(200, this.width / 2 - 155 + 160, this.height - 29, 150, 20, I18n.format("gui.done")));
-        this.buttonReset = this.addButton(new GuiButton(201, this.width / 2 - 155, this.height - 29, 75, 20, I18n.format("controls.resetAll")));
-        this.buttonOpenKeyWiz = new GuiButton(203, this.width / 2 - 75, this.height - 29, 75, 20, I18n.format("gui.openKeyWiz"));
+        this.buttonList.add(new GuiButton(200, this.width / 2 + 60, this.height - 29, 100, 20, I18n.format("gui.done")));
+        this.buttonReset = this.addButton(new GuiButton(201, this.width / 2 - 160, this.height - 29, 100, 20, I18n.format("controls.resetAll")));
+        this.buttonOpenKeyWiz = new GuiButton(203, this.width / 2 - 50, this.height - 29, 100, 20, I18n.format("gui.openKeyWiz"));
         this.buttonList.add(this.buttonOpenKeyWiz);
         this.screenTitle = I18n.format("controls.title");
         int i = 0;
@@ -92,6 +92,9 @@ public class GuiControlsPlusKeyWiz extends GuiScreen
             }
 
             KeyBinding.resetKeyBindingArrayAndHash();
+        }
+        else if (button == this.buttonOpenKeyWiz) {
+        	this.mc.displayGuiScreen(new GuiKeyWizard(this.mc, this, this.options));
         }
         else if (button.id < 100 && button instanceof GuiOptionButton)
         {
