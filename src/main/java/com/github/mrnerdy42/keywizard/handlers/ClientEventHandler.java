@@ -29,4 +29,7 @@ public class ClientEventHandler {
             e.setGui(new GuiControlsPlusKeyWiz(this.client, e.getGui(), this.client.gameSettings));
         }
     }
+    
+    @SubscribeEvent
+    public void keyPressed(keyDownEvent e)
 }

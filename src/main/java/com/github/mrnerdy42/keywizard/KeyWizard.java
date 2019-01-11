@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
@@ -30,6 +31,8 @@ public class KeyWizard {
 	
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 	
+	public static Configuration config;
+	
 	@Instance
 	public static KeyWizard instance = new KeyWizard();
 	
@@ -38,6 +41,7 @@ public class KeyWizard {
     @EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
 		LOGGER.log(Level.INFO, "Let's do some keyboard magic!");
+		config = new Configuration(e.getSuggestedConfigurationFile());
 	}
 	
 	@EventHandler
