@@ -46,8 +46,7 @@ public class KeyWizard {
 	
 	@EventHandler
     public void init(FMLInitializationEvent e) {
-		//KeyBinding keyOpenKeyWizard = new KeyBinding("keywizard.keybind.openKeyboardWizard", Keyboard.KEY_F7, "key.categories.misc");
-		//ClientRegistry.registerKeyBinding(keyOpenKeyWizard);
+		ClientEventHandler.register();
     	MinecraftForge.EVENT_BUS.register(this.clientEventHandler);
     }
 

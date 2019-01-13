@@ -20,8 +20,14 @@ import net.minecraft.client.settings.KeyBinding;
 
 @SideOnly(Side.CLIENT)
 public class ClientEventHandler {
+	
+	public static KeyBinding keyOpenKeyWizard = new KeyBinding("keywizard.keybind.openKeyboardWizard", Keyboard.KEY_F7, "key.categories.misc");
 
 	private Minecraft client  = FMLClientHandler.instance().getClient();
+	
+	public static void register() {
+		ClientRegistry.registerKeyBinding(keyOpenKeyWizard);
+	}
 	
     @SubscribeEvent
     public void guiInit(GuiOpenEvent e) {
@@ -31,5 +37,9 @@ public class ClientEventHandler {
     }
     
     @SubscribeEvent
-    public void keyPressed(keyDownEvent e)
+    public void keyPressed(KeyInputEvent e) {
+    	if (keyOpenKeyWizard.isPressed()) {
+    		this.client.displayGuiScreen(new GuiKeyWizard(this.client, null, this.client.gameSettings));
+    	}
+    }
 }
