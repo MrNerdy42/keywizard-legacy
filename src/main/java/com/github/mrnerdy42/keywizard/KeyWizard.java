@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Logger;
@@ -32,6 +33,7 @@ public class KeyWizard {
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 	
 	public static Configuration config;
+	public static boolean openFromControlsGui;
 	
 	@Instance
 	public static KeyWizard instance = new KeyWizard();
@@ -41,7 +43,10 @@ public class KeyWizard {
     @EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
 		LOGGER.log(Level.INFO, "Let's do some keyboard magic!");
-		config = new Configuration(e.getSuggestedConfigurationFile());
+		this.config = new Configuration(e.getSuggestedConfigurationFile());
+		ConfigManager.sync(MODID, Configuration.type);
+		this.openFromControlsGui = config.getBoolean("openFromControlsGui", Configuration.CATEGORY_GENERAL, false, null);
+		LOGGER.log(Level.INFO, this.openFromControlsGui);
 	}
 	
 	@EventHandler
