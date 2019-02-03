@@ -29,6 +29,7 @@ public class GuiControlsPlusKeyWiz extends GuiScreen
     private GuiControlsPlusKeyWizBindingList keyBindingList;
     private GuiButton buttonReset;
     private GuiButton buttonOpenKeyWiz;
+    private GuiButton buttonDone;
 
     public GuiControlsPlusKeyWiz(Minecraft mcIn, GuiScreen screen, GameSettings settings)
     {
@@ -44,10 +45,16 @@ public class GuiControlsPlusKeyWiz extends GuiScreen
     public void initGui()
     {
         this.keyBindingList = new GuiControlsPlusKeyWizBindingList(this, this.mc);
-        this.buttonList.add(new GuiButton(200, this.width / 2 + 60, this.height - 29, 100, 20, I18n.format("gui.done")));
-        this.buttonReset = this.addButton(new GuiButton(201, this.width / 2 - 160, this.height - 29, 100, 20, I18n.format("controls.resetAll")));
+        
+        this.buttonDone = new GuiButton(200, this.width / 2 + 60, this.height - 29, 100, 20, I18n.format("gui.done"));
+        this.buttonReset = new GuiButton(201, this.width / 2 - 160, this.height - 29, 100, 20, I18n.format("controls.resetAll"));
         this.buttonOpenKeyWiz = new GuiButton(203, this.width / 2 - 50, this.height - 29, 100, 20, I18n.format("gui.openKeyWiz"));
+        
+        
+        this.buttonList.add(this.buttonDone);
+        this.buttonList.add(this.buttonReset);
         this.buttonList.add(this.buttonOpenKeyWiz);
+        
         this.screenTitle = I18n.format("controls.title");
         int i = 0;
 
@@ -84,7 +91,7 @@ public class GuiControlsPlusKeyWiz extends GuiScreen
         {
             this.mc.displayGuiScreen(this.parentScreen);
         }
-        else if (button.id == 201)
+        else if (button == this.buttonReset)
         {
             for (KeyBinding keybinding : this.mc.gameSettings.keyBindings)
             {

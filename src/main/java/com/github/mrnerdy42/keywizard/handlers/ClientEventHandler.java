@@ -32,7 +32,7 @@ public class ClientEventHandler {
     @SubscribeEvent
     public void guiInit(GuiOpenEvent e) {
         if (e.getGui() instanceof GuiControls && !(e.getGui() instanceof GuiControlsPlusKeyWiz) && KeyWizard.openFromControlsGui) {
-            e.setGui(new GuiControlsPlusKeyWiz(this.client, e.getGui(), this.client.gameSettings));
+            e.setGui(new GuiControlsPlusKeyWiz(this.client, client.currentScreen, this.client.gameSettings));
         }
     }
     
