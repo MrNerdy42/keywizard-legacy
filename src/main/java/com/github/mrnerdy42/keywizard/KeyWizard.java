@@ -3,6 +3,7 @@ package com.github.mrnerdy42.keywizard;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -44,19 +45,25 @@ public class KeyWizard {
 	public void preInit(FMLPreInitializationEvent e) {
 		LOGGER.log(Level.INFO, "Let's do some keyboard magic!");
 		this.config = new Configuration(e.getSuggestedConfigurationFile());
-		ConfigManager.sync(MODID, Configuration.type);
-		this.openFromControlsGui = config.getBoolean("openFromControlsGui", Configuration.CATEGORY_GENERAL, false, null);
-		LOGGER.log(Level.INFO, this.openFromControlsGui);
+
 	}
 	
 	@EventHandler
     public void init(FMLInitializationEvent e) {
 		ClientEventHandler.register();
     	MinecraftForge.EVENT_BUS.register(this.clientEventHandler);
+    	
+		
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent e) {
+    	if(Loader.isModLoaded("controlling")) {
+    		LOGGER.log(Level.INFO, "Controlling mod detected. Controls gui override automatically disabled.");
+    		this.openFromControlsGui = false;
+    	}else {
+    		this.openFromControlsGui = config.getBoolean("openFromControlsGui", Configuration.CATEGORY_GENERAL, false, null);
+    	}
     }
 
 
