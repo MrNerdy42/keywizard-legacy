@@ -9,7 +9,8 @@ public class KeyWizardConfig {
 	
 	@Comment({"If true, keyboard wizard will be accessible through a button in the controls gui.",
 		     "as well as through the a keybinding. (default:F7)",
-	         "Note: this option is ignored if Controlling is installed."})
+	         "Note: this option may do weird things if another mod",
+	         "that overrides the controls gui is installed."})
 	@RequiresMcRestart
 	public static boolean openFromControlsGui = true;
 

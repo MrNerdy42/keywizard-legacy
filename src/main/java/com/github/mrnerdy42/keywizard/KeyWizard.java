@@ -53,17 +53,17 @@ public class KeyWizard {
 		ClientEventHandler.register();
     	MinecraftForge.EVENT_BUS.register(this.clientEventHandler);
     	
-		
+    	openFromControlsGui = config.getBoolean("openFromControlsGui", Configuration.CATEGORY_GENERAL, false, null);
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent e) {
-    	if(Loader.isModLoaded("controlling")) {
-    		LOGGER.log(Level.INFO, "Controlling mod detected. Controls gui override automatically disabled.");
-    		openFromControlsGui = false;
-    	}else {
-    		openFromControlsGui = config.getBoolean("openFromControlsGui", Configuration.CATEGORY_GENERAL, false, null);
+    	
+    	if(Loader.isModLoaded("controlling") && openFromControlsGui) {
+    		LOGGER.log(Level.WARN, "Keyboard Wizard is configured to override the controls gui and another mod that does this is installed. The override may not work.");
     	}
+
+    		
     }
 
 
