@@ -44,7 +44,7 @@ public class KeyWizard {
     @EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
 		LOGGER.log(Level.INFO, "Let's do some keyboard magic!");
-		this.config = new Configuration(e.getSuggestedConfigurationFile());
+		config = new Configuration(e.getSuggestedConfigurationFile());
 
 	}
 	
