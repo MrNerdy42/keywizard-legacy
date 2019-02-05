@@ -60,9 +60,9 @@ public class KeyWizard {
     public void postInit(FMLPostInitializationEvent e) {
     	if(Loader.isModLoaded("controlling")) {
     		LOGGER.log(Level.INFO, "Controlling mod detected. Controls gui override automatically disabled.");
-    		this.openFromControlsGui = false;
+    		openFromControlsGui = false;
     	}else {
-    		this.openFromControlsGui = config.getBoolean("openFromControlsGui", Configuration.CATEGORY_GENERAL, false, null);
+    		openFromControlsGui = config.getBoolean("openFromControlsGui", Configuration.CATEGORY_GENERAL, false, null);
     	}
     }
 
