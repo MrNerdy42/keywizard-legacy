@@ -36,6 +36,8 @@ public class KeyWizard {
 	public static Configuration config;
 	public static boolean openFromControlsGui;
 	
+	private static String[] conflictingMods = {"controlling"};
+	
 	@Instance
 	public static KeyWizard instance = new KeyWizard();
 	
@@ -58,12 +60,20 @@ public class KeyWizard {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent e) {
-    	
-    	if(Loader.isModLoaded("controlling") && openFromControlsGui) {
-    		LOGGER.log(Level.WARN, "Keyboard Wizard is configured to override the controls gui and another mod that does this is installed. The override may not work.");
+    	boolean flag = false;
+    	if(openFromControlsGui) {
+    		LOGGER.log(Level.WARN, "Controls gui overide enabled, may cause problems with other mods");
+    		for(String id:conflictingMods) {
+    			if(Loader.isModLoaded(id)) {
+    				flag = true;
+    				break;
+    			}
+    		}
     	}
-
-    		
+    	if(flag) {
+    		LOGGER.log(Level.WARN, "Conflicting mod detected, controls gui override may not work");
+    	}
+	
     }
 
 
