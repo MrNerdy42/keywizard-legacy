@@ -62,19 +62,16 @@ public class KeyWizard {
     public void postInit(FMLPostInitializationEvent e) {
     	boolean flag = false;
     	if(openFromControlsGui) {
-    		LOGGER.log(Level.WARN, "Controls gui override enabled, may cause problems with other mods");
+    		LOGGER.log(Level.WARN, "Controls gui override enabled, this may cause problems with other mods");
     		for(String id:conflictingMods) {
     			if(Loader.isModLoaded(id)) {
     				flag = true;
     				break;
     			}
     		}
+        	if(flag) {
+        		LOGGER.log(Level.WARN, "Conflicting mod detected, controls gui override may not work");
+        	}
     	}
-    	if(flag) {
-    		LOGGER.log(Level.WARN, "Conflicting mod detected, controls gui override may not work");
-    	}
-	
     }
-
-
 }
