@@ -48,7 +48,7 @@ public class GuiControlsPlusKeyWizBindingList extends GuiListExtended
                 this.maxListLabelWidth = j;
             }
 
-            this.listEntries[i++] = new GuiControlsPlusKeyWizBindingList .KeyEntry(keybinding);
+            this.listEntries[i++] = new GuiControlsPlusKeyWizBindingList.KeyEntry(keybinding);
         }
     }
 
@@ -87,12 +87,12 @@ public class GuiControlsPlusKeyWizBindingList extends GuiListExtended
         public CategoryEntry(String name)
         {
             this.labelText = I18n.format(name);
-            this.labelWidth = GuiControlsPlusKeyWizBindingList .this.mc.fontRenderer.getStringWidth(this.labelText);
+            this.labelWidth = GuiControlsPlusKeyWizBindingList.this.mc.fontRenderer.getStringWidth(this.labelText);
         }
 
         public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected, float partialTicks)
         {
-        	GuiControlsPlusKeyWizBindingList .this.mc.fontRenderer.drawString(this.labelText, GuiControlsPlusKeyWizBindingList.this.mc.currentScreen.width / 2 - this.labelWidth / 2, y + slotHeight - GuiControlsPlusKeyWizBindingList .this.mc.fontRenderer.FONT_HEIGHT - 1, 16777215);
+        	GuiControlsPlusKeyWizBindingList.this.mc.fontRenderer.drawString(this.labelText, GuiControlsPlusKeyWizBindingList.this.mc.currentScreen.width / 2 - this.labelWidth / 2, y + slotHeight - GuiControlsPlusKeyWizBindingList .this.mc.fontRenderer.FONT_HEIGHT - 1, 16777215);
         }
 
         /**
@@ -136,12 +136,12 @@ public class GuiControlsPlusKeyWizBindingList extends GuiListExtended
 
         public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected, float partialTicks)
         {
-            boolean flag = GuiControlsPlusKeyWizBindingList .this.controlsScreen.buttonId == this.keybinding;
-            GuiControlsPlusKeyWizBindingList .this.mc.fontRenderer.drawString(this.keyDesc, x + 90 - GuiControlsPlusKeyWizBindingList.this.maxListLabelWidth, y + slotHeight / 2 - GuiControlsPlusKeyWizBindingList.this.mc.fontRenderer.FONT_HEIGHT / 2, 16777215);
+            boolean flag = GuiControlsPlusKeyWizBindingList.this.controlsScreen.buttonId == this.keybinding;
+            GuiControlsPlusKeyWizBindingList.this.mc.fontRenderer.drawString(this.keyDesc, x + 90 - GuiControlsPlusKeyWizBindingList.this.maxListLabelWidth, y + slotHeight / 2 - GuiControlsPlusKeyWizBindingList.this.mc.fontRenderer.FONT_HEIGHT / 2, 16777215);
             this.btnReset.x = x + 210;
             this.btnReset.y = y;
             this.btnReset.enabled = !this.keybinding.isSetToDefaultValue();
-            this.btnReset.drawButton(GuiControlsPlusKeyWizBindingList .this.mc, mouseX, mouseY, partialTicks);
+            this.btnReset.drawButton(GuiControlsPlusKeyWizBindingList.this.mc, mouseX, mouseY, partialTicks);
             this.btnChangeKeyBinding.x = x + 105;
             this.btnChangeKeyBinding.y = y;
             this.btnChangeKeyBinding.displayString = this.keybinding.getDisplayName();
