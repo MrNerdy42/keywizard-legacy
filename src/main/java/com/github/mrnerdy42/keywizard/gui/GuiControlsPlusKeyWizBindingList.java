@@ -38,7 +38,7 @@ public class GuiControlsPlusKeyWizBindingList extends GuiListExtended
             if (!s1.equals(s))
             {
                 s = s1;
-                this.listEntries[i++] = new GuiControlsPlusKeyWizBindingList .CategoryEntry(s1);
+                this.listEntries[i++] = new GuiControlsPlusKeyWizBindingList.CategoryEntry(s1);
             }
 
             int j = mcIn.fontRenderer.getStringWidth(I18n.format(keybinding.getKeyDescription()));
