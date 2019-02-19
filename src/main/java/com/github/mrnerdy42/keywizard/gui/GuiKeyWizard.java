@@ -134,7 +134,6 @@ public class GuiKeyWizard extends GuiScreen {
 				KeyBinding.resetKeyBindingArrayAndHash();
 			}
 			this.buttonReset.enabled = !selectedKeybind.isSetToDefaultValue();
-			System.out.println(this.currentPage.containsValue(button));
 			return;
 		}
 	}
