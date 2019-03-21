@@ -1,0 +1,12 @@
+language.name=Russian
+language.region=RU
+language.code=ru_RU
+ 
+categories.all=Все назначенные клавиши
+categories.conflicts=Конфликтующие клавиши
+categories.unbound=Не назначенные клавиши
+ 
+gui.openKeyWiz=Открыть Умный менеджер Клавиш
+gui.done = Готово
+gui.resetBinding=Вернуться к исходному
+gui.clearBinding=Убрать назначение
