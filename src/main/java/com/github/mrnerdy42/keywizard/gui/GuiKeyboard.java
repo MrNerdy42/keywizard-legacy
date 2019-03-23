@@ -3,7 +3,7 @@ package com.github.mrnerdy42.keywizard.gui;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 
-public class GuiKeyboard extends Gui{
+public class GuiKeyboard extends FloatGui{
 	
 	public int x;
 	public int y;
@@ -28,5 +28,9 @@ public class GuiKeyboard extends Gui{
 		private GuiKeyRow(int[] keys, int[] widths, int[] spacings ) {
 			
 		}
+	}
+	
+	private class GuiKeyboardKey extends FloatGui{
+		
 	}
 }
