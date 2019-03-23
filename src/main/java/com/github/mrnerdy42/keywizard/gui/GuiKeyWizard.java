@@ -260,15 +260,18 @@ public class GuiKeyWizard extends GuiScreen {
 		this.buttonList.add(this.buttonDone);
 
 		int rowPos = 0;
-		GuiButton button;
+		int keyWidth = 34;
+		int keySpaceMod = 2;
+		int shiftx = -30;
+		int shifty = 0;
 		
 		for (int i = KEY_F1; i < KEY_F10 + 1; i++) {
-			this.placeKey(i, (startX + rowPos * 36) - 30, startY, 34, keyboard);
+			this.placeKey(i, (startX + rowPos * (keyWidth + keySpaceMod)) - 30, startY, keyWidth, keyboard);
 			rowPos++;
 		}
 		
 		for (int i = KEY_F11; i < KEY_F12 + 1; i++) {
-			this.placeKey(i, (startX + rowPos * 36) - 30, startY, 34, keyboard);
+			this.placeKey(i, (startX + rowPos * (keyWidth + keySpaceMod)) - 30, startY, keyWidth, keyboard);
 			rowPos++;
 		}
 		
