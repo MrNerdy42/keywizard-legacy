@@ -99,7 +99,8 @@ public class GuiKeyWizard extends GuiScreen {
 		categories.add(0, "categories.conflicts");
 		categories.add(0, "categories.unbound");
 		categories.add(0, "categories.all");
-	
+		
+		this.keyboard = new GuiKeyboard(this,this.height/2.0,this.height/2.0,0);
 	
 		this.categoryList = new GuiCategorySelector(startX - 30, 5, 125, "Binding Categories", categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
@@ -211,6 +212,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.searchBar.drawTextBox();
 	
 		this.categoryList.drawList(this.mc, mouseX, mouseY, partialTicks);
+		this.keyboard.draw();
 	
 		// Color key and draw hovering text
 		/*
