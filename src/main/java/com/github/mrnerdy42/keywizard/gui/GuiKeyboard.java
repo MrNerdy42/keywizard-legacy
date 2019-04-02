@@ -24,6 +24,10 @@ public class GuiKeyboard extends FloatGui{
 		this.testKey.draw();
 	}
 	
+	public void update(double x, double y) {
+		this.testKey.update(x, y);
+	}
+	
 	private class GuiKeyRow{
 		private GuiKeyRow(int start, int end, int width, int height, int spacing) {
 			

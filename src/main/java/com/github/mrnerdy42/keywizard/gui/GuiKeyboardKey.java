@@ -17,4 +17,11 @@ public class GuiKeyboardKey extends FloatGui{
 	public void draw() {
 		drawRect(this.x, y, this.x + this.width, this.y + this.height, 0xFFFFFFFF);
 	}
+	
+	public void update(double x, double y) {
+		this.x = x;
+		this.y = y;
+		System.out.println(this.x);
+		System.out.println(this.y);
+	}
 }
