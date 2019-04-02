@@ -151,7 +151,7 @@ public class GuiKeyWizard extends GuiScreen {
 			this.activeModifier = KeyModifier.NONE;
 		}
 
-		this.buttonActiveModifier.displayString = "Active Modifier: " + activeModifier.toString();
+		this.buttonActiveModifier.displayString = I18n.format("gui.activeModifier" )+ ": " + activeModifier.toString();
 	}
 	
     @Override
@@ -241,15 +241,15 @@ public class GuiKeyWizard extends GuiScreen {
 		categories.add(0, "categories.all");
 
 
-		this.categoryList = new GuiCategorySelector(startX - 30, 5, 125, "Binding Categories", categories);
+		this.categoryList = new GuiCategorySelector(startX - 30, 5, 125, I18n.format("gui.bindingCategories"), categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
-		this.buttonPage = new GuiButton(0, startX + 105, 5, 100, 20, "Page: " + String.format("%d", page) );
+		this.buttonPage = new GuiButton(0, startX + 105, 5, 100, 20, I18n.format("gui.page") + ": " + String.format("%d", page) );
 
 		this.buttonReset = new GuiButton(0, startX - 30, this.height - 40, 100, 20, I18n.format("gui.resetBinding"));
 		this.buttonClear = new GuiButton(0, startX + 75, this.height - 40, 100, 20, I18n.format("gui.clearBinding"));
 		this.buttonDone = new GuiButton(0, startX + 180, this.height - 40, 100, 20, I18n.format("gui.done"));
 		this.buttonActiveModifier = new GuiButton(1, startX - 30, this.height - 65, 150, 20,
-				"Active Modifier: " + activeModifier.toString());
+				I18n.format("gui.activeModifier" ) + ": "  + activeModifier.toString());
 		
 		this.setSelectedKeybind(this.bindingList.getSelectedKeybind());
 		
@@ -425,7 +425,7 @@ public class GuiKeyWizard extends GuiScreen {
         	this.searchText = this.searchBar.getText();
         }
         
-        this.buttonPage.displayString = "Page: " + String.format("%d", page);
+        this.buttonPage.displayString = I18n.format("gui.page") + ": " + String.format("%d", page);
         if ( this.page == 1 ) {
         	numpad.values().forEach(button -> {
         		button.visible = false;

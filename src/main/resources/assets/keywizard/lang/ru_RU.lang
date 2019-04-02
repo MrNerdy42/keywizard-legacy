@@ -10,3 +10,6 @@ gui.openKeyWiz=Открыть Умный менеджер Клавиш
 gui.done = Готово
 gui.resetBinding=Вернуться к исходному
 gui.clearBinding=Убрать назначение
+gui.activeModifier=Модификатор
+gui.bindingCategories=категории
+gui.page=страница
