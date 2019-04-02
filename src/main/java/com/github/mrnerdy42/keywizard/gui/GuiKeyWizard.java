@@ -119,89 +119,6 @@ public class GuiKeyWizard extends GuiScreen {
 		this.buttonList.add(this.buttonReset);
 		this.buttonList.add(this.buttonClear);
 		this.buttonList.add(this.buttonDone);
-		
-		/*
-		*int rowPos = 0;
-		*
-		*for (int i = KEY_F1; i < KEY_F10 + 1; i++) {
-		*	this.placeKey(i, (startX + rowPos * (keyWidth + keySpaceMod)) - 30, startY, keyWidth, keyboard);
-		*	rowPos++;
-		*}
-		*
-		*for (int i = KEY_F11; i < KEY_F12 + 1; i++) {
-		*	this.placeKey(i, (startX + rowPos * (keyWidth + keySpaceMod)) - 30, startY, keyWidth, keyboard);
-		*	rowPos++;
-		*}
-		*
-		*rowPos = 0;
-		*for (int i = KEY_1; i < KEY_EQUALS + 1; i++) {
-		*	this.placeKey(i, (startX + rowPos * 30), startY + 25, 25, keyboard);
-		*	rowPos++;
-		*}
-		*
-		*rowPos = 0;
-		*for (int i = KEY_Q; i < KEY_RBRACKET + 1; i++) {
-		*	this.placeKey(i, (startX + rowPos * 30) + 15, startY + 50, 25, keyboard);
-		*	rowPos++;
-		*}
-		*
-		*rowPos = 0;
-		*for (int i = KEY_A; i < KEY_APOSTROPHE + 1; i++) {
-		*	this.placeKey(i, (startX + rowPos * 30) + 20, startY + 75, 25, keyboard);
-		*	rowPos++;
-		*}
-		*
-		*rowPos = 0;
-		*for (int i = KEY_Z; i < KEY_SLASH + 1; i++) {
-		*	this.placeKey(i, (startX + rowPos * 30) + 25, startY + 100, 25, keyboard);
-		*	rowPos++;
-		*}
-	    *
-		*this.placeAuxKey(KEY_GRAVE, KEY_1, -30, 0, 25, keyboard);
-		*this.placeAuxKey(KEY_BACK, KEY_EQUALS, 30, 0, 40, keyboard);
-	    *
-		*this.placeAuxKey(KEY_TAB, KEY_Q, -45, 0, 40, keyboard);
-		*this.placeAuxKey(KEY_BACKSLASH, KEY_RBRACKET, 30, 0, 25, keyboard);
-	    *
-		*this.placeAuxKey(KEY_CAPITAL, KEY_A, -50, 0, 45, keyboard);
-		*this.placeAuxKey(KEY_RETURN, KEY_APOSTROPHE, 30, 0, 50, keyboard);
-	    *
-		*this.placeAuxKey(KEY_LSHIFT, KEY_Z, -55, 0, 50, keyboard);
-		*this.placeAuxKey(KEY_RSHIFT, KEY_SLASH, 30, 0, 75, keyboard);
-	    *
-		*this.placeAuxKey(KEY_LCONTROL, KEY_LSHIFT, 0, 25, 35, keyboard);
-		*this.placeAuxKey(KEY_LMETA, KEY_LCONTROL, 40, 0, 35, keyboard);
-		*this.placeAuxKey(KEY_LMENU, KEY_LMETA, 40, 0, 35, keyboard);
-	    *
-		*this.placeAuxKey(KEY_SPACE, KEY_LMENU, 40, 0, 185, keyboard);
-	    *
-		*this.placeAuxKey(KEY_RMENU, KEY_SPACE, 195, 0, 35, keyboard);
-		*this.placeAuxKey(KEY_RMETA, KEY_RMENU, 40, 0, 35, keyboard);
-		*this.placeAuxKey(KEY_RCONTROL, KEY_RMETA, 40, 0, 35, keyboard);
-		*
-		* Draw the numpad page
-		*this.placeKey(KEY_NUMPAD7, startX, startY, 50, numpad);
-		*this.placeAuxKey(KEY_NUMPAD8, KEY_NUMPAD7, 55, 0, 50, numpad);
-		*this.placeAuxKey(KEY_NUMPAD9, KEY_NUMPAD8, 55, 0, 50, numpad);
-		*
-		*this.placeAuxKey(KEY_NUMPAD4, KEY_NUMPAD7, 0, 25, 50, numpad);
-		*this.placeAuxKey(KEY_NUMPAD5, KEY_NUMPAD4, 55, 0, 50, numpad);
-		*this.placeAuxKey(KEY_NUMPAD6, KEY_NUMPAD5, 55, 0, 50, numpad);
-		*
-		*this.placeAuxKey(KEY_NUMPAD1, KEY_NUMPAD4, 0, 25, 50, numpad);
-		*this.placeAuxKey(KEY_NUMPAD2, KEY_NUMPAD1, 55, 0, 50, numpad);
-		*this.placeAuxKey(KEY_NUMPAD3, KEY_NUMPAD2, 55, 0, 50, numpad);
-		*
-		*this.placeAuxKey(KEY_NUMPAD0, KEY_NUMPAD1, 0, 25, 100, numpad);
-		*this.placeAuxKey(KEY_DECIMAL, KEY_NUMPAD0, 105, 0, 55, numpad);
-		*
-		*this.placeAuxKey(KEY_DIVIDE, KEY_NUMPAD7, 0, -25, 50, numpad);
-		*this.placeAuxKey(KEY_MULTIPLY, KEY_NUMPAD8, 0, -25, 50, numpad);
-		*this.placeAuxKey(KEY_MINUS, KEY_NUMPAD9, 0, -25, 50, numpad);
-		*
-		*this.placeAuxKey(KEY_ADD, KEY_NUMPAD9, 55, 0, 70, numpad);
-		*this.placeAuxKey(KEY_NUMPADENTER, KEY_NUMPAD6, 55, 0, 70, numpad);
-		*/
 	}
 
 	@Override
@@ -258,23 +175,7 @@ public class GuiKeyWizard extends GuiScreen {
 	    }
 	    
 	    this.buttonPage.displayString = "Page: " + String.format("%d", page);
-	    /*
-	     *if ( this.page == 1 ) {
-	     *	numpad.values().forEach(button -> {
-	     *		button.visible = false;
-	     *	});
-	     *	keyboard.values().forEach(button -> {
-	     *		button.visible = true;
-	     *	});
-	     *} else if ( this.page == 2 ) {
-	     *	keyboard.values().forEach(button -> {
-	     *		button.visible = false;
-	     *	});
-	     *	numpad.values().forEach(button -> {
-	     *		button.visible = true;
-	     *	});
-	     *}
-	     */
+	    this.keyboard.update(this.height/2.0,this.height/2.0);
 	    this.bindingList.updateList();
 	}
 
