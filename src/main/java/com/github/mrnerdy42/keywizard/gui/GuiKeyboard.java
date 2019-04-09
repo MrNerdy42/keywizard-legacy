@@ -1,5 +1,9 @@
 package com.github.mrnerdy42.keywizard.gui;
 
+import java.util.ArrayList;
+
+import net.minecraft.client.Minecraft;
+
 public class GuiKeyboard extends FloatGui{
 	
 	public double x;
@@ -7,9 +11,8 @@ public class GuiKeyboard extends FloatGui{
 	public double scaleFactor;
 	public GuiKeyWizard parent;
 	
-	protected GuiKeyRow[] rows;
-	
-	private GuiKeyboardKey testKey;
+	protected ArrayList<GuiKeyboardKey> keyList = new ArrayList<>();
+	protected GuiKeyRow[] rowList;
 
 	public GuiKeyboard(GuiKeyWizard parent, double x, double y, double scaleFactor) {
 		this.x = x;
@@ -17,15 +20,21 @@ public class GuiKeyboard extends FloatGui{
 		this.scaleFactor = scaleFactor;
 		this.parent = parent;
 		
-		this.testKey = new GuiKeyboardKey(this.x, this.y, 20.0, 20.0, 30);
+
 	}
 	
-	public void draw() {
-		this.testKey.draw();
+	public void init() {
+		this.keyList.add(new GuiKeyboardKey(this.x, this.y, 20.0, 20.0, 30));
 	}
 	
-	public void update(double x, double y) {
-		this.testKey.update(x, y);
+	public void draw(Minecraft mc, int mouseX, int mouseY) {
+		for(GuiKeyboardKey k:this.keyList) {
+			k.drawKey(mc, mouseX, mouseY);
+		}
+	}
+	
+	public void addKey(GuiKeyboardKey k) {
+		this.keyList.add(k);
 	}
 	
 	private class GuiKeyRow{

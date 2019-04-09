@@ -50,6 +50,8 @@ public class FloatGui
 
     /**
      * Draws a solid color rectangle with the specified coordinates and color.
+     * 
+     * @param color 0xAARRGGBB
      */
     public static void drawRect(double left, double top, double right, double bottom, int color)
     {
