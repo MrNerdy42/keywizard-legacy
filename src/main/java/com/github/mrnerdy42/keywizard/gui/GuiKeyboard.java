@@ -24,7 +24,7 @@ public class GuiKeyboard extends FloatGui{
 	}
 	
 	public void init() {
-		this.keyList.add(new GuiKeyboardKey(this.x, this.y, 20.0, 20.0, 30));
+		this.keyList.add(new GuiKeyboardKey(this, this.x, this.y, 15.0, 15.0, 30));
 	}
 	
 	public void draw(Minecraft mc, int mouseX, int mouseY) {
