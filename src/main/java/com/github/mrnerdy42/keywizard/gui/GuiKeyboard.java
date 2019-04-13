@@ -2,6 +2,8 @@ package com.github.mrnerdy42.keywizard.gui;
 
 import java.util.ArrayList;
 
+import com.github.mrnerdy42.keywizard.util.KeyboardLayout;
+
 import net.minecraft.client.Minecraft;
 
 public class GuiKeyboard extends FloatGui{
@@ -12,18 +14,20 @@ public class GuiKeyboard extends FloatGui{
 	public GuiKeyWizard parent;
 	
 	protected ArrayList<GuiKeyboardKey> keyList = new ArrayList<>();
-	protected GuiKeyRow[] rowList;
+	protected GuiKeyRow[] rows;
+	protected KeyboardLayout layout;
 
-	public GuiKeyboard(GuiKeyWizard parent, double x, double y, double scaleFactor) {
+	public GuiKeyboard(GuiKeyWizard parent, KeyboardLayout layout, double x, double y, double scaleFactor) {
+		this.parent = parent;
+		this.layout = layout;
 		this.x = x;
 		this.y = y;
 		this.scaleFactor = scaleFactor;
-		this.parent = parent;
-		
-
 	}
 	
 	public void init() {
+		double keyX = this.x;
+		double keyY = this.y;
 		this.keyList.add(new GuiKeyboardKey(this, this.x, this.y, 15.0, 15.0, 30));
 	}
 	
@@ -38,12 +42,25 @@ public class GuiKeyboard extends FloatGui{
 	}
 	
 	private class GuiKeyRow{
-		private GuiKeyRow(int start, int end, int width, int height, int spacing) {
-			
+		private ArrayList<GuiKeyboardKey> keys = new ArrayList<GuiKeyboardKey>();
+		
+		private GuiKeyboard keyboard;
+		private int xOffset;
+		private int yOffset;
+		
+		private int xSpacing;
+		
+		private GuiKeyRow(GuiKeyboard keyboard, int yOffset, int xSpacing) {
+			this.keyboard = keyboard;
+			this.xOffset = 0;
+			this.yOffset = yOffset;
+			this.xSpacing=xSpacing;
 		}
-		private GuiKeyRow(int[] keys, int[] widths, int[] spacings ) {
-			
+		
+		private void addKey(int[] keyIn) {
+			this.keys.add(new GuiKeyboardKey(this.keyboard, this.keyboard.x + this.xOffset, this.keyboard.y + this.yOffset, keyIn[0], keyIn[1], keyIn[3]));
 		}
+		
 	}
 
 }
