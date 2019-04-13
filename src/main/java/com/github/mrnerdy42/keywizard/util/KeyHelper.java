@@ -6,6 +6,9 @@ import java.util.HashMap;
 
 public class KeyHelper {
 	
+	public static final int STD_HEIGHT = 10;
+	public static final int STD_WIDTH = 10;
+	
 	private static final HashMap<Integer, String> KEY_LABELS = new HashMap();
 	static{
 		KEY_LABELS.put(KEY_F1, "F1");
