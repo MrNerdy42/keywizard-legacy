@@ -18,7 +18,7 @@ public class KeyboardFactory {
 	
 	private static GuiKeyboard makeQwertyKeyboard(GuiKeyWizard parent, double x, double y, double scaleFactor) {
 		GuiKeyboard kb = new GuiKeyboard(parent, x, y, scaleFactor);
-		kb.addKey(0, 0, 10, 10, KEY_A);
+		kb.addKey(0, 0, 20, 20, KEY_A);
 		return kb;
 	}
 

@@ -15,7 +15,7 @@ public class GuiKeyboard extends FloatGui{
 	public double scaleFactor;
 	public GuiKeyWizard parent;
 	
-	protected ArrayList<GuiKeyboardKey> keyList;
+	protected ArrayList<GuiKeyboardKey> keyList = new ArrayList<>();
 
 	public GuiKeyboard(GuiKeyWizard parent, double x, double y, double scaleFactor) {
 		this.parent = parent;
@@ -64,7 +64,7 @@ public class GuiKeyboard extends FloatGui{
 			}else {
 				drawNoFillRect(this.x, this.y, this.x + this.width, this.y + this.height, 0xFFFFFFFF);
 			}
-			this.drawCenteredString(this.keyboard.parent.getFontRenderer(), this.displayString, (float)(this.x+(this.width+2)/2.0F), (float)(this.y+(this.height-7)/2.0F), 0xFFFFFF);
+			this.drawCenteredString(this.keyboard.parent.getFontRenderer(), this.displayString, (float)(this.x+(this.width+2)/2.0F), (float)(this.y+(this.height-6)/2.0F), 0xFFFFFF);
 		}
 
 		protected void drawNoFillRect(double left, double top, double right, double bottom, int color) {
