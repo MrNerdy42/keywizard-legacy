@@ -11,6 +11,8 @@ import org.lwjgl.input.Mouse;
 
 import com.github.mrnerdy42.keywizard.util.KeyHelper;
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
+import com.github.mrnerdy42.keywizard.util.KeyboardFactory;
+import com.github.mrnerdy42.keywizard.util.KeyboardLayout;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -100,8 +102,7 @@ public class GuiKeyWizard extends GuiScreen {
 		categories.add(0, "categories.unbound");
 		categories.add(0, "categories.all");
 		
-		this.keyboard = new GuiKeyboard(this,this.width/2.0D,this.height/2.0D,0);
-		this.keyboard.init();
+		this.keyboard = KeyboardFactory.makeKeyboard(KeyboardLayout.QWERTY, this, this.width/2.0d, this.height/2.0d, 1);
 	
 		this.categoryList = new GuiCategorySelector(startX - 30, 5, 125, "Binding Categories", categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();

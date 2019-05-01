@@ -2,6 +2,7 @@ package com.github.mrnerdy42.keywizard.util;
 
 import com.github.mrnerdy42.keywizard.gui.GuiKeyWizard;
 import com.github.mrnerdy42.keywizard.gui.GuiKeyboard;
+import static org.lwjgl.input.Keyboard.*;
 
 public class KeyboardFactory {
 	public static GuiKeyboard makeKeyboard(KeyboardLayout layout, GuiKeyWizard parent, double x, double y, double scaleFactor) {
@@ -17,6 +18,7 @@ public class KeyboardFactory {
 	
 	private static GuiKeyboard makeQwertyKeyboard(GuiKeyWizard parent, double x, double y, double scaleFactor) {
 		GuiKeyboard kb = new GuiKeyboard(parent, x, y, scaleFactor);
+		kb.addKey(0, 0, 10, 10, KEY_A);
 		return kb;
 	}
 
