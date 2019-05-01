@@ -102,8 +102,9 @@ public class GuiKeyWizard extends GuiScreen {
 		categories.add(0, "categories.unbound");
 		categories.add(0, "categories.all");
 		
-		this.keyboard = KeyboardFactory.makeKeyboard(KeyboardLayout.QWERTY, this, this.width/2.0d, this.height/2.0d, 1);
-	
+		this.keyboard = KeyboardFactory.makeKeyboard(KeyboardLayout.QWERTY, this, this.width/2.0d, this.height/2.0d);
+		keyboard.setScaleFactor(1.0d);
+		
 		this.categoryList = new GuiCategorySelector(startX - 30, 5, 125, "Binding Categories", categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
 		this.buttonPage = new GuiButton(0, startX + 105, 5, 100, 20, "Page: " + String.format("%d", page) );

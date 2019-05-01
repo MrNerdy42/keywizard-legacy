@@ -10,18 +10,18 @@ import net.minecraft.client.Minecraft;
 
 public class GuiKeyboard extends FloatGui{
 
-	public double x;
-	public double y;
-	public double scaleFactor;
+	public double anchorX;
+	public double anchorY;
 	public GuiKeyWizard parent;
 	
 	protected ArrayList<GuiKeyboardKey> keyList = new ArrayList<>();
+	
+	private double scaleFactor;
 
-	public GuiKeyboard(GuiKeyWizard parent, double x, double y, double scaleFactor) {
+	public GuiKeyboard(GuiKeyWizard parent, double anchorX, double anchorY) {
 		this.parent = parent;
-		this.x = x;
-		this.y = y;
-		this.scaleFactor = scaleFactor;
+		this.anchorX = anchorX;
+		this.anchorY = anchorY;
 	}
 
 
@@ -32,7 +32,21 @@ public class GuiKeyboard extends FloatGui{
 	}
 
 	public void addKey(double xIn, double yIn, double width, double height, int keyCode) {
-		this.keyList.add(new GuiKeyboardKey(this, this.x + xIn, this.y + yIn, width, height, keyCode));
+		this.keyList.add(new GuiKeyboardKey(this, xIn, yIn, width, height, keyCode));
+	}
+	
+	public double getScaleFactor () {
+		return this.scaleFactor;
+	}
+	
+	public void setScaleFactor(double scaleFactor) {
+		this.scaleFactor = scaleFactor;
+		for(GuiKeyboardKey k:this.keyList) {
+			k.width = k.width*scaleFactor;
+			k.height = k.height*scaleFactor;
+			k.x = k.x*scaleFactor;
+			k.y = k.y*scaleFactor;
+		}
 	}
 
 	private class GuiKeyboardKey extends FloatGui{
@@ -58,13 +72,13 @@ public class GuiKeyboard extends FloatGui{
 		}
 
 		public void drawKey(Minecraft mc, double mouseX, double mouseY) {
-			this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+			this.hovered = mouseX >= this.absX() && mouseY >= this.absY() && mouseX < this.absX() + this.width && mouseY < this.absY() + this.height;
 			if(this.hovered) {
-				drawNoFillRect(this.x, this.y, this.x + this.width, this.y + this.height, 0xFF00FF00);
+				drawNoFillRect(this.absX(), this.absY(), this.absX() + this.width, this.absY() + this.height, 0xFF00FF00);
 			}else {
-				drawNoFillRect(this.x, this.y, this.x + this.width, this.y + this.height, 0xFFFFFFFF);
+				drawNoFillRect(this.absX(), this.absY(), this.absX() + this.width, this.absY() + this.height, 0xFFFFFFFF);
 			}
-			this.drawCenteredString(this.keyboard.parent.getFontRenderer(), this.displayString, (float)(this.x+(this.width+2)/2.0F), (float)(this.y+(this.height-6)/2.0F), 0xFFFFFF);
+			this.drawCenteredString(this.keyboard.parent.getFontRenderer(), this.displayString, (float)(this.absX()+(this.width+2)/2.0F), (float)(this.absY()+(this.height-6)/2.0F), 0xFFFFFF);
 		}
 
 		protected void drawNoFillRect(double left, double top, double right, double bottom, int color) {
@@ -72,6 +86,13 @@ public class GuiKeyboard extends FloatGui{
 			drawHorizontalLine(left, right, bottom, color);
 			drawVerticalLine(left, top, bottom, color);
 			drawVerticalLine(right, top, bottom, color);
+		}
+		
+		public double absX() {
+			return this.keyboard.anchorX + this.x;
+		}
+		public double absY() {
+			return this.keyboard.anchorY + this.y;
 		}
 	}
 	
