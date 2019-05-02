@@ -93,7 +93,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.searchBar.setFocused(true);
 		this.searchBar.setCanLoseFocus(false);
 	
-		int startX = listWidth + 50;
+		int startX = listWidth + 20;
 		int startY = this.height / 2 - 80;
 	
 		
@@ -132,7 +132,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.searchBar.drawTextBox();
 	
 		this.categoryList.drawList(this.mc, mouseX, mouseY, partialTicks);
-		this.keyboard.draw(this.mc, mouseX, mouseY);
+		this.keyboard.draw(this.mc, mouseX, mouseY, partialTicks);
 	
 		// Color key and draw hovering text
 		/*
@@ -214,6 +214,7 @@ public class GuiKeyWizard extends GuiScreen {
 			if (this.page > 2) {
 				this.page = 1;
 			}
+		this.buttonReset.enabled = !selectedKeybind.isSetToDefaultValue();
 			/*
 			 *switch (this.page) {
 			 *    case 1:
@@ -269,6 +270,7 @@ public class GuiKeyWizard extends GuiScreen {
 	        this.searchBar.setText("");
 	    }
 	    this.categoryList.mouseClicked(this.mc, x, y, button);
+	    this.keyboard.mouseClicked(mc, x, y, button);
 	}
 
 	@Override
@@ -307,6 +309,14 @@ public class GuiKeyWizard extends GuiScreen {
 	
 	public String getSelectedCategory() {
 		return this.selectedCategory;
+	}
+	
+	public KeyModifier getActiveModifier() {
+		return this.activeModifier;
+	}
+	
+	public KeyBinding getSelectedKeybind() {
+		return this.selectedKeybind;
 	}
 
 	protected void setSelectedKeybind(KeyBinding binding){

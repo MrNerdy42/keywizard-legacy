@@ -33,12 +33,25 @@ public class KeybindUtils {
 		return bindingNames;
 	}
 	
+	public static int getNumBindings(int keyId, KeyModifier modifier){
+		int num = 0;
+		
+		if (keyId == 0)
+			return num;
+		
+		for (KeyBinding currentBinding : ALL_BINDINGS) {
+			if (currentBinding.getKeyCode() == keyId && currentBinding.getKeyModifier() == modifier)
+			    num++;
+		}
+		return num;
+	}
+	
 	/** 
 	 * Get the number of conflicts for a key binding 
 	 * 
 	 * @param binding the binding to check
 	 */
-	public static int getConficts(KeyBinding binding) {
+	public static int getNumConficts(KeyBinding binding) {
 		int num = 0;
 		for (KeyBinding currentBinding : ALL_BINDINGS) {
 			if( !(currentBinding == binding) ) {

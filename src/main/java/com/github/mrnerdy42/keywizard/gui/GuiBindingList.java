@@ -69,7 +69,7 @@ public class GuiBindingList extends GuiScrollingList {
 		KeyBinding currentBinding = this.bindings[slotIdx];
 		
 		fontRender.drawString(I18n.format(currentBinding.getKeyDescription()), this.left + 3 , slotTop, 0xFFFFFF);
-		if ( currentBinding.getKeyCode() == 0 || KeybindUtils.getConficts(currentBinding) > 0) {
+		if ( currentBinding.getKeyCode() == 0 || KeybindUtils.getNumConficts(currentBinding) > 0) {
 			fontRender.drawString(currentBinding.getDisplayName(), this.left + 3, slotTop + fontRender.FONT_HEIGHT + 2, 0x993333);
 		} else if(!currentBinding.isSetToDefaultValue()){
 			fontRender.drawString(currentBinding.getDisplayName(), this.left + 3, slotTop + fontRender.FONT_HEIGHT + 2, 0x339933);
@@ -112,7 +112,7 @@ public class GuiBindingList extends GuiScrollingList {
 		case "categories.all":
 			break;
 		case "categories.conflicts":
-			bindings = Arrays.stream(bindings).filter(binding -> KeybindUtils.getConficts(binding) >= 1 && binding.getKeyCode() != 0).toArray(KeyBinding[]::new);
+			bindings = Arrays.stream(bindings).filter(binding -> KeybindUtils.getNumConficts(binding) >= 1 && binding.getKeyCode() != 0).toArray(KeyBinding[]::new);
 			break;
 		case "categories.unbound":
 			bindings = Arrays.stream(bindings).filter(binding -> binding.getKeyCode() == 0).toArray(KeyBinding[]::new);
