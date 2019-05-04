@@ -93,7 +93,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.searchBar.setFocused(true);
 		this.searchBar.setCanLoseFocus(false);
 	
-		int startX = listWidth + 20;
+		int startX = listWidth + 15;
 		int startY = this.height / 2 - 80;
 	
 		
@@ -102,8 +102,7 @@ public class GuiKeyWizard extends GuiScreen {
 		categories.add(0, "categories.unbound");
 		categories.add(0, "categories.all");
 		
-		this.keyboard = KeyboardFactory.makeKeyboard(KeyboardLayout.QWERTY, this, startX, startY);
-		keyboard.setScaleFactor(1.0d);
+		this.keyboard = KeyboardFactory.makeKeyboard(KeyboardLayout.QWERTY, this, startX, startY, this.width-startX-10, 0);
 		
 		this.categoryList = new GuiCategorySelector(startX - 30, 5, 125, "Binding Categories", categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();

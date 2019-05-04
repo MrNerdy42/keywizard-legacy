@@ -46,6 +46,20 @@ public class GuiKeyboard extends FloatGui{
 		this.keyList.put(new Integer(keyCode), new GuiKeyboardKey(this, xIn, yIn, width, height, keyCode));
 	}
 	
+	/**
+	 * Returns the width of the keyboard. Currently unused.
+	 * @return the width of the keyboard
+	 */
+	public double width() {
+		double width = 0;
+		for(GuiKeyboardKey k:this.keyList.values()) {
+			if (k.absX() + k.width > width) {
+				width = k.absX() + k.width;
+			}
+		}
+		return width;
+	}
+	
 	public double getScaleFactor () {
 		return this.scaleFactor;
 	}

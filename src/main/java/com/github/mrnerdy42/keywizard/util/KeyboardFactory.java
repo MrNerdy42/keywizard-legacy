@@ -5,10 +5,10 @@ import com.github.mrnerdy42.keywizard.gui.GuiKeyboard;
 import static org.lwjgl.input.Keyboard.*;
 
 public class KeyboardFactory {
-	public static GuiKeyboard makeKeyboard(KeyboardLayout layout, GuiKeyWizard parent, double x, double y) {
+	public static GuiKeyboard makeKeyboard(KeyboardLayout layout, GuiKeyWizard parent, double x, double y, double width, double height) {
 		switch(layout) {
 		case QWERTY:
-			return makeQwertyKeyboard(parent, x, y);
+			return makeQwertyKeyboard(parent, x, y, width, height);
 		case NUMPAD:
 			return null;
 		default:
@@ -16,13 +16,25 @@ public class KeyboardFactory {
 		}
 	}
 	
-	private static GuiKeyboard makeQwertyKeyboard(GuiKeyWizard parent, double x, double y) {
+	private static GuiKeyboard makeQwertyKeyboard(GuiKeyWizard parent, double x, double y, double width, double height) {
 		GuiKeyboard kb = new GuiKeyboard(parent, x, y);
 		double currentX = 0;
 		double currentY = 0;
-		currentX = addHorizontalRow(kb, KEY_F1, KEY_F10, currentX, currentY, 20, 15, 5);
-		kb.addKey(currentX + 5, currentY, 20, 15, KEY_F11);
-		kb.addKey(currentX + 30, currentY, 20, 15, KEY_F12);
+		
+		double keyWidth = width/12-5;
+		double keyHeight = 15;
+		double keySpacing = 5;
+		
+		currentX = addHorizontalRow(kb, KEY_F1, KEY_F10, 0, currentY, keyWidth, keyHeight, keySpacing);
+		kb.addKey(currentX + keySpacing, currentY, keyWidth, keyHeight, KEY_F11);
+		kb.addKey(currentX + keyWidth + (keySpacing*2), currentY, keyWidth, keyHeight, KEY_F12);
+		
+		keyWidth = width/19;
+		currentY += keyHeight + 5;
+		kb.addKey(0, currentY, keyWidth, keyHeight, KEY_GRAVE);
+		currentX = keyWidth+keySpacing;
+		currentX = addHorizontalRow(kb, KEY_1, KEY_EQUALS, currentX, currentY, keyWidth, keyHeight, keySpacing);
+		kb.addKey(currentX + keySpacing, currentY, width - (currentX + keySpacing)-5, keyHeight, KEY_BACK);
 		return kb;
 	}
 	
@@ -44,7 +56,7 @@ public class KeyboardFactory {
 			kb.addKey(currentX, y, width, height, i);
 			currentX += width + spacing;
 		}
-		return width * (endCode-startCode + 1) + spacing * (endCode-startCode);
+		return startX + (width * (endCode-startCode + 1) + spacing * (endCode-startCode));
 	}
 
 }
