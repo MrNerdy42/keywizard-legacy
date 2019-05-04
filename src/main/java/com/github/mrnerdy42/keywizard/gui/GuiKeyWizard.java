@@ -182,14 +182,30 @@ public class GuiKeyWizard extends GuiScreen {
 	    	case "CONTROL":
 	    		this.keyboard.disableKey(KEY_LCONTROL);
 	    		this.keyboard.disableKey(KEY_RCONTROL);
+	    		
+	    		this.keyboard.enableKey(KEY_LMENU);
+	    		this.keyboard.enableKey(KEY_RMENU);
+	    		this.keyboard.enableKey(KEY_LSHIFT);
+	    		this.keyboard.enableKey(KEY_RSHIFT);
 	    		break;
 	    	case "ALT":
 	    		this.keyboard.disableKey(KEY_LMENU);
 	    		this.keyboard.disableKey(KEY_RMENU);
+	    		
+	    		this.keyboard.enableKey(KEY_LCONTROL);
+	    		this.keyboard.enableKey(KEY_RCONTROL);
+	    		this.keyboard.enableKey(KEY_LSHIFT);
+	    		this.keyboard.enableKey(KEY_RSHIFT);
 	    		break;
 	    	case "SHIFT":
 	    		this.keyboard.disableKey(KEY_LSHIFT);
 	    		this.keyboard.disableKey(KEY_RSHIFT);
+	    		
+	    		this.keyboard.enableKey(KEY_LCONTROL);
+	    		this.keyboard.enableKey(KEY_RCONTROL);
+	    		this.keyboard.enableKey(KEY_LMENU);
+	    		this.keyboard.enableKey(KEY_RMENU);
+	    		break;
 	    	case "NONE" :
 	    		this.keyboard.enableKey(KEY_LCONTROL);
 	    		this.keyboard.enableKey(KEY_RCONTROL);

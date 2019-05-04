@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.SoundEvents;
+import net.minecraftforge.client.settings.KeyModifier;
 
 public class GuiKeyboard extends FloatGui{
 
@@ -94,7 +95,6 @@ public class GuiKeyboard extends FloatGui{
 		public String displayString;
 
 		protected boolean hovered;
-		protected int numBindings;
 		
 
 		public GuiKeyboardKey(GuiKeyboard keyboard, double x, double y, double width, double height, int keyCode) {
@@ -109,21 +109,22 @@ public class GuiKeyboard extends FloatGui{
 
 		public void drawKey(Minecraft mc, double mouseX, double mouseY, float partialTicks) {
 			this.hovered = mouseX >= this.absX() && mouseY >= this.absY() && mouseX < this.absX() + this.width && mouseY < this.absY() + this.height;
-			this.numBindings = KeybindUtils.getNumBindings(this.keyCode, parent.getActiveModifier());
+			int modifiedBindings = KeybindUtils.getNumBindings(this.keyCode, parent.getActiveModifier());
+			//int unmodifiedBindings = KeybindUtils.getNumBindings(this.keyCode, KeyModifier.NONE);
 			int color = 0;
 			if (this.enabled) {
 				if (this.hovered) {
 					color = 0xFFAAAAAA;
-					if(this.numBindings == 1) {
+					if(modifiedBindings == 1) {
 						color = 0xFF00AA00;
-					} else if (this.numBindings > 1) {
+					} else if (modifiedBindings > 1) {
 						color = 0xFFAA0000;
 					}
 				}else {
 					color = 0xFFFFFFFF;
-					if(this.numBindings == 1) {
+					if(modifiedBindings == 1) {
 						color = 0xFF00FF00;
-					} else if (this.numBindings > 1) {
+					} else if (modifiedBindings > 1) {
 						color = 0xFFFF0000;
 					}
 				}
@@ -157,6 +158,10 @@ public class GuiKeyboard extends FloatGui{
 		}
 		public double absY() {
 			return this.keyboard.anchorY + this.y;
+		}
+		
+		public boolean isMouseOver() {
+			return this.hovered;
 		}
 	}
 	
