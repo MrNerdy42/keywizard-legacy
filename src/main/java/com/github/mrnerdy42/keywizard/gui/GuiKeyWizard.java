@@ -94,7 +94,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.searchBar.setCanLoseFocus(false);
 	
 		int keyboardX = listWidth + 15;
-		int keyboardY = this.height / 2 - 80;
+		int keyboardY = this.height / 2 - 100;
 		int buttonX = listWidth + 45;
 	
 		
@@ -103,7 +103,7 @@ public class GuiKeyWizard extends GuiScreen {
 		categories.add(0, "categories.unbound");
 		categories.add(0, "categories.all");
 		
-		this.keyboard = KeyboardFactory.makeKeyboard(KeyboardLayout.QWERTY, this, keyboardX, keyboardY, this.width-buttonX-10, 0);
+		this.keyboard = KeyboardFactory.makeKeyboard(KeyboardLayout.QWERTY, this, keyboardX, keyboardY, this.width-buttonX-5, this.height/15);
 		
 		this.categoryList = new GuiCategorySelector(buttonX - 30, 5, 125, "Binding Categories", categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
@@ -167,7 +167,7 @@ public class GuiKeyWizard extends GuiScreen {
 	    if ( this.buttonReset != null )
 	    	this.buttonReset.enabled = !this.selectedKeybind.isSetToDefaultValue();
 		if ( this.buttonClear != null ) {
-			this.buttonClear.enabled = (this.selectedKeybind.getKeyCode() == 0) ? false:true;
+			this.buttonClear.enabled = !(this.selectedKeybind.getKeyCode() == 0);
 		}
 	
 	    if ( this.categoryList != null )
@@ -175,6 +175,29 @@ public class GuiKeyWizard extends GuiScreen {
 	    
 	    if ( !this.searchBar.getText().equals(this.searchText) ) {
 	    	this.searchText = this.searchBar.getText();
+	    }
+	    
+	    if (this.activeModifier != null) {
+	    	switch (this.activeModifier.toString()) {
+	    	case "CONTROL":
+	    		this.keyboard.disableKey(KEY_LCONTROL);
+	    		this.keyboard.disableKey(KEY_RCONTROL);
+	    		break;
+	    	case "ALT":
+	    		this.keyboard.disableKey(KEY_LMENU);
+	    		this.keyboard.disableKey(KEY_RMENU);
+	    		break;
+	    	case "SHIFT":
+	    		this.keyboard.disableKey(KEY_LSHIFT);
+	    		this.keyboard.disableKey(KEY_RSHIFT);
+	    	case "NONE" :
+	    		this.keyboard.enableKey(KEY_LCONTROL);
+	    		this.keyboard.enableKey(KEY_RCONTROL);
+	    		this.keyboard.enableKey(KEY_LMENU);
+	    		this.keyboard.enableKey(KEY_RMENU);
+	    		this.keyboard.enableKey(KEY_LSHIFT);
+	    		this.keyboard.enableKey(KEY_RSHIFT);
+	    	}
 	    }
 	    
 	    this.buttonPage.displayString = "Page: " + String.format("%d", page);

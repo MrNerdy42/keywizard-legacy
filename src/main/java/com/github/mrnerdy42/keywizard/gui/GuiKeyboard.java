@@ -46,6 +46,14 @@ public class GuiKeyboard extends FloatGui{
 		this.keyList.put(new Integer(keyCode), new GuiKeyboardKey(this, xIn, yIn, width, height, keyCode));
 	}
 	
+	public void disableKey(int keyCode) {
+		this.keyList.get(keyCode).enabled = false;
+	}
+	
+	public void enableKey(int keyCode) {
+		this.keyList.get(keyCode).enabled = true;
+	}
+	
 	/**
 	 * Returns the width of the keyboard. Currently unused.
 	 * @return the width of the keyboard
@@ -80,12 +88,14 @@ public class GuiKeyboard extends FloatGui{
 		public double y;
 		public double width;
 		public double height;
+		public boolean enabled = true;
 
 		public int keyCode;
 		public String displayString;
 
 		protected boolean hovered;
 		protected int numBindings;
+		
 
 		public GuiKeyboardKey(GuiKeyboard keyboard, double x, double y, double width, double height, int keyCode) {
 			this.keyboard = keyboard;
@@ -100,21 +110,27 @@ public class GuiKeyboard extends FloatGui{
 		public void drawKey(Minecraft mc, double mouseX, double mouseY, float partialTicks) {
 			this.hovered = mouseX >= this.absX() && mouseY >= this.absY() && mouseX < this.absX() + this.width && mouseY < this.absY() + this.height;
 			this.numBindings = KeybindUtils.getNumBindings(this.keyCode, parent.getActiveModifier());
-			int color = 0xFFAAAAAA;
-			if (this.hovered) {
-				if(this.numBindings == 1) {
-					color = 0xFF00AA00;
-				} else if (this.numBindings > 1) {
-					color = 0xFFAA0000;
+			int color = 0;
+			if (this.enabled) {
+				if (this.hovered) {
+					color = 0xFFAAAAAA;
+					if(this.numBindings == 1) {
+						color = 0xFF00AA00;
+					} else if (this.numBindings > 1) {
+						color = 0xFFAA0000;
+					}
+				}else {
+					color = 0xFFFFFFFF;
+					if(this.numBindings == 1) {
+						color = 0xFF00FF00;
+					} else if (this.numBindings > 1) {
+						color = 0xFFFF0000;
+					}
 				}
-			}else {
-				color = 0xFFFFFFFF;
-				if(this.numBindings == 1) {
-					color = 0xFF00FF00;
-				} else if (this.numBindings > 1) {
-					color = 0xFFFF0000;
-				}
+			} else {
+				color = 0xFF555555;
 			}
+			
 			drawNoFillRect(this.absX(), this.absY(), this.absX() + this.width, this.absY() + this.height, color);
 			this.drawCenteredString(this.keyboard.parent.getFontRenderer(), this.displayString, (float)(this.absX()+(this.width+2)/2.0F), (float)(this.absY()+(this.height-6)/2.0F), color & 0x00FFFFFF);
 		}
@@ -127,7 +143,7 @@ public class GuiKeyboard extends FloatGui{
 		}
 		
 		public void mouseClicked(Minecraft mc, int mouseX, int mouseY, int button) {
-			if(mouseX >= this.absX() && mouseX < this.absX() + this.width && mouseY >= this.absY() && mouseY < this.absY() + this.height && button == 0) {
+			if(mouseX >= this.absX() && mouseX < this.absX() + this.width && mouseY >= this.absY() && mouseY < this.absY() + this.height && button == 0 && this.enabled) {
 				mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 				parent.getSelectedKeybind().setKeyModifierAndCode(parent.getActiveModifier(), this.keyCode);
 				mc.gameSettings.setOptionKeyBinding(parent.getSelectedKeybind(), this.keyCode);
