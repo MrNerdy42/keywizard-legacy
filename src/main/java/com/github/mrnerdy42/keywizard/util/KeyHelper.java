@@ -36,6 +36,8 @@ public class KeyHelper {
 		KEY_LABELS.put(KEY_GRAVE, "`");
 		KEY_LABELS.put(KEY_LCONTROL, "LCTRL");
 		KEY_LABELS.put(KEY_RCONTROL, "RCTRL");
+		KEY_LABELS.put(KEY_LMETA, "LALT");
+		KEY_LABELS.put(KEY_RMETA, "RALT");
 	}
 	
 	/**

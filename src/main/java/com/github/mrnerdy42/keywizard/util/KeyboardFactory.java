@@ -55,11 +55,8 @@ public class KeyboardFactory {
 		kb.addKey(currentX + keySpacing, currentY, keyWidth*3+keySpacing*2, keyHeight, KEY_RSHIFT);
 		
 		currentY += keyHeight + keySpacing;
-		keyWidth = keyWidth*2;
-		currentX = addHorizontalRow(kb, new int[] {KEY_LCONTROL,KEY_LMETA,KEY_LMENU}, 0, currentY, keyWidth, keyHeight, keySpacing);
-		kb.addKey(currentX, currentY, keyWidth, keyHeight, KEY_SPACE);
-		currentX += keyWidth*2;
-		currentX = addHorizontalRow(kb, new int[] {KEY_RMETA,KEY_RMENU,KEY_RCONTROL}, currentX, currentY, keyWidth, keyHeight, keySpacing);
+		keyWidth = width/7-keySpacing;
+		currentX = addHorizontalRow(kb, new int[] {KEY_LCONTROL,KEY_LMENU,KEY_LMETA,KEY_SPACE,KEY_RMETA,KEY_RMENU,KEY_RCONTROL}, 0, currentY, keyWidth, keyHeight, keySpacing);
 		
 		return kb;
 	}
