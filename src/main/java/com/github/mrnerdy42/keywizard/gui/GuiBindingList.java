@@ -1,18 +1,13 @@
 package com.github.mrnerdy42.keywizard.gui;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.fml.client.GuiScrollingList;
 
 public class GuiBindingList extends GuiScrollingList {

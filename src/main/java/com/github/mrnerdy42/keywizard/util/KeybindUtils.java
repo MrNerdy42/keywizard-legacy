@@ -1,9 +1,6 @@
 package com.github.mrnerdy42.keywizard.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import static org.lwjgl.input.Keyboard.*;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
@@ -21,7 +18,7 @@ public class KeybindUtils {
 	 * @param modifier the modifier of the key to get the binding names for
 	 */
 	public static ArrayList<String> getBindingNames(int keyId, KeyModifier modifier){
-		ArrayList<String> bindingNames = new ArrayList();
+		ArrayList<String> bindingNames = new ArrayList<>();
 		
 		if (keyId == 0)
 			return bindingNames;
@@ -67,7 +64,7 @@ public class KeybindUtils {
 	 */
 	
 	public static ArrayList<String> getCategories() {
-		ArrayList<String> categories = new ArrayList();
+		ArrayList<String> categories = new ArrayList<>();
 		
 		for (KeyBinding currentBinding : ALL_BINDINGS) {
 			if ( !categories.contains(currentBinding.getKeyCategory()) )

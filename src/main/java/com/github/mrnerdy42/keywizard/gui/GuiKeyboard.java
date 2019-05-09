@@ -1,18 +1,14 @@
 package com.github.mrnerdy42.keywizard.gui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import com.github.mrnerdy42.keywizard.util.KeyHelper;
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
-import com.github.mrnerdy42.keywizard.util.KeyboardLayout;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.SoundEvents;
-import net.minecraftforge.client.settings.KeyModifier;
 
 public class GuiKeyboard extends FloatGui{
 

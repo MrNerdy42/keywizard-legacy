@@ -4,12 +4,10 @@ import static org.lwjgl.input.Keyboard.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import org.lwjgl.input.Mouse;
 
-import com.github.mrnerdy42.keywizard.util.KeyHelper;
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
 import com.github.mrnerdy42.keywizard.util.KeyboardFactory;
 import com.github.mrnerdy42.keywizard.util.KeyboardLayout;
@@ -20,9 +18,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.settings.KeyModifier;
 
 public class GuiKeyWizard extends GuiScreen {
@@ -34,7 +30,7 @@ public class GuiKeyWizard extends GuiScreen {
 	//protected Minecraft client = FMLClientHandler.instance().getClient();
 	//protected KeyBinding[] allBindings = KeybindUtils.ALL_BINDINGS;
 	
-	private final GameSettings options;
+	//private final GameSettings options;
 	private final GuiScreen parentScreen;
 
 	// These hash maps map LWJGL key ids to buttons in the gui. Use these to
@@ -62,8 +58,8 @@ public class GuiKeyWizard extends GuiScreen {
 	
 	protected GuiKeyboard keyboard;
 
-	public GuiKeyWizard(Minecraft mcIn, GuiScreen parentScreen, GameSettings settings) {
-		this.options = settings;
+	public GuiKeyWizard(Minecraft mcIn, GuiScreen parentScreen) {
+		//this.options = settings;
 		this.mc = mcIn;
 		this.parentScreen = parentScreen;
 	}

@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiKeyBindingList;
 import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiOptionSlider;
 import net.minecraft.client.gui.GuiScreen;
@@ -101,7 +100,7 @@ public class GuiControlsPlusKeyWiz extends GuiScreen
             KeyBinding.resetKeyBindingArrayAndHash();
         }
         else if (button == this.buttonOpenKeyWiz) {
-        	this.mc.displayGuiScreen(new GuiKeyWizard(this.mc, this, this.options));
+        	this.mc.displayGuiScreen(new GuiKeyWizard(this.mc, this));
         }
         else if (button.id < 100 && button instanceof GuiOptionButton)
         {

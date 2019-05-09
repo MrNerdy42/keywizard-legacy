@@ -1,22 +1,22 @@
 package com.github.mrnerdy42.keywizard.gui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import org.lwjgl.input.Mouse;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.fml.client.FMLClientHandler;
 /**
  *An NEI-style dropdown list menu. Its functionality is 
  *hacked together using the vanilla GuiButton class
  */
 public class GuiCategorySelector extends GuiButton{
+	
+	private ListItem[] items;
+	
+	private boolean extended = false;
+	private ListItem selectedItem;
 
 	private class ListItem extends GuiButton{
 		
@@ -31,10 +31,6 @@ public class GuiCategorySelector extends GuiButton{
 			this.name = name;
 			this.parent = parent;
 			
-		}
-		
-		public int getIndex(){
-			return this.index;
 		}
 		
 		/**
@@ -63,19 +59,10 @@ public class GuiCategorySelector extends GuiButton{
 	    }		
 	}
 	
-	private ListItem[] items;
-	private int length;
-	
-	private boolean extended = false;
-	private ListItem selectedItem;
-	
-	private int selectedIndex;
-	
 	public GuiCategorySelector(int x, int y, int width, String buttonText, ArrayList<String> itemNames) {
 		super(0, x, y, width, 20, buttonText);
 		
 		this.items = new ListItem[itemNames.size()];
-		this.length = this.items.length;
 
 		int row = 0;
 		int column = 0;
@@ -166,7 +153,6 @@ public class GuiCategorySelector extends GuiButton{
     
     public void selectItem(int index){
 		this.selectedItem = items[index];
-		this.selectedIndex = index;
 		this.updateState();
 	}
     
@@ -183,11 +169,7 @@ public class GuiCategorySelector extends GuiButton{
 			
 			item.visible = this.extended;
 			
-			if (item == this.selectedItem){
-				item.enabled = false;
-			} else {
-				item.enabled = true;
-			}
+			this.enabled = !(item == this.selectedItem);
 		}
 	}
 }

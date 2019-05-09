@@ -1,8 +1,9 @@
 package com.github.mrnerdy42.keywizard.util;
 
+import static org.lwjgl.input.Keyboard.*;
+
 import com.github.mrnerdy42.keywizard.gui.GuiKeyWizard;
 import com.github.mrnerdy42.keywizard.gui.GuiKeyboard;
-import static org.lwjgl.input.Keyboard.*;
 
 public class KeyboardFactory {
 	public static GuiKeyboard makeKeyboard(KeyboardLayout layout, GuiKeyWizard parent, double x, double y, double width, double height) {

@@ -1,16 +1,17 @@
 package com.github.mrnerdy42.keywizard.gui;
 
 import java.util.Arrays;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiListExtended;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.client.gui.GuiButton;
-import org.apache.commons.lang3.ArrayUtils;
 
 @SideOnly(Side.CLIENT)
 public class GuiControlsPlusKeyWizBindingList extends GuiListExtended
