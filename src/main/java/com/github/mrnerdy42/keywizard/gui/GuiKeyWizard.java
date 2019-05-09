@@ -352,6 +352,7 @@ public class GuiKeyWizard extends GuiScreen {
 	
 	public KeyModifier getActiveModifier() {
 		return this.activeModifier;
+	}
 	
 	public KeyBinding getSelectedKeybind() {
 		return this.selectedKeybind;
