@@ -61,12 +61,6 @@ public class GuiKeyWizard extends GuiScreen {
 	private GuiButton buttonActiveModifier;
 	
 	protected GuiKeyboard keyboard;
-	
-	/**
-	 * This variable is incremented every time a key is added to the keyboard.
-	 * This is to allows the ids in the buttonList to be sequential.
-	 */
-	private int currentID = 2;
 
 	public GuiKeyWizard(Minecraft mcIn, GuiScreen parentScreen, GameSettings settings) {
 		this.options = settings;
