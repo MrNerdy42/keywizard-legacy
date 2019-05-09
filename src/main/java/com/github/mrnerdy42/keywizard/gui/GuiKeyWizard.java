@@ -216,7 +216,7 @@ public class GuiKeyWizard extends GuiScreen {
 	    	}
 	    }
 	    
-	    this.buttonPage.displayString = "Page: " + String.format("%d", page);
+	    this.buttonPage.displayString = I18n.format("gui.page") + ": " + String.format("%d", page);
 	    this.bindingList.updateList();
 	}
 
@@ -331,7 +331,7 @@ public class GuiKeyWizard extends GuiScreen {
 			this.activeModifier = KeyModifier.NONE;
 		}
 
-		this.buttonActiveModifier.displayString = "Active Modifier: " + activeModifier.toString();
+		this.buttonActiveModifier.displayString = I18n.format("gui.activeModifier" )+ ": " + activeModifier.toString();
 	}
 	
     public Minecraft getClient() {
@@ -352,7 +352,6 @@ public class GuiKeyWizard extends GuiScreen {
 	
 	public KeyModifier getActiveModifier() {
 		return this.activeModifier;
-	}
 	
 	public KeyBinding getSelectedKeybind() {
 		return this.selectedKeybind;
@@ -361,51 +360,4 @@ public class GuiKeyWizard extends GuiScreen {
 	protected void setSelectedKeybind(KeyBinding binding){
     	this.selectedKeybind = binding;
     }
-	
-    /**
-	 * Add a key to the keyboard using an existing key as an anchor
-	 * 
-	 * @param keyCode
-	 *     the LWJGL code of the new key
-	 * @param anchorCode
-	 *     the LWJGL code of the key to anchor to
-	 * @param xOffset
-	 *     amount to offset the key on the x axis
-	 * @param yOffset
-	 *     amount to offset the key on the y axis
-	 * @param width
-	 *     the width of the new key
-	 * @param page
-	 *     the page to place the key on
-	 */
-	private void placeAuxKey(int keyCode, int anchorCode, int xOffset, int yOffset, int width, HashMap<Integer, GuiButton> page) {
-		GuiButton anchor = page.get(anchorCode);
-		GuiButton button = new GuiButton(this.currentID, anchor.x + xOffset, anchor.y + yOffset, width,
-				20, KeyHelper.translateKey(keyCode));
-		this.buttonList.add(button);
-		page.put(keyCode, button);
-		this.currentID++;
-	}
-    
-    /**
-	 * Add a key to the keyboard
-	 * 
-	 * @param keyCode
-	 *     the LWJGL code of the new key
-	 * @param x
-	 *     x position of the button
-	 * @param y
-	 *     y position of the button
-	 * @param width
-	 *     the width of the new key
-	 * @param page
-	 *     the page to place the key on
-	 */
-	private void placeKey(int keyCode, int x, int y, int width, HashMap<Integer, GuiButton> page) {
-		GuiButton button = new GuiButton(this.currentID, x, y, width, 20, KeyHelper.translateKey(keyCode));
-		this.buttonList.add(button);
-		page.put(keyCode, button);
-		this.currentID++;
-	}
-
 }
