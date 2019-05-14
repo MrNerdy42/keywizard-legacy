@@ -104,7 +104,7 @@ public class GuiKeyWizard extends GuiScreen {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		this.bindingList.drawScreen(mouseX, mouseY, partialTicks);
 		this.searchBar.drawTextBox();
-	
+		
 		this.categoryList.drawList(this.mc, mouseX, mouseY, partialTicks);
 		this.keyboard.draw(this.mc, mouseX, mouseY, partialTicks);
 	

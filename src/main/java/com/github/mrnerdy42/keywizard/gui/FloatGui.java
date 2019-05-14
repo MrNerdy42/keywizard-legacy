@@ -47,13 +47,21 @@ public class FloatGui
 
         drawRect(x, startY + 1, x + 1, endY, color);
     }
+    
+
+	protected void drawNoFillRect(double left, double top, double right, double bottom, int color) {
+		drawHorizontalLine(left, right, top, color);
+		drawHorizontalLine(left, right, bottom, color);
+		drawVerticalLine(left, top, bottom, color);
+		drawVerticalLine(right, top, bottom, color);
+	}
 
     /**
      * Draws a solid color rectangle with the specified coordinates and color.
      * 
      * @param color 0xAARRGGBB
      */
-    public static void drawRect(double left, double top, double right, double bottom, int color)
+    public void drawRect(double left, double top, double right, double bottom, int color)
     {
         if (left < right)
         {
@@ -80,10 +88,10 @@ public class FloatGui
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         GlStateManager.color(f, f1, f2, f3);
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION);
-        bufferbuilder.pos((double)left, (double)bottom, 0.0D).endVertex();
-        bufferbuilder.pos((double)right, (double)bottom, 0.0D).endVertex();
-        bufferbuilder.pos((double)right, (double)top, 0.0D).endVertex();
-        bufferbuilder.pos((double)left, (double)top, 0.0D).endVertex();
+        bufferbuilder.pos((double)left, (double)bottom, this.zLevel).endVertex();
+        bufferbuilder.pos((double)right, (double)bottom, this.zLevel).endVertex();
+        bufferbuilder.pos((double)right, (double)top, this.zLevel).endVertex();
+        bufferbuilder.pos((double)left, (double)top, this.zLevel).endVertex();
         tessellator.draw();
         GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
@@ -93,7 +101,7 @@ public class FloatGui
      * Draws a rectangle with a vertical gradient between the specified colors (ARGB format). Args : x1, y1, x2, y2,
      * topColor, bottomColor
      */
-    protected void drawGradientRect(int left, int top, int right, int bottom, int startColor, int endColor)
+    protected void drawGradientRect(double left, double top, double right, double bottom, int startColor, int endColor)
     {
         float f = (float)(startColor >> 24 & 255) / 255.0F;
         float f1 = (float)(startColor >> 16 & 255) / 255.0F;

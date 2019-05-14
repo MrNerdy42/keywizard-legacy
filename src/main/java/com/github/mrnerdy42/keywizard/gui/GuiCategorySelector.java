@@ -56,7 +56,14 @@ public class GuiCategorySelector extends GuiButton{
 	    		buttonHit = true;
 	    	}
 	    	return buttonHit;
-	    }		
+	    }
+	    
+	    @Override
+	    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks){
+	    	this.zLevel = 100;
+	    	super.drawButton(mc, mouseX, mouseY, partialTicks);
+	    	System.out.println(this.zLevel);
+	    }
 	}
 	
 	public GuiCategorySelector(int x, int y, int width, String buttonText, ArrayList<String> itemNames) {
@@ -80,6 +87,7 @@ public class GuiCategorySelector extends GuiButton{
 	
 	@Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks){
+		//this.zLevel = 1;
         if (this.visible)
         {
             FontRenderer fontrenderer = mc.fontRenderer;
@@ -107,10 +115,11 @@ public class GuiCategorySelector extends GuiButton{
 
             this.drawCenteredString(fontrenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
         }
+        System.out.println(this.zLevel);
     }
 	
 	public void drawList(Minecraft mc, int mouseX, int mouseY, float partialTicks){
-		this.drawButton(mc, mouseX, mouseY, partialTicks);;
+		this.drawButton(mc, mouseX, mouseY, partialTicks);
 		
 		for (ListItem item : this.items) {
 			item.drawButton(mc, mouseX, mouseY, partialTicks);

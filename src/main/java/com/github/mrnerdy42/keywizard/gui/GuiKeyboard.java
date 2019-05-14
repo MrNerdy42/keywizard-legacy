@@ -4,9 +4,12 @@ import java.util.HashMap;
 
 import com.github.mrnerdy42.keywizard.util.KeyHelper;
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
+import com.github.mrnerdy42.keywizard.util.UtilityGL11Debug;
+import com.sun.jna.platform.KeyboardUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.SoundEvents;
 
@@ -30,6 +33,11 @@ public class GuiKeyboard extends FloatGui{
 	public void draw(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 		for(GuiKeyboardKey k:this.keyList.values()) {
 			k.drawKey(mc, mouseX, mouseY, partialTicks);
+		}
+		for(GuiKeyboardKey k:this.keyList.values()) {
+			if(k.hovered) {
+			    net.minecraftforge.fml.client.config.GuiUtils.drawHoveringText(KeybindUtils.getBindingNames(k.keyCode, this.parent.getActiveModifier()), (int)k.absX(), (int)k.absY(), this.parent.width, this.parent.height, -1, this.parent.getFontRenderer());
+			}
 		}
 	}
 	
@@ -76,6 +84,13 @@ public class GuiKeyboard extends FloatGui{
 			k.height = k.height*scaleFactor;
 			k.x = k.x*scaleFactor;
 			k.y = k.y*scaleFactor;
+		}
+	}
+	
+	public void setZLevel(float zLevel) {
+		this.zLevel = zLevel;
+		for(GuiKeyboardKey k:this.keyList.values()) {
+			k.zLevel = this.zLevel;
 		}
 	}
 
@@ -127,16 +142,9 @@ public class GuiKeyboard extends FloatGui{
 			} else {
 				color = 0xFF555555;
 			}
-			
-			drawNoFillRect(this.absX(), this.absY(), this.absX() + this.width, this.absY() + this.height, color);
-			this.drawCenteredString(this.keyboard.parent.getFontRenderer(), this.displayString, (float)(this.absX()+(this.width+2)/2.0F), (float)(this.absY()+(this.height-6)/2.0F), color & 0x00FFFFFF);
-		}
 
-		protected void drawNoFillRect(double left, double top, double right, double bottom, int color) {
-			drawHorizontalLine(left, right, top, color);
-			drawHorizontalLine(left, right, bottom, color);
-			drawVerticalLine(left, top, bottom, color);
-			drawVerticalLine(right, top, bottom, color);
+			drawNoFillRect(this.absX(), this.absY(), this.absX() + this.width, this.absY() + this.height, color);
+			drawCenteredString(this.keyboard.parent.getFontRenderer(), this.displayString, (float)(this.absX()+(this.width+2)/2.0F), (float)(this.absY()+(this.height-6)/2.0F), color & 0x00FFFFFF);
 		}
 		
 		public void mouseClicked(Minecraft mc, int mouseX, int mouseY, int button) {
