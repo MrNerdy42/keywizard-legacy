@@ -23,28 +23,13 @@ import net.minecraftforge.client.settings.KeyModifier;
 
 public class GuiKeyWizard extends GuiScreen {
 	
-	
-
-	// An alternative to the mc field of GuiScreen because it was throwing a
-	// null pointer exception
-	//protected Minecraft client = FMLClientHandler.instance().getClient();
-	//protected KeyBinding[] allBindings = KeybindUtils.ALL_BINDINGS;
-	
-	//private final GameSettings options;
 	private final GuiScreen parentScreen;
-
-	// These hash maps map LWJGL key ids to buttons in the gui. Use these to
-	// access keys instead of buttonList
-	//private HashMap<Integer, GuiButton> keyboard = new HashMap();
-	//private HashMap<Integer, GuiButton> numpad = new HashMap();
-	//private HashMap<Integer, GuiButton> currentPage = keyboard;
 	
 	private int page = 1;
 	private KeyBinding selectedKeybind;
 	private KeyModifier activeModifier = KeyModifier.NONE;
 	private String selectedCategory = "categories.all";
 	private String searchText = "";
-	//private String keyboardMode = "keyboard";
 
 
 	private GuiCategorySelector categoryList;
@@ -59,7 +44,6 @@ public class GuiKeyWizard extends GuiScreen {
 	protected GuiKeyboard keyboard;
 
 	public GuiKeyWizard(Minecraft mcIn, GuiScreen parentScreen) {
-		//this.options = settings;
 		this.mc = mcIn;
 		this.parentScreen = parentScreen;
 	}
@@ -206,7 +190,7 @@ public class GuiKeyWizard extends GuiScreen {
 	    	}
 	    }
 	    
-	    this.buttonPage.displayString = I18n.format("gui.page") + ": " + String.format("%d", page);
+	    this.buttonPage.displayString = I18n.format("gui.page") + ": " + String.format("%d", this.page);
 	    this.bindingList.updateList();
 	}
 
@@ -259,27 +243,6 @@ public class GuiKeyWizard extends GuiScreen {
 			 */
 				
 		}
-		
-		//if (!this.categoryList.getExtended() ){
-		/*
-		 *if ( this.currentPage.containsValue(button) && !this.categoryList.getExtended() ){
-		 *
-		 *	int newKeyId = 0;
-         *
-		 *	for (int keyId : currentPage.keySet()) {
-		 *		if (currentPage.containsKey(keyId) && currentPage.get(keyId) == button)
-		 *			newKeyId = keyId;
-		 *	}
-         *
-		 *	if (newKeyId != 0) {
-		 *		this.selectedKeybind.setKeyModifierAndCode(this.activeModifier, newKeyId);
-		 *		this.options.setOptionKeyBinding(this.selectedKeybind, newKeyId);
-		 *		KeyBinding.resetKeyBindingArrayAndHash();
-		 *	}
-		 *	this.buttonReset.enabled = !selectedKeybind.isSetToDefaultValue();
-		 *	return;
-		 *}
-		 */
 	}
 
 	@Override
