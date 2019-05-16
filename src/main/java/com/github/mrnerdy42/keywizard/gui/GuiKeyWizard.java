@@ -68,7 +68,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.searchBar.setCanLoseFocus(false);
 	
 		int keyboardX = listWidth + 15;
-		int keyboardY = this.height / 2 - 100;
+		int keyboardY = this.height / 2 - 90;
 		int buttonX = listWidth + 45;
 	
 		
@@ -81,13 +81,13 @@ public class GuiKeyWizard extends GuiScreen {
 		
 		this.categoryList = new GuiCategorySelector(buttonX - 30, 5, 125, "Binding Categories", categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
-		this.buttonPage = new GuiButton(0, buttonX + 105, 5, 100, 20, "Page: " + String.format("%d", page) );
+		this.buttonPage = new GuiButton(0, buttonX + 105, 5, 100, 20, I18n.format("gui.page") + ": " + String.format("%d", this.page) );
 	
 		this.buttonReset = new GuiButton(0, buttonX - 30, this.height - 40, 100, 20, I18n.format("gui.resetBinding"));
 		this.buttonClear = new GuiButton(0, buttonX + 75, this.height - 40, 100, 20, I18n.format("gui.clearBinding"));
 		this.buttonDone = new GuiButton(0, buttonX + 180, this.height - 40, 100, 20, I18n.format("gui.done"));
 		this.buttonActiveModifier = new GuiButton(1, buttonX - 30, this.height - 65, 150, 20,
-				"Active Modifier: " + activeModifier.toString());
+				I18n.format("gui.activeModifier" )+ ": " + activeModifier.toString());
 		
 		this.setSelectedKeybind(this.bindingList.getSelectedKeybind());
 		
