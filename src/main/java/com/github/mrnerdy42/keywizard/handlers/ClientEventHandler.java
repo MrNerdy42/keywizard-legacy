@@ -8,6 +8,7 @@ import com.github.mrnerdy42.keywizard.gui.GuiKeyWizard;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiControls;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -20,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ClientEventHandler {
 	
-	public static KeyBinding keyOpenKeyWizard = new KeyBinding("keywizard.keybind.openKeyboardWizard", Keyboard.KEY_F7, "key.categories.misc");
+	public static KeyBinding keyOpenKeyWizard = new KeyBinding(I18n.format(KeyWizard.MODID + ".keybind.openKeyboardWizard"), Keyboard.KEY_F7, "key.categories.misc");
 
 	private Minecraft client  = FMLClientHandler.instance().getClient();
 	

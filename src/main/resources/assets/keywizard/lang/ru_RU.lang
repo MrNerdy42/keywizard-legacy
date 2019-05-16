@@ -13,3 +13,5 @@ gui.clearBinding=Убрать назначение
 gui.activeModifier=Модификатор
 gui.bindingCategories=категории
 gui.page=страница
+
+keywizard.keybind.openKeyboardWizard=Открыть Умный менеджер Клавиш
