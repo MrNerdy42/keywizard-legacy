@@ -67,26 +67,25 @@ public class GuiKeyWizard extends GuiScreen {
 		this.searchBar.setFocused(true);
 		this.searchBar.setCanLoseFocus(false);
 	
-		int keyboardX = listWidth + 15;
+		int guiX = listWidth + 15;
+		int adjustedWidth = this.width - guiX;
 		int keyboardY = this.height / 2 - 90;
-		int buttonX = listWidth + 45;
-	
 		
 		ArrayList<String> categories = KeybindUtils.getCategories();
 		categories.add(0, "categories.conflicts");
 		categories.add(0, "categories.unbound");
 		categories.add(0, "categories.all");
 		
-		this.keyboard = KeyboardFactory.makeKeyboard(KeyboardLayout.QWERTY, this, keyboardX, keyboardY, this.width-buttonX-5, this.height/15);
+		this.keyboard = KeyboardFactory.makeKeyboard(KeyboardLayout.QWERTY, this, guiX, keyboardY, adjustedWidth - 5, this.height/15);
 		
-		this.categoryList = new GuiCategorySelector(buttonX - 30, 5, 125, "Binding Categories", categories);
+		this.categoryList = new GuiCategorySelector(guiX, 5, 125, "Binding Categories", categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
-		this.buttonPage = new GuiButton(0, buttonX + 105, 5, 100, 20, I18n.format("gui.page") + ": " + String.format("%d", this.page) );
+		this.buttonPage = new GuiButton(0, guiX + 105, 5, 100, 20, I18n.format("gui.page") + ": " + String.format("%d", this.page) );
 	
-		this.buttonReset = new GuiButton(0, buttonX - 30, this.height - 40, 100, 20, I18n.format("gui.resetBinding"));
-		this.buttonClear = new GuiButton(0, buttonX + 75, this.height - 40, 100, 20, I18n.format("gui.clearBinding"));
-		this.buttonDone = new GuiButton(0, buttonX + 180, this.height - 40, 100, 20, I18n.format("gui.done"));
-		this.buttonActiveModifier = new GuiButton(1, buttonX - 30, this.height - 65, 150, 20,
+		this.buttonReset = new GuiButton(0, guiX, this.height - 40, adjustedWidth / 3, 20, I18n.format("gui.resetBinding"));
+		this.buttonClear = new GuiButton(0, guiX + adjustedWidth / 3 + 3, this.height - 40, adjustedWidth / 3, 20, I18n.format("gui.clearBinding"));
+		this.buttonDone = new GuiButton(0, guiX + (adjustedWidth / 3)*2 + 6, this.height - 40, adjustedWidth / 3 - 10, 20, I18n.format("gui.done"));
+		this.buttonActiveModifier = new GuiButton(1, guiX, this.height - 65, 125, 20,
 				I18n.format("gui.activeModifier" )+ ": " + activeModifier.toString());
 		
 		this.setSelectedKeybind(this.bindingList.getSelectedKeybind());
