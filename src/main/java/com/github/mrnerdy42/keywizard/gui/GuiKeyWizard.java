@@ -78,7 +78,7 @@ public class GuiKeyWizard extends GuiScreen {
 		
 		this.keyboard = KeyboardFactory.makeKeyboard(KeyboardLayout.QWERTY, this, guiX, keyboardY, adjustedWidth - 5, this.height/15);
 		
-		this.categoryList = new GuiCategorySelector(guiX, 5, 125, "Binding Categories", categories);
+		this.categoryList = new GuiCategorySelector(guiX, 5, 125, I18n.format("gui.bindingCategories"), categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
 		this.buttonPage = new GuiButton(0, guiX + 105, 5, 100, 20, I18n.format("gui.page") + ": " + String.format("%d", this.page) );
 	
