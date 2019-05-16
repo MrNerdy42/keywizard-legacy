@@ -62,7 +62,6 @@ public class GuiCategorySelector extends GuiButton{
 	    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks){
 	    	this.zLevel = 100;
 	    	super.drawButton(mc, mouseX, mouseY, partialTicks);
-	    	System.out.println(this.zLevel);
 	    }
 	}
 	
@@ -115,7 +114,7 @@ public class GuiCategorySelector extends GuiButton{
 
             this.drawCenteredString(fontrenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
         }
-        System.out.println(this.zLevel);
+
     }
 	
 	public void drawList(Minecraft mc, int mouseX, int mouseY, float partialTicks){

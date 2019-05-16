@@ -105,8 +105,8 @@ public class GuiKeyWizard extends GuiScreen {
 		this.bindingList.drawScreen(mouseX, mouseY, partialTicks);
 		this.searchBar.drawTextBox();
 		
-		this.categoryList.drawList(this.mc, mouseX, mouseY, partialTicks);
 		this.keyboard.draw(this.mc, mouseX, mouseY, partialTicks);
+		this.categoryList.drawList(this.mc, mouseX, mouseY, partialTicks);
 	
 		// Color key and draw hovering text
 		/*
@@ -314,4 +314,8 @@ public class GuiKeyWizard extends GuiScreen {
 	protected void setSelectedKeybind(KeyBinding binding){
     	this.selectedKeybind = binding;
     }
+	
+	public boolean getCategoryListExtended() {
+		return this.categoryList.getExtended();
+	}
 }

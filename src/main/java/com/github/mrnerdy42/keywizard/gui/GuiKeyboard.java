@@ -4,8 +4,6 @@ import java.util.HashMap;
 
 import com.github.mrnerdy42.keywizard.util.KeyHelper;
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
-import com.github.mrnerdy42.keywizard.util.UtilityGL11Debug;
-import com.sun.jna.platform.KeyboardUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -30,13 +28,15 @@ public class GuiKeyboard extends FloatGui{
 	}
 
 
-	public void draw(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
+	public void draw(Minecraft mc, int mouseX, int mouseY, float partialTicks) {  
 		for(GuiKeyboardKey k:this.keyList.values()) {
 			k.drawKey(mc, mouseX, mouseY, partialTicks);
 		}
 		for(GuiKeyboardKey k:this.keyList.values()) {
-			if(k.hovered) {
+			if(k.hovered && !parent.getCategoryListExtended()) {
 			    net.minecraftforge.fml.client.config.GuiUtils.drawHoveringText(KeybindUtils.getBindingNames(k.keyCode, this.parent.getActiveModifier()), (int)k.absX(), (int)k.absY(), this.parent.width, this.parent.height, -1, this.parent.getFontRenderer());
+			    GlStateManager.disableLighting();
+	            GlStateManager.disableDepth();
 			}
 		}
 	}
@@ -124,7 +124,7 @@ public class GuiKeyboard extends FloatGui{
 			//int unmodifiedBindings = KeybindUtils.getNumBindings(this.keyCode, KeyModifier.NONE);
 			int color = 0;
 			if (this.enabled) {
-				if (this.hovered) {
+				if (this.hovered && !parent.getCategoryListExtended()) {
 					color = 0xFFAAAAAA;
 					if(modifiedBindings == 1) {
 						color = 0xFF00AA00;
@@ -148,7 +148,7 @@ public class GuiKeyboard extends FloatGui{
 		}
 		
 		public void mouseClicked(Minecraft mc, int mouseX, int mouseY, int button) {
-			if(mouseX >= this.absX() && mouseX < this.absX() + this.width && mouseY >= this.absY() && mouseY < this.absY() + this.height && button == 0 && this.enabled) {
+			if(this.hovered && this.enabled && !parent.getCategoryListExtended() && button == 0) {
 				mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 				parent.getSelectedKeybind().setKeyModifierAndCode(parent.getActiveModifier(), this.keyCode);
 				mc.gameSettings.setOptionKeyBinding(parent.getSelectedKeybind(), this.keyCode);
