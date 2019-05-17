@@ -163,10 +163,6 @@ public class GuiKeyboard extends FloatGui{
 		public double absY() {
 			return this.keyboard.anchorY + this.y;
 		}
-		
-		public boolean isMouseOver() {
-			return this.hovered;
-		}
 	}
 	
 }
