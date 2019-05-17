@@ -76,15 +76,22 @@ public class GuiKeyWizard extends GuiScreen {
 		categories.add(0, "categories.unbound");
 		categories.add(0, "categories.all");
 		
+		maxLength = 0;
+		for(String s:categories) {
+			if (s.length() > maxLength)
+				maxLength = s.length();
+		}
+		this.categoryList = new GuiCategorySelector(guiX, 5, maxLength*3, categories);
+		this.selectedCategory = this.categoryList.getSelctedCategory();
+		
+		
 		this.keyboard = KeyboardFactory.makeKeyboard(KeyboardLayout.QWERTY, this, guiX, keyboardY, adjustedWidth - 5, this.height/15);
 		
-		this.categoryList = new GuiCategorySelector(guiX, 5, 125, I18n.format("gui.bindingCategories"), categories);
-		this.selectedCategory = this.categoryList.getSelctedCategory();
 		this.buttonPage = new GuiButton(0, guiX + 105, 5, 100, 20, I18n.format("gui.page") + ": " + String.format("%d", this.page) );
 	
-		this.buttonReset = new GuiButton(0, guiX, this.height - 40, 80, 20, I18n.format("gui.resetBinding"));
-		this.buttonClear = new GuiButton(0, guiX + 85, this.height - 40, 80, 20, I18n.format("gui.clearBinding"));
-		this.buttonDone = new GuiButton(0, this.width - 85, this.height - 40, 80, 20, I18n.format("gui.done"));
+		this.buttonReset = new GuiButton(0, guiX, this.height - 40, 75, 20, I18n.format("gui.resetBinding"));
+		this.buttonClear = new GuiButton(0, guiX + 76, this.height - 40, 75, 20, I18n.format("gui.clearBinding"));
+		this.buttonDone = new GuiButton(0, this.width - 90, this.height - 40, 87, 20, I18n.format("gui.done"));
 		this.buttonActiveModifier = new GuiButton(1, guiX, this.height - 65, 150, 20,
 				I18n.format("gui.activeModifier" )+ ": " + activeModifier.toString());
 		

@@ -65,8 +65,8 @@ public class GuiCategorySelector extends GuiButton{
 	    }
 	}
 	
-	public GuiCategorySelector(int x, int y, int width, String buttonText, ArrayList<String> itemNames) {
-		super(0, x, y, width, 20, buttonText);
+	public GuiCategorySelector(int x, int y, int width, ArrayList<String> itemNames) {
+		super(0, x, y, width, 20, itemNames.get(0));
 		
 		this.items = new ListItem[itemNames.size()];
 
@@ -171,13 +171,12 @@ public class GuiCategorySelector extends GuiButton{
 	
 	private void updateState(){
 		
+		this.displayString = this.selectedItem.displayString;
 		this.hovered = this.extended;
 		
 		for (ListItem item : this.items){
-			
 			item.visible = this.extended;
-			
-			this.enabled = !(item == this.selectedItem);
+			item.enabled = !(item == this.selectedItem);
 		}
 	}
 }
