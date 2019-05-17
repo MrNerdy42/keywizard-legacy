@@ -30,6 +30,19 @@ public class KeybindUtils {
 		return bindingNames;
 	}
 	
+	public static ArrayList<String> getBindingNamesAndCategories(int keyId, KeyModifier modifier){
+		ArrayList<String> bindingNames = new ArrayList<>();
+		
+		if (keyId == 0)
+			return bindingNames;
+		
+		for (KeyBinding currentBinding : ALL_BINDINGS) {
+			if (currentBinding.getKeyCode() == keyId && currentBinding.getKeyModifier() == modifier)
+			    bindingNames.add(I18n.format(currentBinding.getKeyDescription()) + " (" + I18n.format(currentBinding.getKeyCategory()) + ")");
+		}
+		return bindingNames;
+	}
+	
 	public static int getNumBindings(int keyId, KeyModifier modifier){
 		int num = 0;
 		
