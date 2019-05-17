@@ -82,9 +82,9 @@ public class GuiKeyWizard extends GuiScreen {
 		this.selectedCategory = this.categoryList.getSelctedCategory();
 		this.buttonPage = new GuiButton(0, guiX + 105, 5, 100, 20, I18n.format("gui.page") + ": " + String.format("%d", this.page) );
 	
-		this.buttonReset = new GuiButton(0, guiX, this.height - 40, adjustedWidth / 3, 20, I18n.format("gui.resetBinding"));
-		this.buttonClear = new GuiButton(0, guiX + adjustedWidth / 3 + 3, this.height - 40, adjustedWidth / 3, 20, I18n.format("gui.clearBinding"));
-		this.buttonDone = new GuiButton(0, guiX + (adjustedWidth / 3)*2 + 6, this.height - 40, adjustedWidth / 3 - 10, 20, I18n.format("gui.done"));
+		this.buttonReset = new GuiButton(0, guiX, this.height - 40, 80, 20, I18n.format("gui.resetBinding"));
+		this.buttonClear = new GuiButton(0, guiX + 85, this.height - 40, 80, 20, I18n.format("gui.clearBinding"));
+		this.buttonDone = new GuiButton(0, this.width - 85, this.height - 40, 80, 20, I18n.format("gui.done"));
 		this.buttonActiveModifier = new GuiButton(1, guiX, this.height - 65, 150, 20,
 				I18n.format("gui.activeModifier" )+ ": " + activeModifier.toString());
 		

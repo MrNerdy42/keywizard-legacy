@@ -63,14 +63,16 @@ public class GuiBindingList extends GuiScrollingList {
 		FontRenderer fontRender = this.parent.getFontRenderer();
 		KeyBinding currentBinding = this.bindings[slotIdx];
 		
-		fontRender.drawString(I18n.format(currentBinding.getKeyDescription()), this.left + 3 , slotTop, 0xFFFFFF);
+		fontRender.drawStringWithShadow(I18n.format(currentBinding.getKeyDescription()), this.left + 3 , slotTop, 0xFFFFFF);
+		int color = 0;
 		if ( currentBinding.getKeyCode() == 0 || KeybindUtils.getNumConficts(currentBinding) > 0) {
-			fontRender.drawString(currentBinding.getDisplayName(), this.left + 3, slotTop + fontRender.FONT_HEIGHT + 2, 0x993333);
+			color = 0x993333;
 		} else if(!currentBinding.isSetToDefaultValue()){
-			fontRender.drawString(currentBinding.getDisplayName(), this.left + 3, slotTop + fontRender.FONT_HEIGHT + 2, 0x339933);
+			color = 0x339933;
 		} else {
-			fontRender.drawString(currentBinding.getDisplayName(), this.left + 3, slotTop + fontRender.FONT_HEIGHT + 2, 0x999999);
+			color = 0x999999;
 		}
+		fontRender.drawStringWithShadow(currentBinding.getDisplayName(), this.left + 3, slotTop + fontRender.FONT_HEIGHT + 2, color);
 
 	}
 	
