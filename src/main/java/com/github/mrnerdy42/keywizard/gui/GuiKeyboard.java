@@ -34,7 +34,7 @@ public class GuiKeyboard extends FloatGui{
 		}
 		for(GuiKeyboardKey k:this.keyList.values()) {
 			if(k.hovered && !parent.getCategoryListExtended()) {
-			    net.minecraftforge.fml.client.config.GuiUtils.drawHoveringText(KeybindUtils.getBindingNamesAndCategories(k.keyCode, this.parent.getActiveModifier()), (int)k.absX(), (int)k.absY() + 5, this.parent.width, this.parent.height, -1, this.parent.getFontRenderer());
+			    net.minecraftforge.fml.client.config.GuiUtils.drawHoveringText(KeybindUtils.getBindingNamesAndCategories(k.keyCode, this.parent.getActiveModifier()), mouseX, mouseY, this.parent.width, this.parent.height, -1, this.parent.getFontRenderer());
 			    GlStateManager.disableLighting();
 	            GlStateManager.disableDepth();
 			}
