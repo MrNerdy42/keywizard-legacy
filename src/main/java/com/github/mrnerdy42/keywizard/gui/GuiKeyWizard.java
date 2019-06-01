@@ -61,7 +61,7 @@ public class GuiKeyWizard extends GuiScreen {
 		int listWidth = (maxLength * 14);
 	
 		this.bindingList = new GuiBindingList(this, 10, this.height - 30, listWidth, this.height - 40,
-				fontRenderer.FONT_HEIGHT * 2 + 10);
+				fontRenderer.FONT_HEIGHT * 3 + 10);
 		
 		this.searchBar = new GuiTextField(0, this.fontRenderer, 10, this.height - 20, listWidth, 14);
 		this.searchBar.setFocused(true);
@@ -81,7 +81,7 @@ public class GuiKeyWizard extends GuiScreen {
 			if (s.length() > maxLength)
 				maxLength = s.length();
 		}
-		this.categoryList = new GuiCategorySelector(guiX, 5, maxLength*3, categories);
+		this.categoryList = new GuiCategorySelector(guiX, 5, maxLength*5, categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
 		
 		
@@ -93,7 +93,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.buttonClear = new GuiButton(0, guiX + 76, this.height - 40, 75, 20, I18n.format("gui.clearBinding"));
 		this.buttonDone = new GuiButton(0, this.width - 90, this.height - 40, 87, 20, I18n.format("gui.done"));
 		this.buttonActiveModifier = new GuiButton(1, guiX, this.height - 65, 150, 20,
-				I18n.format("gui.activeModifier" )+ ": " + activeModifier.toString());
+				I18n.format("gui.activeModifier")+ ": " + activeModifier.toString());
 		
 		this.setSelectedKeybind(this.bindingList.getSelectedKeybind());
 		
@@ -202,36 +202,38 @@ public class GuiKeyWizard extends GuiScreen {
 
 	@Override
 	protected void actionPerformed(GuiButton button) {
+		
+		if (!this.categoryList.getExtended()) {
+			if (button == this.buttonReset) {
+				this.selectedKeybind.setToDefault();
+				KeyBinding.resetKeyBindingArrayAndHash();
+				this.buttonReset.enabled = !selectedKeybind.isSetToDefaultValue();
+				return;
+			}
 
-		if (button == this.buttonReset) {
-			this.selectedKeybind.setToDefault();
-			KeyBinding.resetKeyBindingArrayAndHash();
-			this.buttonReset.enabled = !selectedKeybind.isSetToDefaultValue();
-			return;
-		}
-		
-		if (button == this.buttonClear) {
-			this.selectedKeybind.setKeyModifierAndCode(KeyModifier.NONE, 0);
-			KeyBinding.resetKeyBindingArrayAndHash();
-			this.buttonClear.enabled = this.selectedKeybind.getKeyCode() != 0;
-		}
-		
-		if (button == this.buttonDone) {
-			if (this.parentScreen != null)
-				this.mc.displayGuiScreen(this.parentScreen);
-			else 
-				this.mc.displayGuiScreen((GuiScreen)null);
-		}
+			if (button == this.buttonClear) {
+				this.selectedKeybind.setKeyModifierAndCode(KeyModifier.NONE, 0);
+				KeyBinding.resetKeyBindingArrayAndHash();
+				this.buttonClear.enabled = this.selectedKeybind.getKeyCode() != 0;
+			}
 
-		if (button == this.buttonActiveModifier) {
-			this.changeActiveModifier();
-			return;
-		}
-		
-		if (button == this.buttonPage) {
-			this.page++;
-			if (this.page > 2) {
-				this.page = 1;
+			if (button == this.buttonDone) {
+				if (this.parentScreen != null)
+					this.mc.displayGuiScreen(this.parentScreen);
+				else 
+					this.mc.displayGuiScreen((GuiScreen)null);
+			}
+
+			if (button == this.buttonActiveModifier) {
+				this.changeActiveModifier();
+				return;
+			}
+
+			if (button == this.buttonPage) {
+				this.page++;
+				if (this.page > 2) {
+					this.page = 1;
+				}
 			}
 		this.buttonReset.enabled = !selectedKeybind.isSetToDefaultValue();
 			/*

@@ -59,11 +59,13 @@ public class GuiBindingList extends GuiScrollingList {
 	}
 
 	@Override
-	protected void drawSlot(int slotIdx, int entryRight, int slotTop, int slotHeight, Tessellator tess) {
+	protected void drawSlot(int slotIdx, int entryRight, int slotTop, int slotBuffer, Tessellator tess) {
 		FontRenderer fontRender = this.parent.getFontRenderer();
 		KeyBinding currentBinding = this.bindings[slotIdx];
 		
 		fontRender.drawStringWithShadow(I18n.format(currentBinding.getKeyDescription()), this.left + 3 , slotTop, 0xFFFFFF);
+		
+		fontRender.drawStringWithShadow("("+I18n.format(currentBinding.getKeyCategory())+")", this.left + 3, slotTop + fontRender.FONT_HEIGHT + 2, 0x444444);
 		int color = 0;
 		if ( currentBinding.getKeyCode() == 0 || KeybindUtils.getNumConficts(currentBinding) > 0) {
 			color = 0x993333;
@@ -72,8 +74,9 @@ public class GuiBindingList extends GuiScrollingList {
 		} else {
 			color = 0x999999;
 		}
-		fontRender.drawStringWithShadow(currentBinding.getDisplayName(), this.left + 3, slotTop + fontRender.FONT_HEIGHT + 2, color);
-
+	    //int len = (I18n.format("gui.key")+": ").length() * 5;
+		//fontRender.drawStringWithShadow(I18n.format("gui.key")+": ", this.left + 3 , slotTop + fontRender.FONT_HEIGHT * 2 + 3, 0x999999);
+		fontRender.drawStringWithShadow(currentBinding.getDisplayName(), this.left + 3, slotTop + fontRender.FONT_HEIGHT * 2 + 3, color);
 	}
 	
 	protected void updateList(){
