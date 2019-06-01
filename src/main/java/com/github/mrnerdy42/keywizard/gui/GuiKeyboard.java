@@ -1,5 +1,7 @@
 package com.github.mrnerdy42.keywizard.gui;
 
+import static org.lwjgl.input.Keyboard.getKeyName;
+
 import java.util.HashMap;
 
 import com.github.mrnerdy42.keywizard.util.KeyHelper;
@@ -150,10 +152,13 @@ public class GuiKeyboard extends FloatGui{
 		public void mouseClicked(Minecraft mc, int mouseX, int mouseY, int button) {
 			if(this.hovered && this.enabled && !parent.getCategoryListExtended() && button == 0) {
 				mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-				parent.getSelectedKeybind().setKeyModifierAndCode(parent.getActiveModifier(), this.keyCode);
-				mc.gameSettings.setOptionKeyBinding(parent.getSelectedKeybind(), this.keyCode);
-				KeyBinding.resetKeyBindingArrayAndHash();
-				
+				if (parent.isShiftKeyDown()) {
+					parent.setSearchText("@"+getKeyName(this.keyCode));
+				} else {
+					parent.getSelectedKeybind().setKeyModifierAndCode(parent.getActiveModifier(), this.keyCode);
+					mc.gameSettings.setOptionKeyBinding(parent.getSelectedKeybind(), this.keyCode);
+					KeyBinding.resetKeyBindingArrayAndHash();
+				}
 			}
 		}
 		

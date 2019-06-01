@@ -1,6 +1,7 @@
 package com.github.mrnerdy42.keywizard.gui;
 
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
 
@@ -11,8 +12,6 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.GuiScrollingList;
 
 public class GuiBindingList extends GuiScrollingList {
-	
-	public boolean filtered = false;
 	
 	private GuiKeyWizard parent;
 	private KeyBinding[] bindings;
@@ -84,15 +83,18 @@ public class GuiBindingList extends GuiScrollingList {
 		if ( !this.searchText.equals(this.parent.getSearchText()) || !this.selectedCategory.equals(this.parent.getSelectedCategory()) ) {
 			this.searchText = this.parent.getSearchText();
 			this.selectedCategory = this.parent.getSelectedCategory();
-
-			String filterExp = "(?i).*" + this.searchText + ".*";
+			KeyBinding[] bindingsNew = bindingsByCategory(this.selectedCategory);
+			String[] words = this.searchText.split("\\s+");
 			
-			if (this.searchText.equals("")) {
-				this.filtered = false;
-			} else {
-				this.filtered = true;
+			if (words.length != 0) {
+				if (words[0].length()>0 && words[0].charAt(0) == '@') {
+					bindingsNew = filterBindingsByKey(bindingsNew, words[0].substring(1, words[0].length()));
+					words[0] = "";
+				}
+				bindingsNew = filterBindingsByName(bindingsNew, words);
 			}
-			this.bindings = this.getBindings(this.selectedCategory, filterExp);
+					
+			this.bindings = bindingsNew;
 			
 			if (this.bindings.length != 0)
 				this.selectKeybind(0);
@@ -105,24 +107,37 @@ public class GuiBindingList extends GuiScrollingList {
 		this.parent.setSelectedKeybind(this.selectedKeybind);
 	}
 	
-	private KeyBinding[] getBindings(String category, String filterExp) {
+	private KeyBinding[] bindingsByCategory(String category) {
 		KeyBinding[] bindings = KeybindUtils.ALL_BINDINGS;
 		
 		switch (category) {
 		case "categories.all":
-			break;
+			return bindings;
 		case "categories.conflicts":
-			bindings = Arrays.stream(bindings).filter(binding -> KeybindUtils.getNumConficts(binding) >= 1 && binding.getKeyCode() != 0).toArray(KeyBinding[]::new);
-			break;
+			return Arrays.stream(bindings).filter(binding -> KeybindUtils.getNumConficts(binding) >= 1 && binding.getKeyCode() != 0).toArray(KeyBinding[]::new);
 		case "categories.unbound":
-			bindings = Arrays.stream(bindings).filter(binding -> binding.getKeyCode() == 0).toArray(KeyBinding[]::new);
-			break;
+			return Arrays.stream(bindings).filter(binding -> binding.getKeyCode() == 0).toArray(KeyBinding[]::new);
 		default:
-			bindings = Arrays.stream(bindings).filter(binding -> binding.getKeyCategory() == category).toArray(KeyBinding[]::new);
-			break;
+			return Arrays.stream(bindings).filter(binding -> binding.getKeyCategory() == category).toArray(KeyBinding[]::new);
 		}
-		bindings = Arrays.stream(bindings).filter(binding -> I18n.format(binding.getKeyDescription()).toLowerCase().matches(filterExp)).toArray(KeyBinding[]::new);
-		return bindings;
+	}
+	
+	private KeyBinding[] filterBindingsByName(KeyBinding[] bindings, String[] words){
+		KeyBinding[] filtered = {};
+		filtered = Arrays.stream(bindings).filter(binding -> {
+				boolean flag = true;
+				for (String w:words) {
+					flag = flag && I18n.format(binding.getKeyDescription()).toLowerCase().contains(w.toLowerCase());
+				}
+				return flag;
+			}).toArray(KeyBinding[]::new);
+		return filtered;
+	}
+	
+	private KeyBinding[] filterBindingsByKey(KeyBinding[] bindings, String keyName) {
+		KeyBinding[] filtered = {};
+		filtered = Arrays.stream(bindings).filter(binding -> binding.getDisplayName().toLowerCase().contains(keyName.toLowerCase())).toArray(KeyBinding[]::new);
+		return filtered;
 	}
 	
 	public KeyBinding getSelectedKeybind(){

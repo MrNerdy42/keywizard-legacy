@@ -265,10 +265,12 @@ public class GuiKeyWizard extends GuiScreen {
 	@Override
 	protected void mouseClicked(int x, int y, int button) throws IOException {
 	    super.mouseClicked(x, y, button);
-	    this.searchBar.mouseClicked(x, y, button);
+	    this.searchBar.mouseClicked(x, y, button);    
+	    /*
 	    if (button == 1 && x >= this.searchBar.x && x < this.searchBar.x + this.searchBar.width && y >= this.searchBar.y && y < this.searchBar.y + this.searchBar.height) {
 	        this.searchBar.setText("");
-	    }
+	        System.out.println("hi");
+	    */    
 	    this.categoryList.mouseClicked(this.mc, x, y, button);
 	    this.keyboard.mouseClicked(mc, x, y, button);
 	}
@@ -304,7 +306,12 @@ public class GuiKeyWizard extends GuiScreen {
 	}
 	
 	public String getSearchText() {
-		return Pattern.quote(this.searchText);
+		return this.searchText;
+	}
+	
+	public void setSearchText(String s) {
+		this.searchText = s;
+		this.searchBar.setText(s);
 	}
 	
 	public String getSelectedCategory() {
