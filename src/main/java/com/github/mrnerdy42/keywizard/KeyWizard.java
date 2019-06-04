@@ -27,6 +27,7 @@ public class KeyWizard {
 	
 	public static Configuration config;
 	public static boolean openFromControlsGui;
+	public static int maxMouseButtons;
 	
 	private static String[] conflictingMods = {"controlling"};
 	
@@ -48,6 +49,7 @@ public class KeyWizard {
     	MinecraftForge.EVENT_BUS.register(this.clientEventHandler);
     	
     	openFromControlsGui = config.getBoolean("openFromControlsGui", Configuration.CATEGORY_GENERAL, false, null);
+    	maxMouseButtons = config.getInt("maxMouseButtons", Configuration.CATEGORY_GENERAL, 0, 3, Integer.MAX_VALUE, null);
     }
 
     @EventHandler

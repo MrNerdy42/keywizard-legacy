@@ -1,6 +1,7 @@
 package com.github.mrnerdy42.keywizard.gui;
 
 import static org.lwjgl.input.Keyboard.*;
+import static org.lwjgl.input.Mouse.getButtonName;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.regex.Pattern;
 
 import org.lwjgl.input.Mouse;
 
+import com.github.mrnerdy42.keywizard.KeyWizard;
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
 import com.github.mrnerdy42.keywizard.util.KeyboardFactory;
 import com.github.mrnerdy42.keywizard.util.KeyboardLayout;
@@ -19,13 +21,17 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.settings.KeyModifier;
+import net.minecraftforge.common.config.Configuration;
 
 public class GuiKeyWizard extends GuiScreen {
 	
 	private final GuiScreen parentScreen;
 	
 	private int page = 1;
+	private int mouse = 0;
+	private int maxMouse = KeyWizard.maxMouseButtons - 1;
 	private KeyBinding selectedKeybind;
 	private KeyModifier activeModifier = KeyModifier.NONE;
 	private String selectedCategory = "categories.all";
@@ -40,6 +46,9 @@ public class GuiKeyWizard extends GuiScreen {
 	private GuiButton buttonClear;
 	private GuiButton buttonDone;
 	private GuiButton buttonActiveModifier;
+	private GuiButton buttonMouse;
+	private GuiButton buttonMousePlus;
+	private GuiButton buttonMouseMinus;
 	
 	protected GuiKeyboard keyboard;
 
@@ -92,16 +101,23 @@ public class GuiKeyWizard extends GuiScreen {
 		this.buttonReset = new GuiButton(0, guiX, this.height - 40, 75, 20, I18n.format("gui.resetBinding"));
 		this.buttonClear = new GuiButton(0, guiX + 76, this.height - 40, 75, 20, I18n.format("gui.clearBinding"));
 		this.buttonDone = new GuiButton(0, this.width - 90, this.height - 40, 87, 20, I18n.format("gui.done"));
-		this.buttonActiveModifier = new GuiButton(1, guiX, this.height - 65, 150, 20,
+		this.buttonActiveModifier = new GuiButton(1, guiX, this.height - 63, 150, 20,
 				I18n.format("gui.activeModifier")+ ": " + activeModifier.toString());
+		this.buttonMouse = new GuiButton(0, guiX + 25, this.height - 85, 100, 20, I18n.format("gui.mouse") + ": " + getButtonName(this.mouse) );
+		this.buttonMousePlus = new GuiButton(0, guiX + 126, this.height - 85, 25, 20, "+");
+	    this.buttonMouseMinus = new GuiButton(0, guiX, this.height - 85, 25, 20, "-");
 		
 		this.setSelectedKeybind(this.bindingList.getSelectedKeybind());
 		
 	    //this.buttonList.add(this.buttonPage);
-		this.buttonList.add(this.buttonActiveModifier);
 		this.buttonList.add(this.buttonReset);
 		this.buttonList.add(this.buttonClear);
 		this.buttonList.add(this.buttonDone);
+		this.buttonList.add(this.buttonActiveModifier);
+		this.buttonList.add(this.buttonMouse);
+		this.buttonList.add(this.buttonMousePlus);
+		this.buttonList.add(this.buttonMouseMinus);
+
 	}
 
 	@Override
@@ -196,6 +212,18 @@ public class GuiKeyWizard extends GuiScreen {
 	    	}
 	    }
 	    
+	    switch (KeybindUtils.getNumBindings(-100 + this.mouse, this.activeModifier)) {
+	    case 0:
+	    	this.buttonMouse.displayString = I18n.format("gui.mouse") + ": " + getButtonName(this.mouse);
+	    	break;
+	    case 1:
+	    	this.buttonMouse.displayString = I18n.format("gui.mouse") + ": " + TextFormatting.GREEN + getButtonName(this.mouse);
+	    	break;
+	    default:
+	    	this.buttonMouse.displayString = I18n.format("gui.mouse") + ": " + TextFormatting.RED + getButtonName(this.mouse);
+	    	break;
+	    }
+	    
 	    this.buttonPage.displayString = I18n.format("gui.page") + ": " + String.format("%d", this.page);
 	    this.bindingList.updateList();
 	}
@@ -226,7 +254,6 @@ public class GuiKeyWizard extends GuiScreen {
 
 			if (button == this.buttonActiveModifier) {
 				this.changeActiveModifier();
-				return;
 			}
 
 			if (button == this.buttonPage) {
@@ -235,6 +262,29 @@ public class GuiKeyWizard extends GuiScreen {
 					this.page = 1;
 				}
 			}
+			
+			if (button == this.buttonMouse) {
+				this.selectedKeybind.setKeyModifierAndCode(this.activeModifier, -100 + this.mouse);
+				mc.gameSettings.setOptionKeyBinding(this.selectedKeybind, -100 + this.mouse);
+				KeyBinding.resetKeyBindingArrayAndHash();
+			}
+			
+			if (button == this.buttonMousePlus) {
+				if(this.mouse >= this.maxMouse) {
+					this.mouse = 0;
+				} else {
+					this.mouse++;
+				}
+			}
+			
+			if (button == this.buttonMouseMinus) {
+				if(this.mouse <= 0) {
+					this.mouse = this.maxMouse;
+				} else {
+					this.mouse--;
+				}
+			}
+
 		this.buttonReset.enabled = !selectedKeybind.isSetToDefaultValue();
 			/*
 			 *switch (this.page) {
