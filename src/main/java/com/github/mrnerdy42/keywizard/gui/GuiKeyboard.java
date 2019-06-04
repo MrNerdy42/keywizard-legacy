@@ -9,6 +9,7 @@ import com.github.mrnerdy42.keywizard.util.KeybindUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.SoundEvents;
@@ -152,7 +153,7 @@ public class GuiKeyboard extends FloatGui{
 		public void mouseClicked(Minecraft mc, int mouseX, int mouseY, int button) {
 			if(this.hovered && this.enabled && !parent.getCategoryListExtended() && button == 0) {
 				mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-				if (parent.isShiftKeyDown()) {
+				if (GuiScreen.isShiftKeyDown()) {
 					parent.setSearchText("@"+getKeyName(this.keyCode));
 				} else {
 					parent.getSelectedKeybind().setKeyModifierAndCode(parent.getActiveModifier(), this.keyCode);
