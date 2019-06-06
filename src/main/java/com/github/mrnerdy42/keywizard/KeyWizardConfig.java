@@ -1,5 +1,7 @@
 package com.github.mrnerdy42.keywizard;
 
+import com.github.mrnerdy42.keywizard.util.KeyboardLayout;
+
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.*;
 
@@ -14,5 +16,6 @@ public class KeyWizardConfig {
 	@Comment("The number of mouse buttons to show (default:5).")
 	@RangeInt(min=3)
 	public static int maxMouseButtons = 5;
+	public static KeyboardLayout layout = KeyboardLayout.QWERTY;
 
 }

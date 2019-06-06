@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import com.github.mrnerdy42.keywizard.handlers.ClientEventHandler;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -25,10 +24,6 @@ public class KeyWizard {
 	
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 	
-	public static Configuration config;
-	public static boolean openFromControlsGui;
-	public static int maxMouseButtons;
-	
 	private static String[] conflictingMods = {"controlling"};
 	
 	@Instance
@@ -39,23 +34,18 @@ public class KeyWizard {
     @EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
 		LOGGER.log(Level.INFO, "Let's do some keyboard magic!");
-		config = new Configuration(e.getSuggestedConfigurationFile());
-
 	}
 	
 	@EventHandler
     public void init(FMLInitializationEvent e) {
 		ClientEventHandler.register();
     	MinecraftForge.EVENT_BUS.register(this.clientEventHandler);
-    	
-    	openFromControlsGui = config.getBoolean("openFromControlsGui", Configuration.CATEGORY_GENERAL, false, null);
-    	maxMouseButtons = config.getInt("maxMouseButtons", Configuration.CATEGORY_GENERAL, 0, 3, Integer.MAX_VALUE, null);
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent e) {
     	boolean flag = false;
-    	if(openFromControlsGui) {
+    	if(KeyWizardConfig.openFromControlsGui) {
     		LOGGER.log(Level.WARN, "Controls gui override enabled, this may cause problems with other mods");
     		for(String id:conflictingMods) {
     			if(Loader.isModLoaded(id)) {

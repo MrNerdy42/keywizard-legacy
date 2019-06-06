@@ -5,11 +5,11 @@ import static org.lwjgl.input.Mouse.getButtonName;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import org.lwjgl.input.Mouse;
 
 import com.github.mrnerdy42.keywizard.KeyWizard;
+import com.github.mrnerdy42.keywizard.KeyWizardConfig;
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
 import com.github.mrnerdy42.keywizard.util.KeyboardFactory;
 import com.github.mrnerdy42.keywizard.util.KeyboardLayout;
@@ -23,15 +23,17 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.settings.KeyModifier;
-import net.minecraftforge.common.config.Configuration;
 
 public class GuiKeyWizard extends GuiScreen {
+	
+	public KeyboardLayout layout = KeyboardLayout.QWERTY;
+	protected GuiKeyboard keyboard;
 	
 	private final GuiScreen parentScreen;
 	
 	private int page = 1;
 	private int mouse = 0;
-	private int maxMouse = KeyWizard.maxMouseButtons - 1;
+	private int maxMouse = KeyWizardConfig.maxMouseButtons - 1;
 	private KeyBinding selectedKeybind;
 	private KeyModifier activeModifier = KeyModifier.NONE;
 	private String selectedCategory = "categories.all";
@@ -50,7 +52,8 @@ public class GuiKeyWizard extends GuiScreen {
 	private GuiButton buttonMousePlus;
 	private GuiButton buttonMouseMinus;
 	
-	protected GuiKeyboard keyboard;
+
+	
 
 	public GuiKeyWizard(Minecraft mcIn, GuiScreen parentScreen) {
 		this.mc = mcIn;
@@ -94,7 +97,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.selectedCategory = this.categoryList.getSelctedCategory();
 		
 		
-		this.keyboard = KeyboardFactory.makeKeyboard(KeyboardLayout.QWERTY, this, guiX, keyboardY, adjustedWidth - 5, this.height/15);
+		this.keyboard = KeyboardFactory.makeKeyboard(this.layout, this, guiX, keyboardY, adjustedWidth - 5, this.height/15);
 		
 		this.buttonPage = new GuiButton(0, guiX + 105, 5, 100, 20, I18n.format("gui.page") + ": " + String.format("%d", this.page) );
 	

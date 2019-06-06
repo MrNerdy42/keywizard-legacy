@@ -3,6 +3,7 @@ package com.github.mrnerdy42.keywizard.handlers;
 import org.lwjgl.input.Keyboard;
 
 import com.github.mrnerdy42.keywizard.KeyWizard;
+import com.github.mrnerdy42.keywizard.KeyWizardConfig;
 import com.github.mrnerdy42.keywizard.gui.GuiControlsPlusKeyWiz;
 import com.github.mrnerdy42.keywizard.gui.GuiKeyWizard;
 
@@ -31,7 +32,7 @@ public class ClientEventHandler {
 	
     @SubscribeEvent
     public void guiInit(GuiOpenEvent e) {
-        if (e.getGui() instanceof GuiControls && !(e.getGui() instanceof GuiControlsPlusKeyWiz) && KeyWizard.openFromControlsGui) {
+        if (e.getGui() instanceof GuiControls && !(e.getGui() instanceof GuiControlsPlusKeyWiz) && KeyWizardConfig.openFromControlsGui) {
             e.setGui(new GuiControlsPlusKeyWiz(this.client, client.currentScreen, this.client.gameSettings));
         }
     }
