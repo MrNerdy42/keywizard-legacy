@@ -14,7 +14,7 @@ public class KeyWizardConfig {
 	         "that overrides the controls gui is installed."})
 	public static boolean openFromControlsGui = true;
 	@Comment("The number of mouse buttons to show (default:5).")
-	@RangeInt(min=3)
+	@RangeInt(min=3, max=15)
 	public static int maxMouseButtons = 5;
 	public static KeyboardLayout layout = KeyboardLayout.QWERTY;
 

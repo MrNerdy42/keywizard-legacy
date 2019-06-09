@@ -55,11 +55,13 @@ public class GuiKeyboard extends FloatGui{
 	}
 	
 	public void disableKey(int keyCode) {
-		this.keyList.get(keyCode).enabled = false;
+		if (this.HasKey(keyCode))
+			this.keyList.get(keyCode).enabled = false;
 	}
 	
 	public void enableKey(int keyCode) {
-		this.keyList.get(keyCode).enabled = true;
+		if (this.HasKey(keyCode)) 
+		    this.keyList.get(keyCode).enabled = true;
 	}
 	
 	/**
@@ -95,6 +97,10 @@ public class GuiKeyboard extends FloatGui{
 		for(GuiKeyboardKey k:this.keyList.values()) {
 			k.zLevel = this.zLevel;
 		}
+	}
+	
+	public boolean HasKey(int keyCode) {
+		return this.keyList.containsKey(keyCode);
 	}
 
 	private class GuiKeyboardKey extends FloatGui{

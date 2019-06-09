@@ -23,7 +23,6 @@ public class KeyHelper {
 		KEY_LABELS.put(KEY_F10, "F10");
 		KEY_LABELS.put(KEY_F11, "F11");
 		KEY_LABELS.put(KEY_F12, "F12");
-		KEY_LABELS.put(KEY_MINUS, "-");
 		KEY_LABELS.put(KEY_EQUALS, "=");
 		KEY_LABELS.put(KEY_LBRACKET, "[");
 		KEY_LABELS.put(KEY_RBRACKET, "]");
@@ -36,6 +35,7 @@ public class KeyHelper {
 		KEY_LABELS.put(KEY_GRAVE, "`");
 		KEY_LABELS.put(KEY_LCONTROL, "LCTRL");
 		KEY_LABELS.put(KEY_RCONTROL, "RCTRL");
+		KEY_LABELS.put(KEY_NUMPADENTER, "ENT");
 	}
 	
 	/**

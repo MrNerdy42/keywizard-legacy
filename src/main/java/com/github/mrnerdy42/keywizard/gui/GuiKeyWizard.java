@@ -26,7 +26,7 @@ import net.minecraftforge.client.settings.KeyModifier;
 
 public class GuiKeyWizard extends GuiScreen {
 	
-	public KeyboardLayout layout = KeyboardLayout.QWERTY;
+	public KeyboardLayout layout = KeyWizardConfig.layout;
 	protected GuiKeyboard keyboard;
 	
 	private final GuiScreen parentScreen;
@@ -70,7 +70,7 @@ public class GuiKeyWizard extends GuiScreen {
 				maxLength = binding.getDisplayName().length();
 		}
 	
-		int listWidth = (maxLength * 14);
+		int listWidth = (maxLength * 11);
 	
 		this.bindingList = new GuiBindingList(this, 10, this.height - 30, listWidth, this.height - 40,
 				fontRenderer.FONT_HEIGHT * 3 + 10);
@@ -96,8 +96,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.categoryList = new GuiCategorySelector(guiX, 5, maxLength*5, categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
 		
-		
-		this.keyboard = KeyboardFactory.makeKeyboard(this.layout, this, guiX, keyboardY, adjustedWidth - 5, this.height/15);
+		this.keyboard = KeyboardFactory.makeKeyboard(this.layout, this, guiX, keyboardY, adjustedWidth - 5, this.height);
 		
 		this.buttonPage = new GuiButton(0, guiX + 105, 5, 100, 20, I18n.format("gui.page") + ": " + String.format("%d", this.page) );
 	

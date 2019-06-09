@@ -11,7 +11,7 @@ public class KeyboardFactory {
 		case QWERTY:
 			return makeQwertyKeyboard(parent, x, y, width, height);
 		case NUMPAD:
-			return null;
+			return makeNumpad(parent, x, y, width, height);
 		default:
 			return null;
 		}
@@ -24,7 +24,7 @@ public class KeyboardFactory {
 		
 		double keySpacing = 5;
 		double keyWidth = width/12-keySpacing;
-		double keyHeight = height;
+		double keyHeight = height/15;
 	
 		currentX = addHorizontalRow(kb, KEY_F1, KEY_F10, 0, currentY, keyWidth, keyHeight, keySpacing);
 		kb.addKey(currentX + keySpacing, currentY, keyWidth, keyHeight, KEY_F11);
@@ -62,6 +62,34 @@ public class KeyboardFactory {
 		return kb;
 	}
 	
+	private static GuiKeyboard makeNumpad(GuiKeyWizard parent, double x, double y, double width, double height) {
+		GuiKeyboard kb = new GuiKeyboard(parent, x, y);
+        double currentX = 0;
+		double currentY = 0;
+		
+		double keySpacing = 5;
+		double keyWidth = width/4-keySpacing;
+		double keyHeight = height/14;
+		
+		currentX = addHorizontalRow(kb, new int[] {KEY_DIVIDE, KEY_MULTIPLY, KEY_MINUS}, 0, currentY, keyWidth, keyHeight, keySpacing);
+		kb.addKey(currentX, currentY, keyWidth / 3, keyHeight*2 + keySpacing, KEY_ADD);
+		currentX=0;
+		currentY += keyHeight + keySpacing;
+		addHorizontalRow(kb, KEY_NUMPAD7, KEY_NUMPAD9, currentX, currentY, keyWidth, keyHeight, keySpacing);
+		currentY += keyHeight + keySpacing;
+		currentX = addHorizontalRow(kb, KEY_NUMPAD4, KEY_NUMPAD6, currentX, currentY, keyWidth, keyHeight, keySpacing);
+		kb.addKey(currentX, currentY, keyWidth / 3, keyHeight*3 + keySpacing*2, KEY_NUMPADENTER);
+		currentX = 0;
+		currentY += keyHeight + keySpacing;
+		addHorizontalRow(kb, KEY_NUMPAD1, KEY_NUMPAD3, currentX, currentY, keyWidth, keyHeight, keySpacing);
+		currentY += keyHeight + keySpacing;
+		kb.addKey(0, currentY, keyWidth*2+keySpacing, keyHeight, KEY_NUMPAD0);
+		currentX += keyWidth*2+keySpacing*2;
+		kb.addKey(currentX, currentY, keyWidth, keyHeight, KEY_DECIMAL);
+		
+		return kb;
+	}
+	
 	/**
 	 * Adds a uniformly spaced row to the keyboard it is passed.
 	 * @param kb
@@ -80,7 +108,7 @@ public class KeyboardFactory {
 			kb.addKey(currentX, y, width, height, i);
 			currentX += width + spacing;
 		}
-		return startX + (width * (endCode-startCode + 1) + spacing * (endCode-startCode));
+		return startX + (width * (endCode-startCode + 1) + spacing * ((endCode-startCode)+1));
 	}
 	
 	private static double addHorizontalRow(GuiKeyboard kb, int[] keys, double startX, double y, double width, double height, double spacing) {
