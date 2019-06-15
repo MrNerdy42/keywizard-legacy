@@ -98,7 +98,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.categoryList = new GuiCategorySelector(this.guiStartX, 5, maxLength*5, categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
 		
-		this.keyboard = KeyboardFactory.makeKeyboard(this.pages[this.pageNum], this, this.guiStartX, this.height / 2 - 90, this.guiWidth, this.height);
+		this.keyboard = KeyboardFactory.makeKeyboard(this.pages[this.pageNum], this, this.guiStartX, this.height / 2 - 90, this.guiWidth - 5, this.height);
 		
 		this.buttonPage = new GuiButton(0, this.guiStartX + 105, 5, 100, 20, I18n.format("gui.page") + ": " + this.pages[this.pageNum].getDisplayName());
 	
@@ -240,7 +240,7 @@ public class GuiKeyWizard extends GuiScreen {
 				if (this.pageNum > this.pages.length-1) {
 					this.pageNum = 0;
 				}
-				this.keyboard = KeyboardFactory.makeKeyboard(this.pages[this.pageNum], this, this.guiStartX, this.height / 2 - 90, this.guiWidth, this.height);
+				this.keyboard = KeyboardFactory.makeKeyboard(this.pages[this.pageNum], this, this.guiStartX, this.height / 2 - 90, this.guiWidth - 5, this.height);
 			}
 			
 			if (button == this.buttonMouse) {
