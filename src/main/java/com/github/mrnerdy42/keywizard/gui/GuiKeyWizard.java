@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import org.lwjgl.input.Mouse;
 
-import com.github.mrnerdy42.keywizard.KeyWizard;
 import com.github.mrnerdy42.keywizard.KeyWizardConfig;
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
 import com.github.mrnerdy42.keywizard.util.KeyboardFactory;
@@ -27,17 +26,21 @@ import net.minecraftforge.client.settings.KeyModifier;
 public class GuiKeyWizard extends GuiScreen {
 	
 	public KeyboardLayout layout = KeyWizardConfig.layout;
+	
 	protected GuiKeyboard keyboard;
 	
 	private final GuiScreen parentScreen;
 	
-	private int page = 1;
+    private KeyboardLayout[] pages = {KeyWizardConfig.layout, KeyboardLayout.NUMPAD};
+    private int pageNum = 0;
 	private int mouse = 0;
 	private int maxMouse = KeyWizardConfig.maxMouseButtons - 1;
 	private KeyBinding selectedKeybind;
 	private KeyModifier activeModifier = KeyModifier.NONE;
 	private String selectedCategory = "categories.all";
 	private String searchText = "";
+	private int guiWidth;
+	private int guiStartX;
 
 
 	private GuiCategorySelector categoryList;
@@ -79,9 +82,8 @@ public class GuiKeyWizard extends GuiScreen {
 		this.searchBar.setFocused(true);
 		this.searchBar.setCanLoseFocus(false);
 	
-		int guiX = listWidth + 15;
-		int adjustedWidth = this.width - guiX;
-		int keyboardY = this.height / 2 - 90;
+		this.guiStartX = listWidth + 15;
+		this.guiWidth = this.width - this.guiStartX;
 		
 		ArrayList<String> categories = KeybindUtils.getCategories();
 		categories.add(0, "categories.conflicts");
@@ -93,25 +95,25 @@ public class GuiKeyWizard extends GuiScreen {
 			if (s.length() > maxLength)
 				maxLength = s.length();
 		}
-		this.categoryList = new GuiCategorySelector(guiX, 5, maxLength*5, categories);
+		this.categoryList = new GuiCategorySelector(this.guiStartX, 5, maxLength*5, categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
 		
-		this.keyboard = KeyboardFactory.makeKeyboard(this.layout, this, guiX, keyboardY, adjustedWidth - 5, this.height);
+		this.keyboard = KeyboardFactory.makeKeyboard(this.pages[this.pageNum], this, this.guiStartX, this.height / 2 - 90, this.guiWidth, this.height);
 		
-		this.buttonPage = new GuiButton(0, guiX + 105, 5, 100, 20, I18n.format("gui.page") + ": " + String.format("%d", this.page) );
+		this.buttonPage = new GuiButton(0, this.guiStartX + 105, 5, 100, 20, I18n.format("gui.page") + ": " + this.pages[this.pageNum].getDisplayName());
 	
-		this.buttonReset = new GuiButton(0, guiX, this.height - 40, 75, 20, I18n.format("gui.resetBinding"));
-		this.buttonClear = new GuiButton(0, guiX + 76, this.height - 40, 75, 20, I18n.format("gui.clearBinding"));
+		this.buttonReset = new GuiButton(0, this.guiStartX, this.height - 40, 75, 20, I18n.format("gui.resetBinding"));
+		this.buttonClear = new GuiButton(0, this.guiStartX + 76, this.height - 40, 75, 20, I18n.format("gui.clearBinding"));
 		this.buttonDone = new GuiButton(0, this.width - 90, this.height - 40, 87, 20, I18n.format("gui.done"));
-		this.buttonActiveModifier = new GuiButton(1, guiX, this.height - 63, 150, 20,
+		this.buttonActiveModifier = new GuiButton(1, this.guiStartX, this.height - 63, 150, 20,
 				I18n.format("gui.activeModifier")+ ": " + activeModifier.toString());
-		this.buttonMouse = new GuiButton(0, guiX + 25, this.height - 85, 100, 20, I18n.format("gui.mouse") + ": " + getButtonName(this.mouse) );
-		this.buttonMousePlus = new GuiButton(0, guiX + 126, this.height - 85, 25, 20, "+");
-	    this.buttonMouseMinus = new GuiButton(0, guiX, this.height - 85, 25, 20, "-");
+		this.buttonMouse = new GuiButton(0, this.guiStartX + 25, this.height - 85, 100, 20, I18n.format("gui.mouse") + ": " + getButtonName(this.mouse) );
+		this.buttonMousePlus = new GuiButton(0, this.guiStartX + 126, this.height - 85, 25, 20, "+");
+	    this.buttonMouseMinus = new GuiButton(0, this.guiStartX, this.height - 85, 25, 20, "-");
 		
 		this.setSelectedKeybind(this.bindingList.getSelectedKeybind());
 		
-	    //this.buttonList.add(this.buttonPage);
+	    this.buttonList.add(this.buttonPage);
 		this.buttonList.add(this.buttonReset);
 		this.buttonList.add(this.buttonClear);
 		this.buttonList.add(this.buttonDone);
@@ -131,31 +133,6 @@ public class GuiKeyWizard extends GuiScreen {
 		
 		this.keyboard.draw(this.mc, mouseX, mouseY, partialTicks);
 		this.categoryList.drawList(this.mc, mouseX, mouseY, partialTicks);
-	
-		// Color key and draw hovering text
-		/*
-		 *currentPage.forEach((keyId, keyButton) -> {
-	     *
-		 *	ArrayList<String> bindingNames = KeybindUtils.getBindingNames(keyId, this.activeModifier);
-	     *
-		 *	switch (bindingNames.size()) {
-		 *	case 0:
-		 *		keyButton.displayString = KeyHelper.translateKey(keyId);
-		 *		break;
-		 *	case 1:
-		 *		keyButton.displayString = TextFormatting.GREEN + KeyHelper.translateKey(keyId);
-		 *		break;
-		 *	default:
-		 *		keyButton.displayString = TextFormatting.RED + KeyHelper.translateKey(keyId);
-		 *		break;
-		 *	}
-	     *
-		 *	if (keyButton.isMouseOver() && !this.categoryList.getExtended()) {
-		 *		drawHoveringText(KeybindUtils.getBindingNames(keyId, this.activeModifier), mouseX, mouseY,
-		 *				fontRenderer);
-		 *	}
-		 *});
-		 */
 	}
 
 	@Override
@@ -226,7 +203,7 @@ public class GuiKeyWizard extends GuiScreen {
 	    	break;
 	    }
 	    
-	    this.buttonPage.displayString = I18n.format("gui.page") + ": " + String.format("%d", this.page);
+	    this.buttonPage.displayString = I18n.format("gui.page") + ": " + this.pages[this.pageNum].getDisplayName();
 	    this.bindingList.updateList();
 	}
 
@@ -259,10 +236,11 @@ public class GuiKeyWizard extends GuiScreen {
 			}
 
 			if (button == this.buttonPage) {
-				this.page++;
-				if (this.page > 2) {
-					this.page = 1;
+				this.pageNum++;
+				if (this.pageNum > this.pages.length-1) {
+					this.pageNum = 0;
 				}
+				this.keyboard = KeyboardFactory.makeKeyboard(this.pages[this.pageNum], this, this.guiStartX, this.height / 2 - 90, this.guiWidth, this.height);
 			}
 			
 			if (button == this.buttonMouse) {
@@ -288,20 +266,6 @@ public class GuiKeyWizard extends GuiScreen {
 			}
 
 		this.buttonReset.enabled = !selectedKeybind.isSetToDefaultValue();
-			/*
-			 *switch (this.page) {
-			 *    case 1:
-			 *    	this.currentPage = this.keyboard;
-			 *    	break;
-			 *    case 2:
-			 *    	this.currentPage = this.numpad;
-			 *    	break;
-			 *    default:
-			 *    	this.currentPage = this.keyboard;
-			 *    	break;
-			 *}
-			 */
-				
 		}
 	}
 
