@@ -72,7 +72,7 @@ public class KeyboardFactory {
 		double keyWidth = width/4-keySpacing;
 		double keyHeight = height/14;
 		
-		currentX = addHorizontalRow(kb, new int[] {KEY_DIVIDE, KEY_MULTIPLY, KEY_MINUS}, 0, currentY, keyWidth, keyHeight, keySpacing);
+		currentX = addHorizontalRow(kb, new int[] {KEY_DIVIDE, KEY_MULTIPLY, KEY_SUBTRACT}, 0, currentY, keyWidth, keyHeight, keySpacing);
 		kb.addKey(currentX, currentY, keyWidth / 3, keyHeight*2 + keySpacing, KEY_ADD);
 		currentX=0;
 		currentY += keyHeight + keySpacing;
