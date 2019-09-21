@@ -12,6 +12,8 @@ public class KeyboardFactory {
 			return makeQwertyKeyboard(parent, x, y, width, height);
 		case NUMPAD:
 			return makeNumpad(parent, x, y, width, height);
+		case AUXILIARY:
+			return makeAuxiliary(parent, x, y, width, height);
 		default:
 			return null;
 		}
@@ -91,6 +93,28 @@ public class KeyboardFactory {
 		return kb;
 	}
 	
+	private static GuiKeyboard makeAuxiliary(GuiKeyWizard parent, double x, double y, double width, double height) {
+		GuiKeyboard kb = new GuiKeyboard(parent, x, y);
+        double currentX = 0;
+		double currentY = 0;
+		
+		double keySpacing = 5;
+		double keyWidth = width/5-keySpacing;
+		double keyHeight = height/14;
+		
+		currentX = addHorizontalRow(kb, new int[] {KEY_SYSRQ, KEY_SCROLL, KEY_PAUSE, KEY_F13, KEY_F14}, currentX, currentY, keyWidth, keyHeight, keySpacing);
+		currentX = 0;
+		currentY += keyHeight + keySpacing;
+		currentX = addHorizontalRow(kb, new int[] {KEY_INSERT, KEY_HOME, KEY_PRIOR, KEY_F15, KEY_F16}, currentX, currentY, keyWidth, keyHeight, keySpacing);
+		currentX = 0;
+		currentY += keyHeight + keySpacing;
+		currentX = addHorizontalRow(kb, new int[] {KEY_DELETE, KEY_END, KEY_NEXT, KEY_F17, KEY_F18}, currentX, currentY, keyWidth, keyHeight, keySpacing);
+		currentX = 0;
+		currentY += keyHeight + keySpacing;
+		currentX = addHorizontalRow(kb, new int[] {KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, KEY_F19}, currentX, currentY, keyWidth, keyHeight, keySpacing);
+		return kb;
+	}
+	
 	/**
 	 * Adds a uniformly spaced row to the keyboard it is passed.
 	 * @param kb
@@ -112,6 +136,17 @@ public class KeyboardFactory {
 		return startX + (width * (endCode-startCode + 1) + spacing * ((endCode-startCode)+1));
 	}
 	
+	/**
+	 * Adds a uniformly spaced row to the keyboard it is passed.
+	 * @param kb
+	 * @param keys
+	 * @param startX
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param spacing
+	 * @return x position of left edge of the last key added
+	 */
 	private static double addHorizontalRow(GuiKeyboard kb, int[] keys, double startX, double y, double width, double height, double spacing) {
 		double currentX = startX;
 		for(int k:keys) {

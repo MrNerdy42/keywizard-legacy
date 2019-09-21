@@ -1,3 +1,5 @@
+v1.7.1
+Added extra keys
 v1.7
 Added search by key name
 Added numpad

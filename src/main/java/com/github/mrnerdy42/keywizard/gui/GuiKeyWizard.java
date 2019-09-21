@@ -31,7 +31,7 @@ public class GuiKeyWizard extends GuiScreen {
 	
 	private final GuiScreen parentScreen;
 	
-    private KeyboardLayout[] pages = {KeyWizardConfig.layout, KeyboardLayout.NUMPAD};
+    private KeyboardLayout[] pages = {KeyWizardConfig.layout, KeyboardLayout.NUMPAD, KeyboardLayout.AUXILIARY};
     private int pageNum = 0;
 	private int mouse = 0;
 	private int maxMouse = KeyWizardConfig.maxMouseButtons - 1;
