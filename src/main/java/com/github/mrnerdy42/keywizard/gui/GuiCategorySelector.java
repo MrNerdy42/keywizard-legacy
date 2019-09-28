@@ -2,21 +2,35 @@ package com.github.mrnerdy42.keywizard.gui;
 
 import java.util.ArrayList;
 
+import com.github.mrnerdy42.keywizard.util.KeybindUtils;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
+import net.minecraftforge.fml.client.GuiScrollingList;
 /**
  *An NEI-style dropdown list menu. Its functionality is 
  *hacked together using the vanilla GuiButton class
  */
 public class GuiCategorySelector extends GuiButton{
 	
+	
+	private GuiKeyWizard parent;
 	private ListItem[] items;
 	
 	private boolean extended = false;
 	private ListItem selectedItem;
+	
+	private GuiCategoryList list;
+	
+	private class GuiCategoryList extends GuiScrollingList {
+		public GuiCategoryList(GuiKeyWizard parent, int left, int bottom, int width, int height, int entryHeight) {
+			super(parent.getClient(), width, height, bottom - height, bottom, left, entryHeight, parent.width, parent.height);
+		}
+
+	}
 
 	private class ListItem extends GuiButton{
 		
@@ -65,22 +79,13 @@ public class GuiCategorySelector extends GuiButton{
 	    }
 	}
 	
-	public GuiCategorySelector(int x, int y, int width, ArrayList<String> itemNames) {
+	public GuiCategorySelector(GuiKeyWizard parent, int x, int y, int width, ArrayList<String> itemNames) {
 		super(0, x, y, width, 20, itemNames.get(0));
 		
+		this.parent = parent;
 		this.items = new ListItem[itemNames.size()];
 
-		int row = 0;
-		int column = 0;
-		for (int i = 0; i < items.length; i ++) {
-			if  (i % 11 == 0 && i != 0) {
-				column++;
-				row = 0;
-			}
-			this.items[i] = new ListItem(i, row, column, I18n.format(itemNames.get(i)), itemNames.get(i), this);
-			row++;
-		}
-		
+
 		this.selectItem(0);
 	}
 	
@@ -118,11 +123,14 @@ public class GuiCategorySelector extends GuiButton{
     }
 	
 	public void drawList(Minecraft mc, int mouseX, int mouseY, float partialTicks){
+		
+		/*
 		this.drawButton(mc, mouseX, mouseY, partialTicks);
 		
 		for (ListItem item : this.items) {
 			item.drawButton(mc, mouseX, mouseY, partialTicks);
 		}
+		*/
 	}
 	
 	public boolean getExtended(){
