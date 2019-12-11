@@ -1,11 +1,15 @@
 package com.github.mrnerdy42.keywizard;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.github.mrnerdy42.keywizard.handlers.ClientEventHandler;
 
+import net.minecraft.client.gui.GuiControls;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
