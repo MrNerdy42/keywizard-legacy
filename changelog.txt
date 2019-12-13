@@ -1,5 +1,10 @@
+v1.7.2
+Fixed janky controls gui override
+Category list is scrolly now :)
+
 v1.7.1
 Added extra keys
+
 v1.7
 Added search by key name
 Added numpad
