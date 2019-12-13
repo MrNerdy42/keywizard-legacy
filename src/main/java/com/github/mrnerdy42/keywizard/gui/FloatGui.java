@@ -155,8 +155,8 @@ public class FloatGui
      */
     public void drawTexturedModalRect(double x, double y, int textureX, int textureY, double width, double height)
     {
-        float f = 0.00390625F;
-        float f1 = 0.00390625F;
+        //float f = 0.00390625F; Unused??
+        //float f1 = 0.00390625F; Unused??
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
@@ -172,8 +172,8 @@ public class FloatGui
      */
     public void drawTexturedModalRect(int xCoord, int yCoord, int minU, int minV, int maxU, int maxV)
     {
-        float f = 0.00390625F;
-        float f1 = 0.00390625F;
+        //float f = 0.00390625F; Unused??
+        //float f1 = 0.00390625F; Unused??
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);

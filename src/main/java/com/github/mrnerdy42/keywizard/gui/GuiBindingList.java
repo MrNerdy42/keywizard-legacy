@@ -1,7 +1,6 @@
 package com.github.mrnerdy42.keywizard.gui;
 
 import java.util.Arrays;
-import java.util.function.Predicate;
 
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
 
@@ -45,11 +44,7 @@ public class GuiBindingList extends GuiScrollingList {
 
 	@Override
 	protected boolean isSelected(int index) {
-		if (this.selectedKeybindId == index) {
-			return true;
-		} else {
-			return false;
-		}
+		return this.selectedKeybindId == index;
 	}
 
 	@Override
