@@ -6,82 +6,83 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
+import net.minecraftforge.fml.client.GuiScrollingList;
 /**
  *An NEI-style dropdown list menu. Its functionality is 
  *hacked together using the vanilla GuiButton class
  */
 public class GuiCategorySelector extends GuiButton{
 	
-	private ListItem[] items;
+	
+	private GuiKeyWizard parent;
 	
 	private boolean extended = false;
-	private ListItem selectedItem;
-
-	private class ListItem extends GuiButton{
-		
-		private int index;
-		private String name;
-		private GuiCategorySelector parent;
-		
-		public ListItem(int index, int row, int column, String itemText, String name, GuiCategorySelector parent) throws IllegalArgumentException{
-			super(index, parent.x + (parent.width + 2) * column, parent.y + 21 * (row + 1), parent.width, 20, itemText);
-			
-			this.index = index;
-			this.name = name;
-			this.parent = parent;
-			
-		}
-		
-		/**
-		 * Performs an action and returns true if the button is clicked by the mouse
-		 * @param mc
-		 *     the current minecraft instance 
-		 * @param mouseX
-		 *     the x position of the mouse
-		 * @param mouseY
-		 *     the y position of the mouse
-		 * @param button
-		 *     the lwjgl id of the button pressed
-		 * @return true if the mouse was clicked on the button
-		 */
-		
-	    public boolean mouseClicked(Minecraft mc, int mouseX, int mouseY, int button) {
-	    	
-	    	boolean buttonHit = false;
-	    	
-	    	if ( this.parent.extended && mouseX >= this.x && mouseX < this.x + this.width && mouseY >= this.y && mouseY < this.y + this.height && button == 0 ) {
-	    		this.playPressSound(mc.getSoundHandler());
-	    		this.parent.selectItem(this.index);
-	    		buttonHit = true;
-	    	}
-	    	return buttonHit;
-	    }
-	    
-	    @Override
-	    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks){
-	    	this.zLevel = 100;
-	    	super.drawButton(mc, mouseX, mouseY, partialTicks);
-	    }
-	}
+	private GuiCategoryList list;
+	private ArrayList<String> categories;
 	
-	public GuiCategorySelector(int x, int y, int width, ArrayList<String> itemNames) {
-		super(0, x, y, width, 20, itemNames.get(0));
-		
-		this.items = new ListItem[itemNames.size()];
+	private int selectedCategoryIdx;
+	private String selectedCategory;
+	
+	private class GuiCategoryList extends GuiScrollingList {
+		public GuiCategoryList(GuiKeyWizard parent, int left, int top, int width, int height, int entryHeight) {
+			super(parent.getClient(), width, height, top, top + height, left, entryHeight, parent.width, parent.height);
+		}
 
-		int row = 0;
-		int column = 0;
-		for (int i = 0; i < items.length; i ++) {
-			if  (i % 11 == 0 && i != 0) {
-				column++;
-				row = 0;
-			}
-			this.items[i] = new ListItem(i, row, column, I18n.format(itemNames.get(i)), itemNames.get(i), this);
-			row++;
+		@Override
+		protected int getSize() {
+			return 5;
+		}
+
+		@Override
+		protected void elementClicked(int index, boolean doubleClick) {
+			selectedCategoryIdx = index;
+			update();
+		}
+
+		@Override
+		protected boolean isSelected(int index) {
+			return selectedCategoryIdx == index;
+		}
+
+		@Override
+		protected void drawBackground() {
+			
+		}
+
+		@Override
+		protected void drawSlot(int slotIdx, int entryRight, int slotTop, int slotBuffer, Tessellator tess) {
+			FontRenderer fontRender = parent.getFontRenderer();
+			fontRender.drawStringWithShadow(I18n.format(categories.get(slotIdx)), this.left + 3 , slotTop + 2, 0xFFFFFF);	
 		}
 		
-		this.selectItem(0);
+		public int getListWidth() {
+			return this.listWidth;
+		}
+		
+		public int getListHeight() {
+			return this.listHeight;
+		}
+		
+		public int getTop() {
+			return this.top;
+		}
+		
+		public int getLeft() {
+			return this.left;
+		}
+
+	}
+
+	public GuiCategorySelector(GuiKeyWizard parent, int x, int y, int width, ArrayList<String> categories) {
+		super(0, x, y, width, 20, I18n.format(categories.get(0)));
+		this.parent = parent;
+		this.categories = categories;
+		this.selectedCategoryIdx = 0;
+		this.selectedCategory = this.categories.get(0);
+		int fontHeight = parent.getFontRenderer().FONT_HEIGHT;
+		this.list = new GuiCategoryList(parent, x ,y + 20, width, this.categories.size() * fontHeight + 10, fontHeight + 7);
 	}
 	
 	@Override
@@ -119,10 +120,16 @@ public class GuiCategorySelector extends GuiButton{
 	
 	public void drawList(Minecraft mc, int mouseX, int mouseY, float partialTicks){
 		this.drawButton(mc, mouseX, mouseY, partialTicks);
+		if (this.extended) {
+		    this.list.drawScreen(mouseX, mouseY, partialTicks);
+		}
+		
+		/*
 		
 		for (ListItem item : this.items) {
 			item.drawButton(mc, mouseX, mouseY, partialTicks);
 		}
+		*/
 	}
 	
 	public boolean getExtended(){
@@ -130,7 +137,7 @@ public class GuiCategorySelector extends GuiButton{
     }
 	
 	public String getSelctedCategory(){
-    	return this.selectedItem.name;
+    	return this.selectedCategory;
     }
     
     private int getShadingMultiplier(boolean mouseOver){
@@ -142,41 +149,23 @@ public class GuiCategorySelector extends GuiButton{
     }
     
     public void mouseClicked(Minecraft mc, int mouseX, int mouseY, int button) {
-    	
-		boolean buttonHit = false;
-		
-		for (ListItem item : this.items){
-			buttonHit = item.mouseClicked(mc, mouseX, mouseY, button);
-			if (buttonHit)
-				break;
-		}
-    	
     	if (mouseX >= this.x && mouseX < this.x + this.width && mouseY >= this.y && mouseY < this.y + this.height && button == 0) {
             this.playPressSound(mc.getSoundHandler());
-    		this.setList(!this.extended);
-    	} else if (!buttonHit) {
-    		this.setList(false);
+    		this.setState(!this.extended);
+    	} else if (!(mouseX >= list.getLeft() && mouseX < list.getLeft() + list.getListWidth() && mouseY >= list.getTop() && mouseY < list.getTop() + list.getListHeight()) && button == 0) {
+    		this.setState(false);
     	}
     }
     
-    public void selectItem(int index){
-		this.selectedItem = items[index];
-		this.updateState();
+    public void setState(boolean extended){
+		this.extended = extended;
+		this.update();
 	}
     
-    public void setList(boolean extended){
-		this.extended = extended;
-		this.updateState();
-	}
-	
-	private void updateState(){
-		
-		this.displayString = this.selectedItem.displayString;
+    private void update() {
 		this.hovered = this.extended;
+		this.selectedCategory = this.categories.get(this.selectedCategoryIdx);
+		this.displayString = I18n.format(this.selectedCategory);
 		
-		for (ListItem item : this.items){
-			item.visible = this.extended;
-			item.enabled = !(item == this.selectedItem);
-		}
-	}
+    }
 }
