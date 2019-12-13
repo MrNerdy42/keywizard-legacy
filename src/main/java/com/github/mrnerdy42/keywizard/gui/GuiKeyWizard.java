@@ -6,6 +6,8 @@ import static org.lwjgl.input.Mouse.getButtonName;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.lwjgl.input.Mouse;
+
 import com.github.mrnerdy42.keywizard.KeyWizardConfig;
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
 import com.github.mrnerdy42.keywizard.util.KeyboardFactory;
@@ -267,16 +269,16 @@ public class GuiKeyWizard extends GuiScreen {
 		}
 	}
 
-/*	
+	
     @Override
 	public void handleMouseInput() throws IOException {
+		super.handleMouseInput();
+		
 		int mouseX = Mouse.getEventX() * this.width / this.mc.displayWidth;
 		int mouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
-	
-		super.handleMouseInput();
-		//this.bindingList.handleMouseInput(mouseX, mouseY);
+		
+		this.bindingList.handleMouseInput(mouseX, mouseY);
 	}
-*/
 
 	@Override
 	protected void mouseClicked(int x, int y, int button) throws IOException {
