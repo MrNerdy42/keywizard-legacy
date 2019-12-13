@@ -1,3 +1,6 @@
+v1.7.3
+Made new category list actually usable
+
 v1.7.2
 Fixed janky controls gui override
 Category list is scrolly now :)
