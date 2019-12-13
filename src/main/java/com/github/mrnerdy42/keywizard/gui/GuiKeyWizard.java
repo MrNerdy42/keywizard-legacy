@@ -94,7 +94,7 @@ public class GuiKeyWizard extends GuiScreen {
 				maxCategoryLength = s.length();
 		}
 		
-		this.categoryList = new GuiCategorySelector(this, this.guiStartX, 5, maxCategoryLength*5, categories);
+		this.categoryList = new GuiCategorySelector(this, this.guiStartX, 5, maxCategoryLength*9, categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
 		
 		this.keyboard = KeyboardFactory.makeKeyboard(this.pages[this.pageNum], this, this.guiStartX, this.height / 2 - 90, this.guiWidth - 5, this.height);

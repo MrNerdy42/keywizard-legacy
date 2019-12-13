@@ -32,7 +32,7 @@ public class GuiCategorySelector extends GuiButton{
 
 		@Override
 		protected int getSize() {
-			return 5;
+			return categories.size();
 		}
 
 		@Override
@@ -82,7 +82,7 @@ public class GuiCategorySelector extends GuiButton{
 		this.selectedCategoryIdx = 0;
 		this.selectedCategory = this.categories.get(0);
 		int fontHeight = parent.getFontRenderer().FONT_HEIGHT;
-		this.list = new GuiCategoryList(parent, x ,y + 20, width, this.categories.size() * fontHeight + 10, fontHeight + 7);
+		this.list = new GuiCategoryList(parent, x ,y + 20, width, parent.height - 40, fontHeight + 7);
 	}
 	
 	@Override
