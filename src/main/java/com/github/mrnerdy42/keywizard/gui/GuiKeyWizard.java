@@ -5,6 +5,7 @@ import static org.lwjgl.input.Mouse.getButtonName;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import org.lwjgl.input.Mouse;
 
@@ -66,23 +67,23 @@ public class GuiKeyWizard extends GuiScreen {
 	@Override
 	public void initGui() {
 		
-		int maxLength = 0;
+		int maxBindingLength = 0;
 	
 		for (KeyBinding binding : KeybindUtils.ALL_BINDINGS) {
-			if (binding.getDisplayName().length() > maxLength)
-				maxLength = binding.getDisplayName().length();
+			if (binding.getDisplayName().length() > maxBindingLength)
+				maxBindingLength = binding.getDisplayName().length();
 		}
+		
+		int bindingListWidth = (maxBindingLength * 11);
 	
-		int listWidth = (maxLength * 11);
-	
-		this.bindingList = new GuiBindingList(this, 10, this.height - 30, listWidth, this.height - 40,
+		this.bindingList = new GuiBindingList(this, 10, this.height - 30, bindingListWidth, this.height - 40,
 				fontRenderer.FONT_HEIGHT * 3 + 10);
 		
-		this.searchBar = new GuiTextField(0, this.fontRenderer, 10, this.height - 20, listWidth, 14);
+		this.searchBar = new GuiTextField(0, this.fontRenderer, 10, this.height - 20, bindingListWidth, 14);
 		this.searchBar.setFocused(true);
 		this.searchBar.setCanLoseFocus(false);
 	
-		this.guiStartX = listWidth + 15;
+		this.guiStartX = bindingListWidth + 15;
 		this.guiWidth = this.width - this.guiStartX;
 		
 		ArrayList<String> categories = KeybindUtils.getCategories();
@@ -90,12 +91,13 @@ public class GuiKeyWizard extends GuiScreen {
 		categories.add(0, "categories.unbound");
 		categories.add(0, "categories.all");
 		
-		maxLength = 0;
+		int maxCategoryLength = 0;
 		for(String s:categories) {
-			if (s.length() > maxLength)
-				maxLength = s.length();
+			if (I18n.format(s).length() > maxCategoryLength)
+				maxCategoryLength = s.length();
 		}
-		this.categoryList = new GuiCategorySelector(this.guiStartX, 5, maxLength*5, categories);
+		
+		this.categoryList = new GuiCategorySelector(this, this.guiStartX, 5, maxCategoryLength*5, categories);
 		this.selectedCategory = this.categoryList.getSelctedCategory();
 		
 		this.keyboard = KeyboardFactory.makeKeyboard(this.pages[this.pageNum], this, this.guiStartX, this.height / 2 - 90, this.guiWidth - 5, this.height);
