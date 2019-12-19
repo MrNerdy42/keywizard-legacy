@@ -1,5 +1,6 @@
 package com.github.mrnerdy42.keywizard.gui;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
@@ -114,22 +115,17 @@ public class GuiCategorySelector extends GuiButton{
             
 
             this.drawCenteredString(fontrenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
+            
+    		if (this.extended) {
+    		    this.list.drawScreen(mouseX, mouseY, partialTicks);
+    		}
         }
 
     }
 	
-	public void drawList(Minecraft mc, int mouseX, int mouseY, float partialTicks){
-		this.drawButton(mc, mouseX, mouseY, partialTicks);
-		if (this.extended) {
-		    this.list.drawScreen(mouseX, mouseY, partialTicks);
-		}
+	public void handleMouseInput(int mouseX, int mouseY) throws IOException {
+		this.list.handleMouseInput(mouseX, mouseY);
 		
-		/*
-		
-		for (ListItem item : this.items) {
-			item.drawButton(mc, mouseX, mouseY, partialTicks);
-		}
-		*/
 	}
 	
 	public boolean getExtended(){
@@ -168,4 +164,5 @@ public class GuiCategorySelector extends GuiButton{
 		this.displayString = I18n.format(this.selectedCategory);
 		
     }
+
 }

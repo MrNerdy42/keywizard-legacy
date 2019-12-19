@@ -132,7 +132,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.searchBar.drawTextBox();
 		
 		this.keyboard.draw(this.mc, mouseX, mouseY, partialTicks);
-		this.categoryList.drawList(this.mc, mouseX, mouseY, partialTicks);
+		this.categoryList.drawButton(this.mc, mouseX, mouseY, partialTicks);
 	}
 
 	@Override
@@ -278,6 +278,7 @@ public class GuiKeyWizard extends GuiScreen {
 		int mouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
 		
 		this.bindingList.handleMouseInput(mouseX, mouseY);
+		this.categoryList.handleMouseInput(mouseX, mouseY);
 	}
 
 	@Override
