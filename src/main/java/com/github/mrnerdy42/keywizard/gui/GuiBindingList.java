@@ -1,6 +1,7 @@
 package com.github.mrnerdy42.keywizard.gui;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
 
@@ -26,7 +27,7 @@ public class GuiBindingList extends GuiScrollingList {
 		super(parent.getClient(), width, height, bottom - height, bottom, left, entryHeight, parent.width, parent.height);
 		
 		this.parent = parent;
-		this.bindings = KeybindUtils.ALL_BINDINGS;
+		this.bindings = Arrays.copyOf(KeybindUtils.ALL_BINDINGS, KeybindUtils.ALL_BINDINGS.length);
 		this.searchText = this.parent.getSearchText();
 		this.selectedCategory = this.parent.getSelectedCategory();
 		this.selectKeybind(0);
@@ -49,7 +50,7 @@ public class GuiBindingList extends GuiScrollingList {
 
 	@Override
 	protected void drawBackground() {
-
+		
 	}
 
 	@Override
@@ -88,7 +89,7 @@ public class GuiBindingList extends GuiScrollingList {
 				}
 				bindingsNew = filterBindingsByName(bindingsNew, words);
 			}
-					
+			Arrays.sort(bindingsNew, this.parent.sortType);
 			this.bindings = bindingsNew;
 			
 			if (this.bindings.length != 0)
@@ -103,7 +104,7 @@ public class GuiBindingList extends GuiScrollingList {
 	}
 	
 	private KeyBinding[] bindingsByCategory(String category) {
-		KeyBinding[] bindings = KeybindUtils.ALL_BINDINGS;
+		KeyBinding[] bindings = Arrays.copyOf(KeybindUtils.ALL_BINDINGS, KeybindUtils.ALL_BINDINGS.length);
 		
 		switch (category) {
 		case "categories.all":

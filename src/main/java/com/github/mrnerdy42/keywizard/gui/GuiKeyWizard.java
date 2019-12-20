@@ -5,6 +5,7 @@ import static org.lwjgl.input.Mouse.getButtonName;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import org.lwjgl.input.Mouse;
 
@@ -25,9 +26,17 @@ import net.minecraftforge.client.settings.KeyModifier;
 
 public class GuiKeyWizard extends GuiScreen {
 	
+	private enum SortType implements Comparator<KeyBinding> {
+		NAME { @Override public int compare(KeyBinding arg0, KeyBinding arg1){ return I18n.format(arg0.getKeyDescription()).compareTo(I18n.format(arg1.getKeyDescription())); }},
+		CATEGORY { @Override public int compare(KeyBinding arg0, KeyBinding arg1){ return I18n.format(arg0.getKeyCategory()).compareTo(I18n.format(arg1.getKeyCategory())); }},
+		KEY { @Override public int compare(KeyBinding arg0, KeyBinding arg1){ return I18n.format(arg0.getDisplayName()).compareTo(I18n.format(arg1.getDisplayName())); }};
+		
+	}
+	
 	public KeyboardLayout layout = KeyWizardConfig.layout;
 	
 	protected GuiKeyboard keyboard;
+	protected SortType sortType = SortType.NAME;
 	
 	private final GuiScreen parentScreen;
 	
