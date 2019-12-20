@@ -50,7 +50,6 @@ public class GuiBindingList extends GuiScrollingList {
 
 	@Override
 	protected void drawBackground() {
-		this.parent.drawDefaultBackground();
 	}
 
 	@Override
