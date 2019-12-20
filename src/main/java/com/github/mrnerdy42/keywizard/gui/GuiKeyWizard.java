@@ -63,7 +63,7 @@ public class GuiKeyWizard extends GuiScreen {
 	private GuiButton buttonMouse;
 	private GuiButton buttonMousePlus;
 	private GuiButton buttonMouseMinus;
-	
+	private GuiButton buttonSortBy;
 
 	
 
@@ -119,6 +119,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.buttonMouse = new GuiButton(0, this.guiStartX + 25, this.height - 85, 100, 20, I18n.format("gui.mouse") + ": " + getButtonName(this.mouse) );
 		this.buttonMousePlus = new GuiButton(0, this.guiStartX + 126, this.height - 85, 25, 20, "+");
 	    this.buttonMouseMinus = new GuiButton(0, this.guiStartX, this.height - 85, 25, 20, "-");
+	    //this.buttonSortBy = new GuiButton(0, this.searchBar.x + 10, this.height - 20, 20, 14, "Cat");
 		
 		this.setSelectedKeybind(this.bindingList.getSelectedKeybind());
 		
@@ -130,6 +131,7 @@ public class GuiKeyWizard extends GuiScreen {
 		this.buttonList.add(this.buttonMouse);
 		this.buttonList.add(this.buttonMousePlus);
 		this.buttonList.add(this.buttonMouseMinus);
+		//this.buttonList.add(this.buttonSortBy);
 
 	}
 

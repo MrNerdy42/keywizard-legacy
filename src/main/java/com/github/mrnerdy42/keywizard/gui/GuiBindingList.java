@@ -1,7 +1,6 @@
 package com.github.mrnerdy42.keywizard.gui;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 import com.github.mrnerdy42.keywizard.util.KeybindUtils;
 
@@ -74,7 +73,6 @@ public class GuiBindingList extends GuiScrollingList {
 	}
 	
 	protected void updateList(){
-		
 		if ( !this.searchText.equals(this.parent.getSearchText()) || !this.selectedCategory.equals(this.parent.getSelectedCategory()) ) {
 			this.searchText = this.parent.getSearchText();
 			this.selectedCategory = this.parent.getSelectedCategory();
@@ -88,12 +86,13 @@ public class GuiBindingList extends GuiScrollingList {
 				}
 				bindingsNew = filterBindingsByName(bindingsNew, words);
 			}
-			Arrays.sort(bindingsNew, this.parent.sortType);
+			
 			this.bindings = bindingsNew;
 			
 			if (this.bindings.length != 0)
 				this.selectKeybind(0);
 		}
+		Arrays.sort(this.bindings, this.parent.sortType);
 	}
 	
 	private void selectKeybind(int id){
