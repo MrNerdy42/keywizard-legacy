@@ -49,7 +49,7 @@ public class GuiCategorySelector extends GuiButton{
 
 		@Override
 		protected void drawBackground() {
-			
+			parent.drawDefaultBackground();
 		}
 
 		@Override
