@@ -35,7 +35,7 @@ displayName="Keyboard Wizard" #mandatory
 displayURL="https://www.curseforge.com/minecraft/mc-mods/keyboard-wizard" #optional
 
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="examplemod.png" #optional
+#logoFile="examplemod.png" #optional
 
 # A text field displayed in the mod UI
 credits="_Bedrock_Miner_ for his Forge tutorials." #optional
@@ -47,22 +47,7 @@ authors="MrNerdy42" #optional
 description='''
 Keyboard Wizard is simple that makes finding and fixing key bind conflicts a lot easier.
 '''
-# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.examplemod]] #optional
-    # the modid of the dependency
-    modId="forge" #mandatory
-    # Does this dependency have to exist - if not, ordering below must be specified
-    mandatory=true #mandatory
-    # The version range of the dependency
-    versionRange="[36,)" #mandatory
-    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
-    ordering="NONE"
-    # Side this dependency is applied on - BOTH, CLIENT or SERVER
-    side="BOTH"
-# Here's another dependency
-[[dependencies.examplemod]]
-    modId="minecraft"
-    mandatory=true
+
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
     versionRange="[1.16.5,1.17)"
     ordering="NONE"
